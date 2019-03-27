@@ -388,21 +388,21 @@
       <SubType>compile</SubType>
       <Link>SwFramework\SwFramework.h</Link>
     </Compile>
-    <Compile Include="..\SwFramework\Traces\Logger.cpp">
+    <Compile Include="..\SwFramework\Tracing\Logger.cpp">
       <SubType>compile</SubType>
-      <Link>SwFramework\Traces\Logger.cpp</Link>
+      <Link>SwFramework\Tracing\Logger.cpp</Link>
     </Compile>
-    <Compile Include="..\SwFramework\Traces\Logger.h">
+    <Compile Include="..\SwFramework\Tracing\Logger.h">
       <SubType>compile</SubType>
-      <Link>SwFramework\Traces\Logger.h</Link>
+      <Link>SwFramework\Tracing\Logger.h</Link>
     </Compile>
-    <Compile Include="..\SwFramework\Traces\Traces.cpp">
+    <Compile Include="..\SwFramework\Tracing\Traces.cpp">
       <SubType>compile</SubType>
-      <Link>SwFramework\Traces\Traces.cpp</Link>
+      <Link>SwFramework\Tracing\Traces.cpp</Link>
     </Compile>
-    <Compile Include="..\SwFramework\Traces\Traces.h">
+    <Compile Include="..\SwFramework\Tracing\Traces.h">
       <SubType>compile</SubType>
-      <Link>SwFramework\Traces\Traces.h</Link>
+      <Link>SwFramework\Tracing\Traces.h</Link>
     </Compile>
     <Compile Include="..\SwUnits\IResponse.cpp">
       <SubType>compile</SubType>
@@ -505,7 +505,7 @@
     <Folder Include="SwFramework\Protocols\" />
     <Folder Include="SwFramework\Protocols\Ethernet\" />
     <Folder Include="SwFramework\Security\" />
-    <Folder Include="SwFramework\Traces\" />
+    <Folder Include="SwFramework\Tracing\" />
     <Folder Include="SwUnits\" />
     <Folder Include="Xmega\" />
     <Folder Include="Xmega\Peripherals\" />

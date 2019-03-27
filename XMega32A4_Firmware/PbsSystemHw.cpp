@@ -9,7 +9,7 @@
 #include <Release.h>
 #include <Security/Checksum.h>
 #include <HomeAutomationConfiguration.h>
-#include <Traces/Logger.h>
+#include <Tracing/Logger.h>
 #include <LogicalButton.h>
 #include <Security/ModuleId.h>
 #include <PersistentRules.h>

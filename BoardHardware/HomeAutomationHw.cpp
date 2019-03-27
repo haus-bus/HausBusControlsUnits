@@ -8,7 +8,7 @@
 #include "HomeAutomationHw.h"
 #include <Security/Checksum.h>
 #include <FlashString.h>
-#include <Traces/Logger.h>
+#include <Tracing/Logger.h>
 #include <Security/ModuleId.h>
 #include <Peripherals/Oscillator.h>
 #include <Peripherals/Clock.h>

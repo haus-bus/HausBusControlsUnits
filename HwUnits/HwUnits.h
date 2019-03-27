@@ -12,8 +12,8 @@
 #include <Security/Checksum.h>
 #include <DebugOptions.h>
 #include <Protocols/HACF.h>
-#include <Traces/Logger.h>
-#include <SystemTime.h>
+#include <Tracing/Logger.h>
+#include <Time/SystemTime.h>
 #include <IResponse.h>
 #include <EventPkg/EventPkg.h>
 #include <CriticalSection.h>

@@ -20,7 +20,7 @@ void DS1820::scanAndCreateDevices( PortPin _owPin )
 
    // wait 1ms to stabilize the line
    SystemTime::waitMs( 1 );
-   DEBUG_M4( FSTR( "1-Wire port: " ), portNumber, FSTR( "pin: " ), i );
+   DEBUG_M4( FSTR( "1-Wire port: " ), _owPin.portNumber, FSTR( "pin: " ), _owPin.pinNumber );
 
    // check for 1-Wire components
    uint8_t diff = OneWire::SEARCH_FIRST;

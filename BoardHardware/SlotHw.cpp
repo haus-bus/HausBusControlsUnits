@@ -6,7 +6,7 @@
  */
 
 #include "SlotHw.h"
-#include <Traces/Logger.h>
+#include <Tracing/Logger.h>
 
 const uint8_t SlotHw::debugLevel( DEBUG_LEVEL_OFF );
 

@@ -546,17 +546,9 @@
       <SubType>compile</SubType>
       <Link>Interfaces\IDimmerHw.h</Link>
     </Compile>
-    <Compile Include="..\Interfaces\IDiskIo.h">
-      <SubType>compile</SubType>
-      <Link>Interfaces\IDiskIo.h</Link>
-    </Compile>
     <Compile Include="..\Interfaces\Release.h">
       <SubType>compile</SubType>
       <Link>Interfaces\Release.h</Link>
-    </Compile>
-    <Compile Include="..\Interfaces\SystemTime.h">
-      <SubType>compile</SubType>
-      <Link>Interfaces\SystemTime.h</Link>
     </Compile>
     <Compile Include="..\SwFramework\Containers\Array.h">
       <SubType>compile</SubType>
@@ -581,10 +573,6 @@
     <Compile Include="..\SwFramework\Containers\StaticQueue.h">
       <SubType>compile</SubType>
       <Link>SwFramework\Container\StaticQueue.h</Link>
-    </Compile>
-    <Compile Include="..\SwFramework\CriticalSection.cpp">
-      <SubType>compile</SubType>
-      <Link>SwFramework\CriticalSection.cpp</Link>
     </Compile>
     <Compile Include="..\SwFramework\DefaultTypes.h">
       <SubType>compile</SubType>
@@ -878,21 +866,21 @@
       <SubType>compile</SubType>
       <Link>SwFramework\Time\WeekTime.h</Link>
     </Compile>
-    <Compile Include="..\SwFramework\Traces\Logger.cpp">
+    <Compile Include="..\SwFramework\Tracing\Logger.cpp">
       <SubType>compile</SubType>
-      <Link>SwFramework\Traces\Logger.cpp</Link>
+      <Link>SwFramework\Tracing\Logger.cpp</Link>
     </Compile>
-    <Compile Include="..\SwFramework\Traces\Logger.h">
+    <Compile Include="..\SwFramework\Tracing\Logger.h">
       <SubType>compile</SubType>
-      <Link>SwFramework\Traces\Logger.h</Link>
+      <Link>SwFramework\Tracing\Logger.h</Link>
     </Compile>
-    <Compile Include="..\SwFramework\Traces\Traces.cpp">
+    <Compile Include="..\SwFramework\Tracing\Traces.cpp">
       <SubType>compile</SubType>
-      <Link>SwFramework\Traces\Traces.cpp</Link>
+      <Link>SwFramework\Tracing\Traces.cpp</Link>
     </Compile>
-    <Compile Include="..\SwFramework\Traces\Traces.h">
+    <Compile Include="..\SwFramework\Tracing\Traces.h">
       <SubType>compile</SubType>
-      <Link>SwFramework\Traces\Traces.h</Link>
+      <Link>SwFramework\Tracing\Traces.h</Link>
     </Compile>
     <Compile Include="..\SwUnits\ConfigurationManager.cpp">
       <SubType>compile</SubType>
@@ -998,10 +986,6 @@
       <SubType>compile</SubType>
       <Link>Xmega\Basics.h</Link>
     </Compile>
-    <Compile Include="..\Xmega\CriticalSection.h">
-      <SubType>compile</SubType>
-      <Link>Xmega\CriticalSection.h</Link>
-    </Compile>
     <Compile Include="..\Xmega\DigitalInput.h">
       <SubType>compile</SubType>
       <Link>Xmega\DigitalInput.h</Link>
@@ -1021,10 +1005,6 @@
     <Compile Include="..\Xmega\Enc28j60.h">
       <SubType>compile</SubType>
       <Link>Xmega\Enc28j60.h</Link>
-    </Compile>
-    <Compile Include="..\Xmega\GlobalInterrupt.h">
-      <SubType>compile</SubType>
-      <Link>Xmega\GlobalInterrupt.h</Link>
     </Compile>
     <Compile Include="..\Xmega\InternalEeprom.cpp">
       <SubType>compile</SubType>
@@ -1049,10 +1029,6 @@
     <Compile Include="..\Xmega\InternalTemperature.h">
       <SubType>compile</SubType>
       <Link>Xmega\InternalTemperature.h</Link>
-    </Compile>
-    <Compile Include="..\Xmega\NonCriticalSection.h">
-      <SubType>compile</SubType>
-      <Link>Xmega\NonCriticalSection.h</Link>
     </Compile>
     <Compile Include="..\Xmega\Peripherals\Adc.cpp">
       <SubType>compile</SubType>
@@ -1255,7 +1231,7 @@
     <Folder Include="SwFramework\FileSystems" />
     <Folder Include="SwFramework\Protocols\Ethernet" />
     <Folder Include="SwFramework\Protocols\IpStack" />
-    <Folder Include="SwFramework\Traces" />
+    <Folder Include="SwFramework\Tracing" />
     <Folder Include="SwFramework\Time" />
     <Folder Include="SwFramework\Security" />
     <Folder Include="SwFramework\Protocols" />

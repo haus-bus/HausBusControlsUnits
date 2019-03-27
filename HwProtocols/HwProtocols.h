@@ -9,7 +9,7 @@
 #define HwProtocols_HwProtocols_H
 
 #include <util/delay.h>
-#include <Traces/Logger.h>
+#include <Tracing/Logger.h>
 class Dali;
 
 class Dht22;

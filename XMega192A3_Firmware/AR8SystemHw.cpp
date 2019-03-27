@@ -14,7 +14,7 @@
 #include <Peripherals/EventSystem.h>
 #include <HacfIpStackManager.h>
 #include <IrReceiver.h>
-#include <Traces/Logger.h>
+#include <Tracing/Logger.h>
 #include <LogicalButton.h>
 #include <DigitalOutputUnit.h>
 #include <Security/ModuleId.h>

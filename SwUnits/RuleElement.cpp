@@ -7,7 +7,7 @@
 
 #include "RuleElement.h"
 
-#include <Traces/Logger.h>
+#include <Tracing/Logger.h>
 #include <Time/Calender.h>
 
 const uint8_t RuleElement::debugLevel( DEBUG_LEVEL_OFF );
@@ -197,7 +197,7 @@ bool RuleElement::Condition::isActiveForEvent( const HACF::ControlFrame& message
    uint32_t msgSenderId = message.senderId.getId();
    if ( senderId == msgSenderId )
    {
-      DEBUG_M2( FSTR( "sender " ), msgSenderId ); DEBUG_M2( FSTR( "c:" ), index );
+      DEBUG_M2( FSTR( "sender " ), msgSenderId );
       uint8_t length = message.getDataLength() - 1;
       while ( ( message.data[length] == data[length] ) || ( data[length] == WILDCARD ) )
       {
