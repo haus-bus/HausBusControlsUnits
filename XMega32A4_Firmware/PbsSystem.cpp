@@ -79,5 +79,8 @@ void PbsSystem::start()
    SystemTime::init( SystemTime::RTCSRC_RCOSC_1024, 1024 );
 
    static PbsSystem ms6;
-   Scheduler::runJobs();
+   while ( 1 )
+   {
+      Scheduler::runJobs();
+   }
 }

@@ -24,8 +24,11 @@ int main( void )
    SystemTime::init( SystemTime::RTCSRC_RCOSC_1024, 1024 );
 
    static AR8System ar8;
-   Scheduler::runJobs();
-   return 0;
+
+   while ( 1 )
+   {
+      Scheduler::runJobs();
+   }
 }
 
 AR8System::AR8System() :
