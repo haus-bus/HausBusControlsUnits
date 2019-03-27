@@ -622,10 +622,6 @@
       <SubType>compile</SubType>
       <Link>SwFramework\IoStream.h</Link>
     </Compile>
-    <Compile Include="..\SwFramework\MemoryManager.cpp">
-      <SubType>compile</SubType>
-      <Link>SwFramework\MemoryManager.cpp</Link>
-    </Compile>
     <Compile Include="..\SwFramework\MemoryManager.h">
       <SubType>compile</SubType>
       <Link>SwFramework\MemoryManager.h</Link>
@@ -1006,6 +1002,10 @@
       <SubType>compile</SubType>
       <Link>Xmega\Enc28j60.h</Link>
     </Compile>
+    <Compile Include="..\Xmega\GlobalInterruptAVR.h">
+      <SubType>compile</SubType>
+      <Link>Xmega\GlobalInterruptAVR.h</Link>
+    </Compile>
     <Compile Include="..\Xmega\InternalEeprom.cpp">
       <SubType>compile</SubType>
       <Link>Xmega\InternalEeprom.cpp</Link>
@@ -1029,6 +1029,10 @@
     <Compile Include="..\Xmega\InternalTemperature.h">
       <SubType>compile</SubType>
       <Link>Xmega\InternalTemperature.h</Link>
+    </Compile>
+    <Compile Include="..\Xmega\MemoryManager.cpp">
+      <SubType>compile</SubType>
+      <Link>Xmega\MemoryManager.cpp</Link>
     </Compile>
     <Compile Include="..\Xmega\Peripherals\Adc.cpp">
       <SubType>compile</SubType>

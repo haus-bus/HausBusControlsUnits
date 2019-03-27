@@ -9,11 +9,10 @@
 #define Systems_HomeAutomationInterface_H
 
 #include "HomeAutomationConfiguration.h"
-
+#include <MemoryManager.h>
 #include <Security/ModuleId.h>
 #include <IResponse.h>
 
-extern void getUnusedMemory( uint16_t& freeStack, uint16_t& freeHeap );
 
 class HomeAutomationInterface
 {
@@ -437,7 +436,7 @@ inline void HomeAutomationInterface::Response::setUnusedMemory()
 {
    controlFrame.setDataLength( sizeof( getResponse() ) + sizeof( getParameter().unusedMemory ) );
    setResponse( UNUSED_MEMORY );
-   getUnusedMemory( getParameter().unusedMemory.freeStack, getParameter().unusedMemory.freeHeap );
+   getUnusedMemory( &getParameter().unusedMemory.freeStack, &getParameter().unusedMemory.freeHeap );
 }
 
 #endif
