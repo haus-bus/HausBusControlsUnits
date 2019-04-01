@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Erstellungszeit: 14. Jan 2019 um 16:40
+-- Erstellungszeit: 26. Mrz 2019 um 17:43
 -- Server-Version: 10.1.23-MariaDB-9+deb9u1
 -- PHP-Version: 7.0.30-0+deb9u1
 
@@ -64,7 +64,8 @@ INSERT INTO `featureclasses` (`id`, `classId`, `name`, `guiControl`, `guiControl
 (29, 163, 'SnmpAgent', '', 0, '', 'Standard'),
 (30, 3, 'SystemTime', '', 0, '', 'Experte'),
 (31, 90, 'CurrentReader', '', 0, '', 'Standard'),
-(32, 91, 'TcpClient', '', 0, '', 'Standard');
+(32, 91, 'TcpClient', '', 0, '', 'Standard'),
+(33, 164, 'WiFi', '', 0, '', 'Standard');
 
 -- --------------------------------------------------------
 
@@ -300,7 +301,47 @@ INSERT INTO `featurefunctionbitmasks` (`id`, `featureFunctionId`, `paramId`, `bi
 (253, 221, 503, 4, 'reserved4'),
 (254, 221, 503, 5, 'reserved5'),
 (255, 221, 503, 6, 'reserved6'),
-(256, 221, 503, 7, 'reserved7');
+(256, 221, 503, 7, 'reserved7'),
+(257, 240, 0, 0, 'enableSignalEvent'),
+(258, 240, 0, 1, 'enableCurrentEvent'),
+(259, 240, 0, 2, 'enableInterruptEvent'),
+(260, 240, 0, 3, 'enableDebugEvent'),
+(261, 240, 0, 4, ''),
+(262, 240, 0, 5, ''),
+(263, 240, 0, 6, ''),
+(264, 240, 0, 7, ''),
+(265, 242, 0, 0, 'enableSignalEvent'),
+(266, 242, 0, 1, 'enableCurrentEvent'),
+(267, 242, 0, 2, 'enableInterruptEvent'),
+(268, 242, 0, 3, 'enableDebugEvent'),
+(269, 242, 0, 4, ''),
+(270, 242, 0, 5, ''),
+(271, 242, 0, 6, ''),
+(272, 242, 0, 7, ''),
+(273, 255, 0, 0, 'invalidSignalLength'),
+(274, 255, 0, 1, 'firmwareUpdateFinished'),
+(275, 255, 0, 2, 'mainLoopTooLong'),
+(276, 255, 0, 3, 'gotMultipleEvents'),
+(277, 240, 0, 0, 'enableSignalEvent'),
+(278, 240, 0, 1, 'enableCurrentEvent'),
+(279, 240, 0, 2, 'enableInterruptEvent'),
+(280, 240, 0, 3, 'enableDebugEvent'),
+(281, 240, 0, 4, ''),
+(282, 240, 0, 5, ''),
+(283, 240, 0, 6, ''),
+(284, 240, 0, 7, ''),
+(285, 242, 0, 0, 'enableSignalEvent'),
+(286, 242, 0, 1, 'enableCurrentEvent'),
+(287, 242, 0, 2, 'enableInterruptEvent'),
+(288, 242, 0, 3, 'enableDebugEvent'),
+(289, 242, 0, 4, ''),
+(290, 242, 0, 5, ''),
+(291, 242, 0, 6, ''),
+(292, 242, 0, 7, ''),
+(293, 255, 0, 0, 'invalidSignalLength'),
+(294, 255, 0, 1, 'firmwareUpdateFinished'),
+(295, 255, 0, 2, 'mainLoopTooLong'),
+(296, 255, 0, 3, 'gotMultipleEvents');
 
 -- --------------------------------------------------------
 
@@ -746,7 +787,18 @@ INSERT INTO `featurefunctionenums` (`id`, `featureFunctionId`, `paramId`, `name`
 (729, 33, 68, 'SONOFF', '5'),
 (730, 33, 68, 'S0 Reader', '6'),
 (733, 206, 420, 'BUFFER_OVERRUN', '6'),
-(734, 206, 420, 'NO_CONFIGURATION', '7');
+(734, 206, 420, 'NO_CONFIGURATION', '7'),
+(736, 261, 525, 'NO_ERROR', '0'),
+(737, 33, 68, 'S0 Reader', '6'),
+(738, 268, 540, 'BIT', '0'),
+(739, 268, 540, 'BYTE', '1'),
+(740, 268, 540, 'WORD', '2'),
+(741, 269, 543, 'BIT', '0'),
+(742, 269, 543, 'BYTE', '1'),
+(743, 269, 543, 'WORD', '2'),
+(744, 270, 545, 'BIT', '0'),
+(745, 270, 545, 'BYTE', '1'),
+(746, 270, 545, 'WORD', '2');
 
 -- --------------------------------------------------------
 
@@ -834,13 +886,13 @@ INSERT INTO `featurefunctionparams` (`id`, `featureFunctionId`, `name`, `type`, 
 (149, 85, 'data', 'BLOB', '', 'Standard'),
 (294, 160, 'mac3', 'BYTE', '', 'Standard'),
 (293, 160, 'mac4', 'BYTE', '', 'Standard'),
-(155, 91, 'lowerThreshold', 'BYTE', 'untere Temperaturschwelle', 'Standard'),
+(155, 91, 'lowerThreshold', 'SBYTE', 'untere Temperaturschwelle', 'Standard'),
 (156, 91, 'lowerThresholdFraction', 'BYTE', 'lowerThresholdFraction', 'Standard'),
-(157, 91, 'upperThreshold', 'BYTE', 'obere Temperaturschwelle', 'Standard'),
-(158, 92, 'lowerThreshold', 'BYTE', 'untere Temperaturschwelle', 'Standard'),
+(157, 91, 'upperThreshold', 'SBYTE', 'obere Temperaturschwelle', 'Standard'),
+(158, 92, 'lowerThreshold', 'SBYTE', 'untere Temperaturschwelle', 'Standard'),
 (159, 92, 'lowerThresholdFraction', 'BYTE', 'Nachkommastellen der unteren Temperaturschwelle [00-99] ', 'Standard'),
-(160, 92, 'upperThreshold', 'BYTE', 'obere Temperaturschwelle', 'Standard'),
-(161, 94, 'celsius', 'BYTE', 'Grad Celsius', 'Standard'),
+(160, 92, 'upperThreshold', 'SBYTE', 'obere Temperaturschwelle', 'Standard'),
+(161, 94, 'celsius', 'SBYTE', 'Grad Celsius', 'Standard'),
 (162, 94, 'centiCelsius', 'BYTE', 'hundertstel Grad Celsius', 'Standard'),
 (164, 97, 'button1', 'BYTE', '', 'Standard'),
 (227, 97, 'button2', 'BYTE', '', 'Standard'),
@@ -1143,7 +1195,30 @@ INSERT INTO `featurefunctionparams` (`id`, `featureFunctionId`, `name`, `type`, 
 (520, 91, 'reportTimeBase', 'BYTE', 'Zeitbasis f?r die Einstellungen von minReportTime und maxReportTime', 'Standard'),
 (521, 91, 'minReportTime', 'BYTE', 'Mindestzeit, die seit dem letzten Melden vergehen muss bevor die n?chste Meldung gesendet werden darf', 'Standard'),
 (522, 91, 'maxReportTime', 'BYTE', 'Maximalzeit, nach deren Ablauf die n?chste Meldung gesendet wird, wenn keine andere Bedingung zum Senden vorliegt', 'Standard'),
-(523, 91, 'hysteresis', 'BYTE', 'Hysterese [Wert * 0,1?C], die berschritten werden muss, um wieder in den vorherigen Zustand zurckzukehren bzw um eine Meldung abzusetzen in der Zeit zwischen minReportTime und maxReportTime', 'Standard');
+(523, 91, 'hysteresis', 'BYTE', 'Hysterese [Wert * 0,1?C], die berschritten werden muss, um wieder in den vorherigen Zustand zurckzukehren bzw um eine Meldung abzusetzen in der Zeit zwischen minReportTime und maxReportTime', 'Standard'),
+(525, 261, 'errorCode', 'ENUM', '', 'Standard'),
+(526, 263, 'mac1', 'BYTE', '', 'Standard'),
+(527, 263, 'mac2', 'BYTE', '', 'Standard'),
+(528, 263, 'mac3', 'BYTE', '', 'Standard'),
+(529, 263, 'mac4', 'BYTE', '', 'Standard'),
+(530, 263, 'mac5', 'BYTE', '', 'Standard'),
+(531, 263, 'mac6', 'BYTE', '', 'Standard'),
+(532, 264, 'SSID', 'STRING', '', 'Standard'),
+(533, 264, 'Password', 'STRING', '', 'Standard'),
+(534, 265, 'SSID', 'STRING', '', 'Standard'),
+(535, 265, 'Password', 'STRING', '', 'Standard'),
+(536, 267, 'IP0', 'BYTE', '', 'Standard'),
+(537, 267, 'IP1', 'BYTE', '', 'Standard'),
+(538, 267, 'PI2', 'BYTE', '', 'Standard'),
+(539, 267, 'IP3', 'BYTE', '', 'Standard'),
+(540, 268, 'type', 'ENUM', 'Hier wird der Typ der Variable, die gesetzt werden soll definiert.', 'Experte'),
+(541, 268, 'index', 'BYTE', 'Die Variablen liegen mehrfach vor (32xBIT, 16xBYTE, 16xWORD). Mit dem index wird eine davon selektiert.', 'Experte'),
+(542, 268, 'value', 'WORD', 'Die Systemvariable wird mit diesem Wert belegt.', 'Experte'),
+(543, 269, 'type', 'ENUM', 'Hier wird der Typ der Variable, die abgefragt werden soll definiert.', 'Standard'),
+(544, 269, 'index', 'BYTE', 'Die Variablen liegen mehrfach vor (32xBIT, 16xBYTE, 16xWORD). Mit dem index wird eine davon selektiert.', 'Standard'),
+(545, 270, 'type', 'ENUM', 'Gibt den Typ der Variable an, die hier gemeldet wird.', 'Standard'),
+(546, 270, 'index', 'BYTE', 'Die Variablen liegen mehrfach vor (32xBIT, 16xBYTE, 16xWORD). Der Index gibt an, welche hiermit gemeldet wird.', 'Standard'),
+(547, 270, 'value', 'WORD', 'Der Wert der Systemvariable.', 'Standard');
 
 -- --------------------------------------------------------
 
@@ -1387,7 +1462,17 @@ INSERT INTO `featurefunctions` (`id`, `featureClassesId`, `type`, `name`, `funct
 (257, 32, 'ACTION', 'announceServer', 1, 'Standard'),
 (258, 32, 'FUNCTION', 'getCurrentIp', 2, 'Standard'),
 (259, 32, 'RESULT', 'CurrentIp', 128, 'Standard'),
-(260, 32, 'EVENT', 'evWhoIsServer', 200, 'Standard');
+(260, 32, 'EVENT', 'evWhoIsServer', 200, 'Standard'),
+(261, 33, 'EVENT', 'evError', 255, 'Standard'),
+(262, 33, 'FUNCTION', 'getConfiguration', 0, 'Experte'),
+(263, 33, 'ACTION', 'wakeUpDevice', 2, 'Standard'),
+(264, 33, 'FUNCTION', 'setConfiguration', 1, 'Experte'),
+(265, 33, 'RESULT', 'Configuration', 128, 'Experte'),
+(266, 33, 'FUNCTION', 'getCurrentIp', 3, 'Standard'),
+(267, 33, 'RESULT', 'CurrentIp', 129, 'Standard'),
+(268, 12, 'ACTION', 'setSystemVariable', 16, 'Experte'),
+(269, 12, 'FUNCTION', 'getSystemVariable', 17, 'Standard'),
+(270, 12, 'RESULT', 'SystemVariable', 137, 'Standard');
 
 --
 -- Indizes der exportierten Tabellen
@@ -1439,27 +1524,27 @@ ALTER TABLE `featurefunctions`
 -- AUTO_INCREMENT für Tabelle `featureclasses`
 --
 ALTER TABLE `featureclasses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 --
 -- AUTO_INCREMENT für Tabelle `featurefunctionbitmasks`
 --
 ALTER TABLE `featurefunctionbitmasks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=257;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=297;
 --
 -- AUTO_INCREMENT für Tabelle `featurefunctionenums`
 --
 ALTER TABLE `featurefunctionenums`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=735;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=747;
 --
 -- AUTO_INCREMENT für Tabelle `featurefunctionparams`
 --
 ALTER TABLE `featurefunctionparams`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=525;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=548;
 --
 -- AUTO_INCREMENT für Tabelle `featurefunctions`
 --
 ALTER TABLE `featurefunctions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=261;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=271;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -66,7 +66,7 @@ class Booter
          uint16_t dataLength = message->getDataLength() - sizeof( parameter.address ) - 1; // sizeof( command )
          if ( !downloadAllowed )
          {
-            static uint8_t buffer[2 * APP_SECTION_PAGE_SIZE];
+            static uint8_t buffer[APP_SECTION_PAGE_SIZE + _VECTORS_SIZE];
             if ( ( parameter.address + dataLength ) <= sizeof( buffer ) )
             {
                memcpy( &buffer[parameter.address], parameter.data, dataLength );
@@ -86,6 +86,10 @@ class Booter
                         if ( modId->minorRelease >= Release::MINOR )
                         {
                            downloadAllowed = Flash::write( 0, buffer, Flash::getPageSize() );
+                           if ( APP_SECTION_PAGE_SIZE < _VECTORS_SIZE )
+                           {
+                              Flash::write( APP_SECTION_PAGE_SIZE, &buffer[APP_SECTION_PAGE_SIZE], Flash::getPageSize() );
+                           }
                         }
                      }
                   }
