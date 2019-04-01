@@ -174,7 +174,7 @@ bool RuleElement::Condition::isActiveForLocal() const
    {
       case SystemConditions::BIT:
       {
-         return SystemConditions::bitField.isSet( data[0] );
+         return SystemConditions::bitField.isSet( data[0] ) == data[1];
       }
       case SystemConditions::BYTE:
       {
