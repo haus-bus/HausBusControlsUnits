@@ -82,8 +82,8 @@
           <ListValues>
             <Value>../../BoardHardware</Value>
             <Value>../../SwFramework</Value>
-            <Value>../../HwUnits</Value>
-            <Value>../../SwUnits</Value>
+            <Value>../../HbcUnits</Value>
+            <Value>../../HbcUnits</Value>
             <Value>../../Xmega</Value>
             <Value>../../Interfaces</Value>
             <Value>..</Value>
@@ -159,8 +159,8 @@
           <ListValues>
             <Value>../../BoardHardware</Value>
             <Value>../../SwFramework</Value>
-            <Value>../../HwUnits</Value>
-            <Value>../../SwUnits</Value>
+            <Value>../../HbcUnits</Value>
+            <Value>../../HbcUnits</Value>
             <Value>../../Xmega</Value>
             <Value>../../Interfaces</Value>
             <Value>..</Value>
@@ -232,8 +232,8 @@
           <ListValues>
             <Value>../../BoardHardware</Value>
             <Value>../../SwFramework</Value>
-            <Value>../../HwUnits</Value>
-            <Value>../../SwUnits</Value>
+            <Value>../../HbcUnits</Value>
+            <Value>../../HbcUnits</Value>
             <Value>../../Xmega</Value>
             <Value>../../Interfaces</Value>
             <Value>..</Value>
