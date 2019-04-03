@@ -105,7 +105,6 @@
             <Value>../../Xmega</Value>
             <Value>../../SwFramework</Value>
             <Value>../../HbcUnits</Value>
-            <Value>../../HbcUnits</Value>
             <Value>../../HwProtocols</Value>
             <Value>../../BoardHardware</Value>
             <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.68\include</Value>
@@ -188,7 +187,6 @@
             <Value>../../Xmega</Value>
             <Value>../../SwFramework</Value>
             <Value>../../HbcUnits</Value>
-            <Value>../../HbcUnits</Value>
             <Value>../../HwProtocols</Value>
             <Value>../../BoardHardware</Value>
             <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.68\include</Value>
@@ -270,7 +268,6 @@
             <Value>../../Xmega</Value>
             <Value>../../SwFramework</Value>
             <Value>../../HbcUnits</Value>
-            <Value>../../HbcUnits</Value>
             <Value>../../HwProtocols</Value>
             <Value>../../BoardHardware</Value>
             <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.68\include</Value>
@@ -308,6 +305,7 @@
     <Folder Include="BoardHardware\" />
     <Folder Include="HwProtocols\" />
     <Folder Include="HbcUnits\" />
+	<Folder Include="HbcUnits\Rules" />
     <Folder Include="Interfaces\" />
     <Folder Include="SwFramework\" />
     <Folder Include="SwFramework\Container\" />
@@ -316,7 +314,6 @@
     <Folder Include="SwFramework\Security\" />
     <Folder Include="SwFramework\Time\" />
     <Folder Include="SwFramework\Tracing\" />
-    <Folder Include="HbcUnits\" />
     <Folder Include="Xmega\" />
     <Folder Include="Xmega\Peripherals\" />
   </ItemGroup>
@@ -801,37 +798,37 @@
       <SubType>compile</SubType>
       <Link>HbcUnits\IResponse.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\PersistentRules.cpp">
+    <Compile Include="..\HbcUnits\Rules\PersistentRules.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\PersistentRules.cpp</Link>
+      <Link>HbcUnits\Rules\PersistentRules.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\PersistentRules.h">
+    <Compile Include="..\HbcUnits\Rules\PersistentRules.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\PersistentRules.h</Link>
+      <Link>HbcUnits\Rules\PersistentRules.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\Rule.cpp">
+    <Compile Include="..\HbcUnits\Rules\Rule.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\Rule.cpp</Link>
+      <Link>HbcUnits\Rules\Rule.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\Rule.h">
+    <Compile Include="..\HbcUnits\Rules\Rule.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\Rule.h</Link>
+      <Link>HbcUnits\Rules\Rule.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\RuleElement.cpp">
+    <Compile Include="..\HbcUnits\Rules\RuleElement.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\RuleElement.cpp</Link>
+      <Link>HbcUnits\Rules\RuleElement.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\RuleElement.h">
+    <Compile Include="..\HbcUnits\Rules\RuleElement.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\RuleElement.h</Link>
+      <Link>HbcUnits\Rules\RuleElement.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\RuleEngine.cpp">
+    <Compile Include="..\HbcUnits\Rules\RuleEngine.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\RuleEngine.cpp</Link>
+      <Link>HbcUnits\Rules\RuleEngine.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\RuleEngine.h">
+    <Compile Include="..\HbcUnits\Rules\RuleEngine.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\RuleEngine.h</Link>
+      <Link>HbcUnits\Rules\RuleEngine.h</Link>
     </Compile>
     <Compile Include="..\HbcUnits\HbcUnits.h">
       <SubType>compile</SubType>

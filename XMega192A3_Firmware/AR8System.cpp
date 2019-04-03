@@ -9,8 +9,6 @@
 #include "DebugOptions.h"
 #include <Gateway.h>
 #include "HomeAutomation.h"
-#include <PersistentRules.h>
-#include <RuleEngine.h>
 #include <Scheduler.h>
 #include <Time/WeekTime.h>
 

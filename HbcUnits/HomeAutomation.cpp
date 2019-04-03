@@ -11,8 +11,8 @@
 #include <EventPkg/EventPkg.h>
 #include <Gateway.h>
 #include <Protocols/HBCP.h>
-#include <PersistentRules.h>
-#include <RuleEngine.h>
+#include <Rules/PersistentRules.h>
+#include <Rules/RuleEngine.h>
 #include <Scheduler.h>
 #include <Time/Calender.h>
 

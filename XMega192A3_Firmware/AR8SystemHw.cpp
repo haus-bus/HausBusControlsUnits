@@ -18,7 +18,6 @@
 #include <LogicalButton.h>
 #include <DigitalOutputUnit.h>
 #include <Security/ModuleId.h>
-#include <PersistentRules.h>
 #include <RollerShutter.h>
 #include <Peripherals/TimerCounter.h>
 #include <Protocols/IpStack/UdpConnection.h>

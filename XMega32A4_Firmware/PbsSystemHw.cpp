@@ -12,7 +12,6 @@
 #include <Tracing/Logger.h>
 #include <LogicalButton.h>
 #include <Security/ModuleId.h>
-#include <PersistentRules.h>
 #include <Peripherals/TimerCounter.h>
 #include <Gateway.h>
 #include <SoftTwi.h>
