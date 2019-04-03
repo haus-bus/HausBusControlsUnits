@@ -105,10 +105,10 @@ void HacfIpStackManager::wakeUpDevice( const MAC& mac )
 {
 }
 
-bool HacfIpStackManager::handleRequest( HACF* message )
+bool HacfIpStackManager::handleRequest( HBCP* message )
 {
    bool consumed = true;
-   HACF::ControlFrame& cf = message->controlFrame;
+   HBCP::ControlFrame& cf = message->controlFrame;
    Command* data = reinterpret_cast<Command*>( cf.getData() );
    if ( cf.isCommand( Command::GET_CONFIGURATION ) )
    {

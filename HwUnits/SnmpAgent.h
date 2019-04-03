@@ -84,7 +84,7 @@ class SnmpAgent : public Gateway,
 
             enum Commands
             {
-               GET_CONFIGURATION = HACF::COMMANDS_START,
+               GET_CONFIGURATION = HBCP::COMMANDS_START,
                SET_CONFIGURATION
 
             };
@@ -131,7 +131,7 @@ class SnmpAgent : public Gateway,
 
             enum Responses
             {
-               CONFIGURATION = HACF::RESULTS_START
+               CONFIGURATION = HBCP::RESULTS_START
             };
 
             union Parameter
@@ -146,7 +146,7 @@ class SnmpAgent : public Gateway,
             {
             }
 
-            inline Response( uint16_t id, const HACF& message ) :
+            inline Response( uint16_t id, const HBCP& message ) :
                IResponse( id, message )
             {
             }
@@ -175,9 +175,9 @@ class SnmpAgent : public Gateway,
 
       virtual bool notifyEvent( const Event& event );
 
-      bool handleRequest( HACF* message );
+      bool handleRequest( HBCP* message );
 
-      bool sendMessage( HACF* message );
+      bool sendMessage( HBCP* message );
 
       virtual uint8_t bindProc( uint8_t req_type, Snmp::ObjectIdentifier* oid,
                                 Snmp::Sequence* out );
@@ -188,7 +188,7 @@ class SnmpAgent : public Gateway,
 
    protected:
 
-      Reactive* getNextNode( HACF::Object& object );
+      Reactive* getNextNode( HBCP::Object& object );
 
       void updateConfiguration();
 

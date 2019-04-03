@@ -11,7 +11,7 @@
 #include <DefaultTypes.h>
 #include <Security/Checksum.h>
 #include <DebugOptions.h>
-#include <Protocols/HACF.h>
+#include <Protocols/HBCP.h>
 #include <Tracing/Logger.h>
 #include <Time/SystemTime.h>
 #include <IResponse.h>

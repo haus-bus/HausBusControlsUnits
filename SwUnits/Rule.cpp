@@ -11,7 +11,7 @@
 
 const uint8_t Rule::debugLevel( DEBUG_LEVEL_OFF );
 
-bool Rule::notifyEvent( const HACF::ControlFrame& message, uint8_t ruleIndex )
+bool Rule::notifyEvent( const HBCP::ControlFrame& message, uint8_t ruleIndex )
 {
    RuleElement* element = firstElement;
    uint8_t idx = 0;
@@ -26,7 +26,7 @@ bool Rule::notifyEvent( const HACF::ControlFrame& message, uint8_t ruleIndex )
          {
             if ( DebugOptions::notifyTriggeredRule() )
             {
-               IResponse triggerMsg( HACF::SYSTEM_ID );
+               IResponse triggerMsg( HBCP::SYSTEM_ID );
                triggerMsg.controlFrame.setDataLength( 3 );
                triggerMsg.controlFrame.data[0] = 136;
                triggerMsg.controlFrame.data[1] = ruleIndex;
@@ -69,7 +69,7 @@ bool Rule::triggerElement( const RuleElement& element )
    while ( index-- )
    {
       DEBUG_M2( FSTR( "a:" ), index );
-      IResponse actionMsg( HACF::SYSTEM_ID );
+      IResponse actionMsg( HBCP::SYSTEM_ID );
       element.getAction( &action, index );
 
       actionMsg.controlFrame.receiverId.setId( action.receiverId );

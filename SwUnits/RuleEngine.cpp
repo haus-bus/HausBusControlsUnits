@@ -22,7 +22,7 @@ FlashString* RuleEngine::getId()
 }
 #endif
 
-void RuleEngine::notifyEvent( const HACF::ControlFrame& message )
+void RuleEngine::notifyEvent( const HBCP::ControlFrame& message )
 {
    uint8_t idx = numOfRules;
    while ( idx-- )

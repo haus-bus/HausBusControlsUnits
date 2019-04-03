@@ -59,7 +59,7 @@ class DS1307 : public Reactive
 
             enum Commands
             {
-               GET_TIME = HACF::COMMANDS_START,
+               GET_TIME = HBCP::COMMANDS_START,
                SET_TIME,
             };
 
@@ -105,7 +105,7 @@ class DS1307 : public Reactive
 
             enum Responses
             {
-               TIME = HACF::RESULTS_START,
+               TIME = HBCP::RESULTS_START,
             };
 
             union Parameter
@@ -120,7 +120,7 @@ class DS1307 : public Reactive
             {
             }
 
-            inline Response( uint16_t id, const HACF& message ) :
+            inline Response( uint16_t id, const HBCP& message ) :
                IResponse( id, message )
             {
             }

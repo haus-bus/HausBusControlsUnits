@@ -15,7 +15,7 @@ bool DigitalOutputUnit::notifyEvent( const Event& event )
 
    if ( event.isEvMessage() )
    {
-      HACF::ControlFrame& cf = checkedEvent.isEvMessage()->getMessage()->controlFrame;
+      HBCP::ControlFrame& cf = checkedEvent.isEvMessage()->getMessage()->controlFrame;
       Command* data = reinterpret_cast<Command*>( cf.getData() );
       uint8_t maxOnTime = configuration->dutyOffset;
       uint8_t offDelayTime = configuration->minDuty;

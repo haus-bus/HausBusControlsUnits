@@ -16,7 +16,7 @@ class CriticalSection;
 
 class Event;
 
-class HACF;
+class HBCP;
 
 class Scheduler;
 
@@ -125,7 +125,7 @@ class RollerShutter : public Reactive
 
             enum Commands
             {
-               GET_CONFIGURATION = HACF::COMMANDS_START,
+               GET_CONFIGURATION = HBCP::COMMANDS_START,
                SET_CONFIGURATION,
                MOVE_TO_POSITION,
                START,
@@ -178,10 +178,10 @@ class RollerShutter : public Reactive
 
             enum Responses
             {
-               CONFIGURATION = HACF::RESULTS_START,
+               CONFIGURATION = HBCP::RESULTS_START,
                STATUS,
 
-               EVENT_CLOSED = HACF::EVENTS_START,
+               EVENT_CLOSED = HBCP::EVENTS_START,
                EVENT_START,
                EVENT_OPEN,
             };
@@ -201,7 +201,7 @@ class RollerShutter : public Reactive
             {
             }
 
-            inline Response( uint16_t id, const HACF& message ) :
+            inline Response( uint16_t id, const HBCP& message ) :
                IResponse( id, message )
             {
             }
@@ -246,7 +246,7 @@ class RollerShutter : public Reactive
 
    private:
 
-      bool handleRequest( HACF* message );
+      bool handleRequest( HBCP* message );
 
       void handleRunningState();
 

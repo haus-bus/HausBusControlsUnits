@@ -34,13 +34,13 @@ SnmpAgent::SnmpAgent()
    setConfiguration( ConfigurationManager::getConfiguration<EepromConfiguration>( id ) );
 }
 
-bool SnmpAgent::handleRequest( HACF* message )
+bool SnmpAgent::handleRequest( HBCP* message )
 {
    if ( !message->controlFrame.isCommand() )
    {
       return false;
    }
-   HACF::ControlFrame& cf = message->controlFrame;
+   HBCP::ControlFrame& cf = message->controlFrame;
    Command* data = reinterpret_cast<Command*>( cf.getData() );
 
    if ( cf.isCommand( Command::SET_CONFIGURATION ) )
@@ -78,12 +78,12 @@ bool SnmpAgent::notifyEvent( const Event& event )
    else if ( event.isEvGatewayMessage() )
    {
       DEBUG_H1( FSTR( ".evGatewayMessage" ) );
-      HACF* message = event.isEvGatewayMessage()->getMessage();
-      HACF::ControlFrame& cf = message->controlFrame;
+      HBCP* message = event.isEvGatewayMessage()->getMessage();
+      HBCP::ControlFrame& cf = message->controlFrame;
 
       if ( cf.isEvent() )
       {
-         HACF::Object& sender = cf.senderId;
+         HBCP::Object& sender = cf.senderId;
          if ( isClassIdSupported( sender.classId ) )
          {
             sendMessage( message );
@@ -121,7 +121,7 @@ uint8_t SnmpAgent::bindProc( uint8_t req_type, Snmp::ObjectIdentifier* oid,
          ERROR_1( FSTR( "oid not found" ) );
          return 0;
       }
-      HACF::Object object;
+      HBCP::Object object;
       receiver = getNextNode( object );
       if ( !receiver )
       {
@@ -142,7 +142,7 @@ uint8_t SnmpAgent::bindProc( uint8_t req_type, Snmp::ObjectIdentifier* oid,
       nodes[PANKRAZ] = 47408;
       nodes[PRODUCTS] = 1;
       nodes[DEVICE_TYPE] = 4;
-      nodes[DEVICE_ID] = HACF::deviceId;
+      nodes[DEVICE_ID] = HBCP::deviceId;
       nodes[CLASS_ID] = receiver->getClassId();
       nodes[INSTANCE_ID] = receiver->getInstanceId();
       nodes[FUNCTION_ID] = 1;
@@ -157,10 +157,10 @@ uint8_t SnmpAgent::bindProc( uint8_t req_type, Snmp::ObjectIdentifier* oid,
          nodes[DEVICE_TYPE] = 4;
       }
 
-      if ( ( ( numOfNodes <= DEVICE_ID ) || ( nodes[DEVICE_ID] != HACF::deviceId ) )
+      if ( ( ( numOfNodes <= DEVICE_ID ) || ( nodes[DEVICE_ID] != HBCP::deviceId ) )
          && ( req_type == Snmp::TYPE_GETNEXTREQ ) )
       {
-         nodes[DEVICE_ID] = HACF::deviceId;
+         nodes[DEVICE_ID] = HBCP::deviceId;
       }
 
       if ( ( ( numOfNodes <= CLASS_ID ) || !isClassIdSupported( nodes[CLASS_ID] ) )
@@ -169,14 +169,14 @@ uint8_t SnmpAgent::bindProc( uint8_t req_type, Snmp::ObjectIdentifier* oid,
          nodes[CLASS_ID] = getFirstSupportedClassId();
       }
 
-      HACF::Object object;
+      HBCP::Object object;
       object.setDeviceId( nodes[DEVICE_ID] );
       object.setClassId( nodes[CLASS_ID] );
       object.setInstanceId( nodes[INSTANCE_ID] );
 
       if ( nodes[DEVICE_TYPE] == 4 ) // IO128
       {
-         if ( nodes[DEVICE_ID] == HACF::deviceId )
+         if ( nodes[DEVICE_ID] == HBCP::deviceId )
          {
             receiver = getObject( object.getObjectId() );
             if ( req_type == Snmp::TYPE_GETNEXTREQ )
@@ -224,7 +224,7 @@ uint8_t SnmpAgent::bindProc( uint8_t req_type, Snmp::ObjectIdentifier* oid,
                if ( obj->isOfType( TYPE_INTEGER ) )
                {
                   IResponse cmd( getId() );
-                  cmd.controlFrame.receiverId.setDeviceId( HACF::deviceId );
+                  cmd.controlFrame.receiverId.setDeviceId( HBCP::deviceId );
                   cmd.controlFrame.receiverId.setObjectId( receiver->getId() );
                   if ( obj->data[0] != 0 )
                   {
@@ -345,7 +345,7 @@ void SnmpAgent::run()
 
 // if ( !itsMessageQueue.isEmpty() )
 // {
-// HACF* message = itsMessageQueue.front();
+// HBCP* message = itsMessageQueue.front();
 // if ( sendMessage( message ) || !--retries )
 // {
 // retries = MAX_SEND_RETRIES;
@@ -362,10 +362,10 @@ void SnmpAgent::run()
    }
 }
 
-bool SnmpAgent::sendMessage( HACF* msg )
+bool SnmpAgent::sendMessage( HBCP* msg )
 {
-   HACF::ControlFrame& cf = msg->controlFrame;
-   HACF::Object& sender = cf.senderId;
+   HBCP::ControlFrame& cf = msg->controlFrame;
+   HBCP::Object& sender = cf.senderId;
 
    uint16_t senderOidNodes[] = { 1, 3, 6, 1, 4, 1, 47408, 1, 4,
                                  sender.getDeviceId(), 0, sender.instanceId, 1 };
@@ -425,7 +425,7 @@ void SnmpAgent::updateConfiguration()
    }
 }
 
-Reactive* SnmpAgent::getNextNode( HACF::Object& object )
+Reactive* SnmpAgent::getNextNode( HBCP::Object& object )
 {
    DEBUG_H1( FSTR( ".getNextReceiver()" ) );
    DEBUG_M2( FSTR( "start with object: 0x" ), object.getObjectId() );

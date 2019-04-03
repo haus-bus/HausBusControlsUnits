@@ -175,14 +175,14 @@ void Dimmer::configureHw()
    hardware->off();
 }
 
-bool Dimmer::handleRequest( HACF* message )
+bool Dimmer::handleRequest( HBCP* message )
 {
    if ( !message->controlFrame.isCommand() )
    {
       return false;
    }
 
-   HACF::ControlFrame& cf = message->controlFrame;
+   HBCP::ControlFrame& cf = message->controlFrame;
    Command* data = reinterpret_cast<Command*>( cf.getData() );
 
    if ( cf.isCommand( Command::GET_CONFIGURATION )

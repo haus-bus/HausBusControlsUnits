@@ -10,7 +10,7 @@
 #include <DebugOptions.h>
 #include <EventPkg/EventPkg.h>
 #include <Gateway.h>
-#include <Protocols/HACF.h>
+#include <Protocols/HBCP.h>
 #include <PersistentRules.h>
 #include <RuleEngine.h>
 #include <Scheduler.h>
@@ -91,7 +91,7 @@ bool HomeAutomation::notifyEvent( const Event& event )
    }
    else if ( event.isEvGatewayMessage() )
    {
-      HACF* message = event.isEvGatewayMessage()->getMessage();
+      HBCP* message = event.isEvGatewayMessage()->getMessage();
 
       DEBUG_H1( FSTR( ".evGatewayMessage" ) );
       DEBUG_M2( FSTR( "sender   " ), message->header.getSenderId() );
@@ -279,18 +279,18 @@ void HomeAutomation::cmdWriteRules( HomeAutomationInterface::Command::WriteRules
       result = IStream::ABORTED;
    }
    response.setMemoryStatus( result );
-   if ( dataLength < HACF::MAX_DATA_SIZE )
+   if ( dataLength < HBCP::MAX_DATA_SIZE )
    {
       checkPersistentRules();
    }
 
 }
 
-bool HomeAutomation::handleRequest( HACF* message )
+bool HomeAutomation::handleRequest( HBCP* message )
 {
    bool consumed = true;
 
-   HACF::ControlFrame& cf = message->controlFrame;
+   HBCP::ControlFrame& cf = message->controlFrame;
    HomeAutomationInterface::Command* data = reinterpret_cast<HomeAutomationInterface::Command*>( cf.data );
    HomeAutomationInterface::Response response( getId() );
 
@@ -470,10 +470,10 @@ bool HomeAutomation::handleRequest( HACF* message )
                HomeAutomationConfiguration::instance().set( conf );
                lastMemoryReportTime = Timestamp();
                setSleepTime( WAKE_UP );
-               if ( HACF::deviceId != HomeAutomationConfiguration::instance().getDeviceId() )
+               if ( HBCP::deviceId != HomeAutomationConfiguration::instance().getDeviceId() )
                {
                   // change deviceId only after reset
-                  // HACF::deviceId = HomeAutomationHw::Configuration::instance().getDeviceId();
+                  // HBCP::deviceId = HomeAutomationHw::Configuration::instance().getDeviceId();
                   response.setDeviceId( HomeAutomationConfiguration::instance().getDeviceId() );
                }
                else

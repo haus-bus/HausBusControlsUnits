@@ -8,7 +8,7 @@
 #ifndef BooterHw_H
 #define BooterHw_H
 
-#include <Protocols/HACF.h>
+#include <Protocols/HBCP.h>
 #include <HomeAutomationHw.h>
 #include <HomeAutomationConfiguration.h>
 #include <Peripherals/RealTimeCounter.h>
@@ -57,7 +57,7 @@ class BooterHw : public HomeAutomationHw
       struct TransferBuffer
       {
          uint8_t header[sizeof( LanHeader )];
-         HACF::ControlFrame controlFrame;
+         HBCP::ControlFrame controlFrame;
          uint8_t buffer[APP_SECTION_PAGE_SIZE];
       };
 
@@ -71,7 +71,7 @@ class BooterHw : public HomeAutomationHw
 
       void configure();
 
-      HACF::ControlFrame* getMessage();
+      HBCP::ControlFrame* getMessage();
 
       inline static uint16_t getNewDeviceId();
 
@@ -93,7 +93,7 @@ class BooterHw : public HomeAutomationHw
 
       ////    Attributes    ////
 
-      static HACF::ControlFrame* message;
+      static HBCP::ControlFrame* message;
 
       static TransferBuffer transferBuffer;
 

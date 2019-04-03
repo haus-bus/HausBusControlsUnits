@@ -24,9 +24,9 @@ Counter::Counter( uint8_t _id )
    Object::setId( ( ClassId::COUNTER << 8 ) | _id );
 }
 
-bool Counter::handleRequest( HACF* message )
+bool Counter::handleRequest( HBCP* message )
 {
-   HACF::ControlFrame& cf = message->controlFrame;
+   HBCP::ControlFrame& cf = message->controlFrame;
    Command* data = reinterpret_cast<Command*>( cf.getData() );
 
    if ( cf.isCommand( Command::GET_CONFIGURATION ) )

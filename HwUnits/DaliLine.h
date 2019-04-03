@@ -17,7 +17,7 @@ class CriticalSection;
 
 class Event;
 
-class HACF;
+class HBCP;
 
 class Scheduler;
 
@@ -66,7 +66,7 @@ class DaliLine : public Reactive
 
             enum Commands
             {
-               GET_CONFIGURATION = HACF::COMMANDS_START,
+               GET_CONFIGURATION = HBCP::COMMANDS_START,
                SET_CONFIGURATION,
                ALL_OFF,
                ALL_ON,
@@ -123,10 +123,10 @@ class DaliLine : public Reactive
 
             enum Responses
             {
-               CONFIGURATION = HACF::RESULTS_START,
+               CONFIGURATION = HBCP::RESULTS_START,
                STATUS,
 
-               EVENT_ERROR = HACF::EVENTS_END
+               EVENT_ERROR = HBCP::EVENTS_END
             };
 
             union Parameter
@@ -142,7 +142,7 @@ class DaliLine : public Reactive
             {
             }
 
-            inline Response( uint16_t id, const HACF& message ) :
+            inline Response( uint16_t id, const HBCP& message ) :
                IResponse( id, message )
             {
             }
@@ -180,7 +180,7 @@ class DaliLine : public Reactive
 
    private:
 
-      bool handleRequest( HACF* message );
+      bool handleRequest( HBCP* message );
 
       ////    Additional operations    ////
 

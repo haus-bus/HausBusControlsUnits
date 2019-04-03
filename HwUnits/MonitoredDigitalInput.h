@@ -71,7 +71,7 @@ class MonitoredDigitalInput : public Reactive
 
             enum Commands
             {
-               GET_CONFIGURATION = HACF::COMMANDS_START,
+               GET_CONFIGURATION = HBCP::COMMANDS_START,
                SET_CONFIGURATION,
                GET_STATUS,
             };
@@ -118,11 +118,11 @@ class MonitoredDigitalInput : public Reactive
 
             enum Responses
             {
-               CONFIGURATION = HACF::RESULTS_START,
+               CONFIGURATION = HBCP::RESULTS_START,
                STATUS,
 
 
-               EVENT_LOW = HACF::EVENTS_START,
+               EVENT_LOW = HBCP::EVENTS_START,
                EVENT_HIGH,
                EVENT_MANIPULATED_OPEN,
                EVENT_MANIPULATED_SHORTEN,
@@ -141,7 +141,7 @@ class MonitoredDigitalInput : public Reactive
             {
             }
 
-            inline Response( uint16_t id, const HACF& message ) :
+            inline Response( uint16_t id, const HBCP& message ) :
                IResponse( id, message )
             {
             }
@@ -182,7 +182,7 @@ class MonitoredDigitalInput : public Reactive
 
       ////    Operations    ////
 
-      bool handleRequest( HACF* message );
+      bool handleRequest( HBCP* message );
 
       virtual bool notifyEvent( const Event& event );
 

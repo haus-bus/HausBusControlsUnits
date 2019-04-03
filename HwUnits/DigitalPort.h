@@ -23,7 +23,7 @@ class Dht;
 
 class Event;
 
-class HACF;
+class HBCP;
 
 class IrReceiver;
 
@@ -113,7 +113,7 @@ class DigitalPort : public Reactive
 
             enum Commands
             {
-               GET_CONFIGURATION = HACF::COMMANDS_START,
+               GET_CONFIGURATION = HBCP::COMMANDS_START,
                SET_CONFIGURATION,
             };
 
@@ -159,7 +159,7 @@ class DigitalPort : public Reactive
 
             enum Responses
             {
-               CONFIGURATION = HACF::RESULTS_START,
+               CONFIGURATION = HBCP::RESULTS_START,
             };
 
             union Parameter
@@ -174,7 +174,7 @@ class DigitalPort : public Reactive
             {
             }
 
-            inline Response( uint16_t id, const HACF& message ) :
+            inline Response( uint16_t id, const HBCP& message ) :
                IResponse( id, message )
             {
             }
@@ -218,7 +218,7 @@ class DigitalPort : public Reactive
 
    protected:
 
-      bool handleRequest( HACF* message );
+      bool handleRequest( HBCP* message );
 
    private:
 

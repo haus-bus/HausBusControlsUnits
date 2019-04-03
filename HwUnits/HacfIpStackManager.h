@@ -24,7 +24,7 @@ class Enc28j60;
 
 class Event;
 
-class HACF;
+class HBCP;
 
 class IP;
 
@@ -117,7 +117,7 @@ class HacfIpStackManager : public IpStackManager
 
             enum Commands
             {
-               GET_CONFIGURATION = HACF::COMMANDS_START,
+               GET_CONFIGURATION = HBCP::COMMANDS_START,
                SET_CONFIGURATION,
                WAKE_UP_DEVICE,
                GET_CURRENT_IP
@@ -155,7 +155,7 @@ class HacfIpStackManager : public IpStackManager
 
             enum Responses
             {
-               CONFIGURATION = HACF::RESULTS_START,
+               CONFIGURATION = HBCP::RESULTS_START,
                CURRENT_IP
             };
 
@@ -172,7 +172,7 @@ class HacfIpStackManager : public IpStackManager
             {
             }
 
-            inline Response( uint16_t id, const HACF& message ) :
+            inline Response( uint16_t id, const HBCP& message ) :
                IResponse( id, message )
             {
             }
@@ -212,7 +212,7 @@ class HacfIpStackManager : public IpStackManager
 
    protected:
 
-      bool handleRequest( HACF* message );
+      bool handleRequest( HBCP* message );
 
       ////    Relations and components    ////
 

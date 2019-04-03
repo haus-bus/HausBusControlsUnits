@@ -134,7 +134,7 @@ bool RuleElement::isActiveForState( uint8_t _state ) const
    return false;
 }
 
-bool RuleElement::isAnyConditionActive( const HACF::ControlFrame& message ) const
+bool RuleElement::isAnyConditionActive( const HBCP::ControlFrame& message ) const
 {
    Condition condition;
 
@@ -190,7 +190,7 @@ bool RuleElement::Condition::isActiveForLocal() const
    }
 }
 
-bool RuleElement::Condition::isActiveForEvent( const HACF::ControlFrame& message ) const
+bool RuleElement::Condition::isActiveForEvent( const HBCP::ControlFrame& message ) const
 {
    // these are event conditions, check senderId and data
 

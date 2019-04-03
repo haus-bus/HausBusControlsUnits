@@ -12,7 +12,7 @@
 #include "SystemConditions.h"
 
 #include <ApplicationTable.h>
-#include <Protocols/HACF.h>
+#include <Protocols/HBCP.h>
 
 
 class Logger;
@@ -54,7 +54,7 @@ class RuleElement
 
          bool isActiveForLocal() const;
 
-         bool isActiveForEvent( const HACF::ControlFrame& message ) const;
+         bool isActiveForEvent( const HBCP::ControlFrame& message ) const;
       };
 
       struct Action
@@ -116,7 +116,7 @@ class RuleElement
 
       bool isActiveForState( uint8_t _state ) const;
 
-      bool isAnyConditionActive( const HACF::ControlFrame& message ) const;
+      bool isAnyConditionActive( const HBCP::ControlFrame& message ) const;
 
       RuleElement* next() const;
 

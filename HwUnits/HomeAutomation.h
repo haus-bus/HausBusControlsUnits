@@ -26,7 +26,7 @@ class Event;
 
 class Gateway;
 
-class HACF;
+class HBCP;
 
 class PersistentRules;
 
@@ -70,7 +70,7 @@ class HomeAutomation : public Reactive
 
             enum Events
             {
-               EVENT_TIME = HACF::EVENTS_START,
+               EVENT_TIME = HBCP::EVENTS_START,
                EVENT_NEW_DEVICE_ID,
                EVENT_STARTED,
                EVENT_GROUP_ON,
@@ -82,9 +82,9 @@ class HomeAutomation : public Reactive
 
             ////    Constructors and destructors    ////
 
-            inline MyEvent() : IResponse( HACF::SYSTEM_ID )
+            inline MyEvent() : IResponse( HBCP::SYSTEM_ID )
             {
-               controlFrame.receiverId.setId( ( (uint32_t) HACF::deviceId << 16 ) | HACF::SYSTEM_ID );
+               controlFrame.receiverId.setId( ( (uint32_t) HBCP::deviceId << 16 ) | HBCP::SYSTEM_ID );
                controlFrame.setDataLength( 1 );
             }
 
@@ -95,11 +95,11 @@ class HomeAutomation : public Reactive
 
       ////    Constructors and destructors    ////
 
-      inline HomeAutomation() : errorEvent( HACF::SYSTEM_ID )
+      inline HomeAutomation() : errorEvent( HBCP::SYSTEM_ID )
       {
-         setId( ( ClassId::SYSTEM << 8 ) | HACF::SYSTEM_ID );
+         setId( ( ClassId::SYSTEM << 8 ) | HBCP::SYSTEM_ID );
          HomeAutomationConfiguration& conf = HomeAutomationConfiguration::instance();
-         HACF::deviceId = conf.getDeviceId();
+         HBCP::deviceId = conf.getDeviceId();
          Calender::minuteListener = this;
          // give some additional time to get e.g. a valid IP address from DHCP Server
          setGlobalSleepDelay( conf.getStartupDelay() << 3 );
@@ -124,7 +124,7 @@ class HomeAutomation : public Reactive
                           uint16_t dataLength,
                           HomeAutomationInterface::Response& response );
 
-      bool handleRequest( HACF* message );
+      bool handleRequest( HBCP* message );
 
    private:
 

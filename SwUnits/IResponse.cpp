@@ -16,7 +16,7 @@ IResponse::IResponse( uint16_t id )
    setup( id );
 }
 
-IResponse::IResponse( uint16_t id, const HACF& request )
+IResponse::IResponse( uint16_t id, const HBCP& request )
 {
    setup( id );
    setupForResult( request );
@@ -26,10 +26,10 @@ void IResponse::queue( Reactive* reactive )
 {
    if ( !reactive )
    {
-      reactive = Scheduler::getJob( HACF::SYSTEM_ID );
+      reactive = Scheduler::getJob( HBCP::SYSTEM_ID );
    }
 
-   HACF* newMsg = copy();
+   HBCP* newMsg = copy();
    if ( newMsg )
    {
       if ( !evGatewayMessage( reactive, newMsg ).queue() )
@@ -44,7 +44,7 @@ void IResponse::setErrorCode( uint8_t errorCode, uint8_t* errorData )
 {
    controlFrame.setDataLength( errorData ? ControlFrame::DEFAULT_DATA_LENGTH : 2 );
    uint8_t* pData = controlFrame.data;
-   *pData++ = HACF::EVENT_ERROR;
+   *pData++ = HBCP::EVENT_ERROR;
    *pData++ = errorCode;
    if ( errorData )
    {
@@ -58,14 +58,14 @@ void IResponse::setErrorCode( uint8_t errorCode, uint8_t* errorData )
 void IResponse::setup( uint16_t id )
 {
    header.setSenderId( id );
-   controlFrame.receiverId.setId( HACF::BROADCAST_ID );
+   controlFrame.receiverId.setId( HBCP::BROADCAST_ID );
    controlFrame.senderId.setObjectId( id );
-   controlFrame.senderId.setDeviceId( HACF::deviceId );
+   controlFrame.senderId.setDeviceId( HBCP::deviceId );
    controlFrame.setDataLength( 2 );
    setResponse( 0 );
 }
 
-void IResponse::setupForResult( const HACF& request )
+void IResponse::setupForResult( const HBCP& request )
 {
    controlFrame.receiverId.setId( request.controlFrame.senderId.getId() );
    controlFrame.packetCounter = request.controlFrame.packetCounter;

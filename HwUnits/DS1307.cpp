@@ -96,8 +96,8 @@ bool DS1307::notifyEvent( const Event& event )
    }
    else if ( event.isEvMessage() )
    {
-      HACF* message = event.isEvMessage()->getMessage();
-      HACF::ControlFrame& cf = message->controlFrame;
+      HBCP* message = event.isEvMessage()->getMessage();
+      HBCP::ControlFrame& cf = message->controlFrame;
       Command* data = reinterpret_cast<Command*>( cf.getData() );
 
       Response response( getId(), *message );

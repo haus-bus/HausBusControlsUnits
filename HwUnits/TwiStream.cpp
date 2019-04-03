@@ -181,7 +181,7 @@ bool TwiStream::isBusIdle()
 
 bool TwiStream::isMyTimeSlot()
 {
-   return isBusIdle() && lastIdleTimestamp.elapsed( HACF::getDeviceId() & 0xF );
+   return isBusIdle() && lastIdleTimestamp.elapsed( HBCP::getDeviceId() & 0xF );
 }
 
 bool TwiStream::notifyEvent( const Event& event )
@@ -199,7 +199,7 @@ bool TwiStream::notifyEvent( const Event& event )
    else if ( event.isEvGatewayMessage() )
    {
       DEBUG_H1( FSTR( ".evGatewayMessage" ) );
-      HACF* message = event.isEvGatewayMessage()->getMessage();
+      HBCP* message = event.isEvGatewayMessage()->getMessage();
       if ( DebugOptions::gatewaysReadOnly()
          || !isPartOfThisNetwork(
               message->controlFrame.getReceiverId()->getDeviceId() ) )
@@ -273,7 +273,7 @@ void TwiStream::run()
          Header* header = (Header*) masterDescriptor.pData;
          header->address = 0;
          header->checksum = 0;
-         header->lastDeviceId = HACF::deviceId;
+         header->lastDeviceId = HBCP::deviceId;
          header->checksum = Checksum::get( masterDescriptor.pData,
                                            masterDescriptor.bytesRemaining );
 
@@ -357,7 +357,7 @@ void TwiStream::notifyEndOfMasterTransfer()
    }
    else
    {
-      HACF* msg;
+      HBCP* msg;
       if ( itsMessageQueue.pop( msg ) )
       {
          notifyMessageSent( msg );
@@ -383,15 +383,15 @@ void TwiStream::notifyEndOfSlaveTransfer()
    bool notRelevant = false;
    bool readFailed = false;
    uint16_t transferred = slaveDescriptor.bytesTransferred;
-   const uint8_t minLength = sizeof( HACF )
-                             - HACF::ControlFrame::DEFAULT_DATA_LENGTH;
+   const uint8_t minLength = sizeof( HBCP )
+                             - HBCP::ControlFrame::DEFAULT_DATA_LENGTH;
 
    if ( transferred > minLength )
    {
       Header* hdr = (Header*) slaveDescriptor.pData;
-      HACF* hacf = (HACF*) slaveDescriptor.pData;
+      HBCP* hacf = (HBCP*) slaveDescriptor.pData;
       checksum = Checksum::get( slaveDescriptor.pData, transferred );
-      notRelevant = ( ( hdr->lastDeviceId == HACF::deviceId )
+      notRelevant = ( ( hdr->lastDeviceId == HBCP::deviceId )
                     || ( ( numOfGateways < 2 )
                        && ( !hacf->controlFrame.isRelevantForComponent()
                           || hacf->controlFrame.isForBootloader() ) ) );
@@ -432,10 +432,10 @@ void TwiStream::notifyEndOfSlaveTransfer()
    state &= ~SLAVE_BUSY;
 }
 
-bool TwiStream::handleRequest( HACF* message )
+bool TwiStream::handleRequest( HBCP* message )
 {
    bool consumed = true;
-   HACF::ControlFrame& cf = message->controlFrame;
+   HBCP::ControlFrame& cf = message->controlFrame;
 // if ( cf.isCommand( Command::CHECK_BUS_TIMING ) )
 // {
 // DEBUG_H1( FSTR(".checkBusTiming()") );
@@ -445,11 +445,11 @@ bool TwiStream::handleRequest( HACF* message )
 // }
 // else
 // {
-// HACF* newMsg = message->copy();
+// HBCP* newMsg = message->copy();
 // if ( newMsg )
 // {
-// newMsg->controlFrame.receiverId.setDeviceId( HACF::BROADCAST_ID );
-// newMsg->controlFrame.senderId.setDeviceId( HACF::deviceId );
+// newMsg->controlFrame.receiverId.setDeviceId( HBCP::BROADCAST_ID );
+// newMsg->controlFrame.senderId.setDeviceId( HBCP::deviceId );
 // newMsg->controlFrame.senderId.setObjectId( getId() );
 // checkBusTimingCmd = Timestamp();
 // itsMessageQueue.push( newMsg );
@@ -484,12 +484,12 @@ bool TwiStream::handleRequest( HACF* message )
          sentPingIds->clear();
          checkPerformanceTimestamp = Timestamp();
          IResponse ping( getId() );
-         ping.getControlFrame()->getReceiverId()->setObjectId( HACF::SYSTEM_ID );
+         ping.getControlFrame()->getReceiverId()->setObjectId( HBCP::SYSTEM_ID );
          ping.getControlFrame()->setDataLength( 1 );
          ping.setResponse( HomeAutomationInterface::Command::PING );
          for ( uint8_t i = 0; i < deviceArray->size(); i++ )
          {
-            HACF* newMsg = ping.copy();
+            HBCP* newMsg = ping.copy();
             if ( newMsg )
             {
                uint16_t receiverId = deviceArray->getElement( i );

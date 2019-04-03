@@ -37,9 +37,9 @@ MonitoredDigitalInput::MonitoredDigitalInput( PortPin _hardware ) :
    }
 }
 
-bool MonitoredDigitalInput::handleRequest( HACF* message )
+bool MonitoredDigitalInput::handleRequest( HBCP* message )
 {
-   HACF::ControlFrame& cf = message->controlFrame;
+   HBCP::ControlFrame& cf = message->controlFrame;
    Command* data = reinterpret_cast<Command*>( cf.getData() );
 
    if ( cf.isCommand( Command::GET_CONFIGURATION ) )
@@ -105,7 +105,7 @@ MonitoredDigitalInput::State MonitoredDigitalInput::getCurrentState()
 void MonitoredDigitalInput::notifyNewState( State _state )
 {
    Response eventMessage( getId() );
-   eventMessage.setEvent( _state + HACF::EVENTS_START );
+   eventMessage.setEvent( _state + HBCP::EVENTS_START );
    eventMessage.queue();
 }
 

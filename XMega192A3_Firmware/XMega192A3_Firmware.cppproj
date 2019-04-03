@@ -686,13 +686,13 @@
       <SubType>compile</SubType>
       <Link>SwFramework\Protocols\Ethernet\UdpHeader.h</Link>
     </Compile>
-    <Compile Include="..\SwFramework\Protocols\HACF.cpp">
+    <Compile Include="..\SwFramework\Protocols\HBCP.cpp">
       <SubType>compile</SubType>
-      <Link>SwFramework\Protocols\HACF.cpp</Link>
+      <Link>SwFramework\Protocols\HBCP.cpp</Link>
     </Compile>
-    <Compile Include="..\SwFramework\Protocols\HACF.h">
+    <Compile Include="..\SwFramework\Protocols\HBCP.h">
       <SubType>compile</SubType>
-      <Link>SwFramework\Protocols\HACF.h</Link>
+      <Link>SwFramework\Protocols\HBCP.h</Link>
     </Compile>
     <Compile Include="..\SwFramework\Protocols\IpStack\ArpManager.cpp">
       <SubType>compile</SubType>

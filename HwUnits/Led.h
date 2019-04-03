@@ -15,7 +15,7 @@ class CriticalSection;
 
 class Event;
 
-class HACF;
+class HBCP;
 
 class PortPin;
 
@@ -42,7 +42,7 @@ class Led : public PortPinUnit
 
             enum Commands
             {
-               GET_CONFIGURATION = HACF::COMMANDS_START,
+               GET_CONFIGURATION = HBCP::COMMANDS_START,
                SET_CONFIGURATION,
                OFF,
                ON,
@@ -115,10 +115,10 @@ class Led : public PortPinUnit
 
             enum Responses
             {
-               CONFIGURATION = HACF::RESULTS_START,
+               CONFIGURATION = HBCP::RESULTS_START,
                STATUS,
 
-               EVENT_OFF = HACF::EVENTS_START,
+               EVENT_OFF = HBCP::EVENTS_START,
                EVENT_ON,
                EVENT_BLINK
             };
@@ -136,7 +136,7 @@ class Led : public PortPinUnit
             {
             }
 
-            inline Response( uint16_t id, const HACF& message ) :
+            inline Response( uint16_t id, const HBCP& message ) :
                IResponse( id, message )
             {
             }
@@ -180,7 +180,7 @@ class Led : public PortPinUnit
 
       uint8_t getHwBrightness() const;
 
-      bool handleRequest( HACF* message );
+      bool handleRequest( HBCP* message );
 
       virtual bool notifyEvent( const Event& event );
 

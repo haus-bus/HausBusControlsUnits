@@ -17,7 +17,7 @@ class CriticalSection;
 
 class Event;
 
-class HACF;
+class HBCP;
 
 class Led;
 
@@ -89,7 +89,7 @@ class LogicalButton : public Reactive
 
             enum Commands
             {
-               GET_CONFIGURATION = HACF::COMMANDS_START,
+               GET_CONFIGURATION = HBCP::COMMANDS_START,
                SET_CONFIGURATION,
                OFF,
                ON,
@@ -146,7 +146,7 @@ class LogicalButton : public Reactive
 
             enum Responses
             {
-               CONFIGURATION = HACF::RESULTS_START,
+               CONFIGURATION = HBCP::RESULTS_START,
                STATUS,
 
             };
@@ -164,7 +164,7 @@ class LogicalButton : public Reactive
             {
             }
 
-            inline Response( uint16_t id, const HACF& message ) :
+            inline Response( uint16_t id, const HBCP& message ) :
                IResponse( id, message )
             {
             }

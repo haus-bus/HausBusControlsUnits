@@ -11,7 +11,7 @@
 #include "SwUnits.h"
 #include "Rule.h"
 
-#include <Protocols/HACF.h>
+#include <Protocols/HBCP.h>
 
 class FlashString;
 
@@ -25,7 +25,7 @@ class RuleEngine
       static FlashString* getId();
 #endif
 
-      static void notifyEvent( const HACF::ControlFrame& message );
+      static void notifyEvent( const HBCP::ControlFrame& message );
 
       inline static void disable()
       {

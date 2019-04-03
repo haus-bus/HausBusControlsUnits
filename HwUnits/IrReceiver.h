@@ -15,7 +15,7 @@ class CriticalSection;
 
 class Event;
 
-class HACF;
+class HBCP;
 
 class PortPin;
 
@@ -39,7 +39,7 @@ class IrReceiver : public Reactive
 
             enum Commands
             {
-               OFF = HACF::COMMANDS_START,
+               OFF = HBCP::COMMANDS_START,
                ON
             };
 
@@ -85,7 +85,7 @@ class IrReceiver : public Reactive
 
             enum Responses
             {
-               EVENT_OFF = HACF::EVENTS_START,
+               EVENT_OFF = HBCP::EVENTS_START,
                EVENT_ON,
                EVENT_CLICKED,
                EVENT_HOLD_START,
@@ -110,7 +110,7 @@ class IrReceiver : public Reactive
             {
             }
 
-            inline Response( uint16_t id, const HACF& message ) :
+            inline Response( uint16_t id, const HBCP& message ) :
                IResponse( id, message )
             {
             }
@@ -147,7 +147,7 @@ class IrReceiver : public Reactive
 
       void checkForNewEvent();
 
-      bool handleRequest( HACF* message );
+      bool handleRequest( HBCP* message );
 
       ////    Additional operations    ////
 

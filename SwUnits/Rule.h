@@ -11,7 +11,7 @@
 #include "SwUnits.h"
 #include "RuleElement.h"
 
-#include <Protocols/HACF.h>
+#include <Protocols/HBCP.h>
 
 class DebugOptions;
 
@@ -32,7 +32,7 @@ class Rule
 
    public:
 
-      bool notifyEvent( const HACF::ControlFrame& message, uint8_t ruleIndex );
+      bool notifyEvent( const HBCP::ControlFrame& message, uint8_t ruleIndex );
 
       void triggerElement( uint8_t index );
 

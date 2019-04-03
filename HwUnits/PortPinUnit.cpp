@@ -63,13 +63,13 @@ void PortPinUnit::enableFeedback( bool enable )
    updateHw();
 }
 
-bool PortPinUnit::handleRequest( HACF* message )
+bool PortPinUnit::handleRequest( HBCP* message )
 {
    if ( !message->controlFrame.isCommand() )
    {
       return false;
    }
-   HACF::ControlFrame& cf = message->controlFrame;
+   HBCP::ControlFrame& cf = message->controlFrame;
    Command* data = reinterpret_cast<Command*>( cf.getData() );
 
    if ( cf.isCommand( Command::SET_CONFIGURATION ) )

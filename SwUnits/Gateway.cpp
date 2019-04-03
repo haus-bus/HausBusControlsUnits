@@ -62,7 +62,7 @@ bool Gateway::notifyEvent( const Event& event )
    else if ( event.isEvGatewayMessage() )
    {
       DEBUG_H1( FSTR( ".evGatewayMessage" ) );
-      HACF* message = event.isEvGatewayMessage()->getMessage();
+      HBCP* message = event.isEvGatewayMessage()->getMessage();
       if ( DebugOptions::gatewaysReadOnly() || !configuration->getOptions().enabled )
       {
          delete message;
@@ -82,18 +82,18 @@ bool Gateway::notifyEvent( const Event& event )
    {
       IStream::TransferDescriptor* td = event.isEvData()->getTransferDescriptor();
 
-      if ( td->bytesTransferred && ( td->bytesTransferred <= HACF::MAX_BUFFER_SIZE ) )
+      if ( td->bytesTransferred && ( td->bytesTransferred <= HBCP::MAX_BUFFER_SIZE ) )
       {
          // we received new data
          DEBUG_H1( FSTR( "->data received" ) );
 
-         HACF::ControlFrame* msg = (HACF::ControlFrame*) ( td->pData );
+         HBCP::ControlFrame* msg = (HBCP::ControlFrame*) ( td->pData );
 
          if ( ( getInstanceId() == UDP_9 ) || ( getInstanceId() == UDP ) )
          {
             if ( *( (uint16_t*) td->pData ) == MAGIC_NUMBER )
             {
-               msg = (HACF::ControlFrame*) ( td->pData + sizeof( MAGIC_NUMBER ) );
+               msg = (HBCP::ControlFrame*) ( td->pData + sizeof( MAGIC_NUMBER ) );
                if ( msg->getLength() >= ( td->bytesTransferred - sizeof( MAGIC_NUMBER ) ) )
                {
                   notifyMessageReceived( msg );
@@ -118,8 +118,8 @@ void Gateway::run()
    if ( inStartUp() )
    {
       IoStream::CommandINIT data;
-      data.deviceId = HACF::getDeviceId() & 0x7F;
-      data.buffersize = HACF::MAX_BUFFER_SIZE;
+      data.deviceId = HBCP::getDeviceId() & 0x7F;
+      data.buffersize = HBCP::MAX_BUFFER_SIZE;
       data.owner = this;
       if ( configuration && ioStream && ( ioStream->genericCommand( IoStream::INIT, &data ) == IStream::SUCCESS ) )
       {
@@ -135,7 +135,7 @@ void Gateway::run()
 
    if ( inRunning() )
    {
-      uint8_t buffer[HACF::MAX_BUFFER_SIZE];
+      uint8_t buffer[HBCP::MAX_BUFFER_SIZE];
 
       // if there is some data, it will be notified by evData
       ioStream->read( buffer, sizeof( buffer ), this );
@@ -153,7 +153,7 @@ void Gateway::run()
             }
             else
             {
-               minWaitTime += ( HACF::deviceId % 0x1F ) + ( RETRY_DELAY_TIME * retries ) + 4;
+               minWaitTime += ( HBCP::deviceId % 0x1F ) + ( RETRY_DELAY_TIME * retries ) + 4;
             }
          }
 
@@ -199,7 +199,7 @@ void Gateway::run()
                Header* header = (Header*) buffer;
                header->address = 0;
                header->checksum = 0;
-               header->lastDeviceId = HACF::deviceId;
+               header->lastDeviceId = HBCP::deviceId;
                header->checksum = Checksum::get( buffer, len );
             }
             notifyEndOfWriteTransfer( ioStream->write( pData, len, this ) );
@@ -212,7 +212,7 @@ void Gateway::run()
 void Gateway::notifyEndOfWriteTransfer( IStream::Status status )
 {
    writeStatus[retries] = status;
-   HACF* msg;
+   HBCP* msg;
 
    if ( ( status != IStream::SUCCESS ) && ( retries < MAX_RETRIES ) )
    {
@@ -256,17 +256,17 @@ void Gateway::notifyEndOfReadTransfer( IStream::TransferDescriptor* td )
    bool notRelevant = false;
    bool readFailed = false;
    uint16_t transferred = td->bytesTransferred;
-   const uint8_t minLength = sizeof( HACF::ControlFrame ) - HACF::ControlFrame::DEFAULT_DATA_LENGTH;
+   const uint8_t minLength = sizeof( HBCP::ControlFrame ) - HBCP::ControlFrame::DEFAULT_DATA_LENGTH;
 
    if ( transferred > minLength )
    {
       checksum = Checksum::get( td->pData, transferred );
-      uint8_t headerSize = sizeof( HACF::Header );
+      uint8_t headerSize = sizeof( HBCP::Header );
       if ( getInstanceId() == RS485 )
       {
          headerSize = 1;
       }
-      HACF::ControlFrame* cf = ( (HACF::ControlFrame*)&td->pData[headerSize] );
+      HBCP::ControlFrame* cf = ( (HBCP::ControlFrame*)&td->pData[headerSize] );
       notRelevant = cf->isFromThisDevice() || ( ( numOfGateways < 2 ) && ( !cf->isRelevantForComponent() || cf->isForBootloader() ) );
       if ( ( checksum == 0 ) && ( transferred == ( cf->getLength() + headerSize ) ) && !notRelevant )
       {
@@ -336,12 +336,12 @@ void Gateway::notifyError( uint8_t errorCode, uint8_t* errorData )
 
 }
 
-void Gateway::notifyMessageReceived( HACF::ControlFrame* controlFrame )
+void Gateway::notifyMessageReceived( HBCP::ControlFrame* controlFrame )
 {
    DEBUG_H1( FSTR( ".new Msg " ) );
-   HACF* msg = (HACF*) ( ( (uint8_t*) controlFrame ) - sizeof( HACF::Header ) );
+   HBCP* msg = (HBCP*) ( ( (uint8_t*) controlFrame ) - sizeof( HBCP::Header ) );
 
-   HACF* newMsg = msg->copy();
+   HBCP* newMsg = msg->copy();
    if ( newMsg )
    {
       newMsg->header.setSenderId( getId() );
@@ -350,7 +350,7 @@ void Gateway::notifyMessageReceived( HACF::ControlFrame* controlFrame )
          evGatewayMessage( listener, newMsg ).send();
       }
 
-      if ( !evGatewayMessage( Scheduler::getJob( HACF::SYSTEM_ID ), newMsg ).queue() )
+      if ( !evGatewayMessage( Scheduler::getJob( HBCP::SYSTEM_ID ), newMsg ).queue() )
       {
          ERROR_1( FSTR( "EventQueue is full" ) );
          delete newMsg;
@@ -361,7 +361,7 @@ void Gateway::notifyMessageReceived( HACF::ControlFrame* controlFrame )
    gatewayLoad.bytesPerMinute += msg->getLength();
 }
 
-void Gateway::notifyMessageSent( HACF* hacf )
+void Gateway::notifyMessageSent( HBCP* hacf )
 {
    DEBUG_H1( FSTR( "->msg sent" ) );
    gatewayLoad.messagesPerMinute++;
@@ -403,13 +403,13 @@ void Gateway::reportGatewayLoad()
    }
 }
 
-bool Gateway::handleRequest( HACF* message )
+bool Gateway::handleRequest( HBCP* message )
 {
    if ( !message->controlFrame.isCommand() )
    {
       return false;
    }
-   HACF::ControlFrame& cf = message->controlFrame;
+   HBCP::ControlFrame& cf = message->controlFrame;
    Command* data = reinterpret_cast<Command*>( cf.getData() );
 
    if ( cf.isCommand( Command::SET_CONFIGURATION ) )

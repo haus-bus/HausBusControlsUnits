@@ -8,7 +8,7 @@
 #ifndef Booter_H
 #define Booter_H
 
-#include <Protocols/HACF.h>
+#include <Protocols/HBCP.h>
 #include <HomeAutomationHw.h>
 #include <HomeAutomationInterface.h>
 #include <Security/ModuleId.h>
@@ -30,7 +30,7 @@ class Booter
 
       inline static uint16_t getId()
       {
-         return HACF::BOOTLOADER_ID;
+         return HBCP::BOOTLOADER_ID;
       }
 
       static void start();
@@ -116,7 +116,7 @@ class Booter
 
       inline static HomeAutomationInterface::Response* getResponse()
       {
-         return reinterpret_cast<HomeAutomationInterface::Response*>( ( (uint16_t) message ) - sizeof( HACF::Header ) );
+         return reinterpret_cast<HomeAutomationInterface::Response*>( ( (uint16_t) message ) - sizeof( HBCP::Header ) );
       }
 
       inline static bool handleMessage();
@@ -127,12 +127,12 @@ class Booter
 
    public:
 
-      inline static HACF::ControlFrame* getMessage()
+      inline static HBCP::ControlFrame* getMessage()
       {
          return message;
       }
 
-      inline static void setMessage( HACF::ControlFrame* p_message )
+      inline static void setMessage( HBCP::ControlFrame* p_message )
       {
          message = p_message;
       }
@@ -185,7 +185,7 @@ class Booter
 
    public:
 
-      static HACF::ControlFrame* message;
+      static HBCP::ControlFrame* message;
 
       static bool isFirmwareValid;
 
@@ -293,7 +293,7 @@ inline bool Booter::handleMessage()
 
    HomeAutomationInterface::Command* data = reinterpret_cast<HomeAutomationInterface::Command*>( message->getData() );
    uint8_t command = data->getCommand();
-   if ( command < HACF::RESULTS_START )
+   if ( command < HBCP::RESULTS_START )
    {
       if ( command == HomeAutomationInterface::Command::RESET )
       {
@@ -301,8 +301,8 @@ inline bool Booter::handleMessage()
       }
 // else if( command == HomeAutomationInterface::Command::GENERATE_RANDOM_DEVICE_ID )
 // {
-// HACF::deviceId = ( BooterHw::getNewDeviceId() & 0x7FFF );
-// HomeAutomationHw::Configuration::instance().setDeviceId( HACF::deviceId );
+// HBCP::deviceId = ( BooterHw::getNewDeviceId() & 0x7FFF );
+// HomeAutomationHw::Configuration::instance().setDeviceId( HBCP::deviceId );
 // }
       else if ( command == HomeAutomationInterface::Command::GET_MODULE_ID )
       {

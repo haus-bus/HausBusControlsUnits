@@ -109,13 +109,13 @@ uint8_t Led::getHwBrightness() const
    return maximum<uint8_t>( brightness - dimmOffset, minBrightness );
 }
 
-bool Led::handleRequest( HACF* message )
+bool Led::handleRequest( HBCP* message )
 {
    if ( !message->controlFrame.isCommand() )
    {
       return false;
    }
-   HACF::ControlFrame& cf = message->controlFrame;
+   HBCP::ControlFrame& cf = message->controlFrame;
    Command* data = reinterpret_cast<Command*>( cf.getData() );
 
    if ( cf.isCommand( Command::SET_CONFIGURATION ) )
@@ -200,7 +200,7 @@ bool Led::notifyEvent( const Event& event )
    }
    else if ( event.isEvMessage() )
    {
-      HACF* message = event.isEvMessage()->getMessage();
+      HBCP* message = event.isEvMessage()->getMessage();
       consumed = handleRequest( message );
       if ( !consumed )
       {

@@ -14,7 +14,7 @@
 
 class CriticalSection;
 
-class HACF;
+class HBCP;
 
 class Scheduler;
 
@@ -158,7 +158,7 @@ class BaseSensorUnit : public Reactive
 
             enum Commands
             {
-               GET_CONFIGURATION = HACF::COMMANDS_START,
+               GET_CONFIGURATION = HBCP::COMMANDS_START,
                SET_CONFIGURATION,
                GET_STATUS,
             };
@@ -204,10 +204,10 @@ class BaseSensorUnit : public Reactive
 
             enum Responses
             {
-               CONFIGURATION = HACF::RESULTS_START,
+               CONFIGURATION = HBCP::RESULTS_START,
                STATUS,
 
-               EVENT_BELOW = HACF::EVENTS_START,
+               EVENT_BELOW = HBCP::EVENTS_START,
                EVENT_IN_RANGE,
                EVENT_ABOVE,
             };
@@ -225,7 +225,7 @@ class BaseSensorUnit : public Reactive
             {
             }
 
-            inline Response( uint16_t id, const HACF& message ) :
+            inline Response( uint16_t id, const HBCP& message ) :
                IResponse( id, message )
             {
             }
@@ -268,7 +268,7 @@ class BaseSensorUnit : public Reactive
 
    protected:
 
-      bool handleRequest( HACF* message );
+      bool handleRequest( HBCP* message );
 
       ////    Additional operations    ////
 

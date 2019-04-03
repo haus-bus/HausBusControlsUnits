@@ -15,7 +15,7 @@ class CriticalSection;
 
 class Event;
 
-class HACF;
+class HBCP;
 
 class IDimmerHw;
 
@@ -140,7 +140,7 @@ class Dimmer : public Reactive
 
             enum Commands
             {
-               GET_CONFIGURATION = HACF::COMMANDS_START,
+               GET_CONFIGURATION = HBCP::COMMANDS_START,
                SET_CONFIGURATION,
                SET_BRIGHTNESS,
                START,
@@ -198,14 +198,14 @@ class Dimmer : public Reactive
 
             enum Responses
             {
-               CONFIGURATION = HACF::RESULTS_START,
+               CONFIGURATION = HBCP::RESULTS_START,
                STATUS,
 
-               EVENT_OFF = HACF::EVENTS_START,
+               EVENT_OFF = HBCP::EVENTS_START,
                EVENT_ON,
                EVENT_START,
 
-               EVENT_ERROR = HACF::EVENTS_END
+               EVENT_ERROR = HBCP::EVENTS_END
             };
 
             union Parameter
@@ -223,7 +223,7 @@ class Dimmer : public Reactive
             {
             }
 
-            inline Response( uint16_t id, const HACF& message ) :
+            inline Response( uint16_t id, const HBCP& message ) :
                IResponse( id, message )
             {
             }
@@ -284,7 +284,7 @@ class Dimmer : public Reactive
          return configuration->dimmingRangeStart * 10;
       }
 
-      bool handleRequest( HACF* message );
+      bool handleRequest( HBCP* message );
 
       void handleRunningState();
 

@@ -19,7 +19,7 @@ const ModuleId moduleId =
 
 const uint8_t Booter::debugLevel( DEBUG_LEVEL_OFF );
 
-HACF::ControlFrame* Booter::message( 0 );
+HBCP::ControlFrame* Booter::message( 0 );
 
 bool Booter::isFirmwareValid( false );
 
@@ -34,7 +34,7 @@ ModuleId Booter::installedMod;
 NO_RETURN void Booter::start()
 {
    hardware.configure();
-   HACF::deviceId = HomeAutomationConfiguration::instance().getDeviceId();
+   HBCP::deviceId = HomeAutomationConfiguration::instance().getDeviceId();
 
    checkFirmware();
    while ( true )
@@ -45,8 +45,8 @@ NO_RETURN void Booter::start()
          if ( handleMessage() && message->getDataLength() )
          {
             message->receiverId = message->senderId;
-            message->senderId.setDeviceId( HACF::deviceId );
-            message->senderId.setObjectId( HACF::BOOTLOADER_ID );
+            message->senderId.setDeviceId( HBCP::deviceId );
+            message->senderId.setObjectId( HBCP::BOOTLOADER_ID );
             hardware.sendMessage();
          }
       }

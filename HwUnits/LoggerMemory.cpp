@@ -108,8 +108,8 @@ bool LoggerMemory::notifyEvent( const Event& event )
    }
    else if ( event.isEvMessage() )
    {
-      HACF* message = event.isEvMessage()->getMessage();
-      HACF::ControlFrame& cf = message->controlFrame;
+      HBCP* message = event.isEvMessage()->getMessage();
+      HBCP::ControlFrame& cf = message->controlFrame;
       Command* data = reinterpret_cast<Command*>( cf.getData() );
 
       if ( cf.isCommand( Command::ERASE ) )
@@ -128,7 +128,7 @@ bool LoggerMemory::notifyEvent( const Event& event )
    else if ( event.isEvGatewayMessage() )
    {
       DEBUG_M1( FSTR( "writing to logFile" ) );
-      HACF* message = event.isEvGatewayMessage()->getMessage();
+      HBCP* message = event.isEvGatewayMessage()->getMessage();
 
       uint16_t written;
       FatSystem::Result res = myLogFile.write( message, message->getLength(),

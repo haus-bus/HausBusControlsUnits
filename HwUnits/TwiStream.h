@@ -17,7 +17,7 @@
 
 class CriticalSection;
 class Event;
-class HACF;
+class HBCP;
 class IResponse;
 class ResetSystem;
 class Scheduler;
@@ -56,7 +56,7 @@ class TwiStream : public Gateway
 
             enum Commands
             {
-               GET_CONFIGURATION = HACF::COMMANDS_START,
+               GET_CONFIGURATION = HBCP::COMMANDS_START,
                SET_CONFIGURATION,
                CHECK_BUS_TIMING,
                GET_BUS_TIMING,
@@ -109,7 +109,7 @@ class TwiStream : public Gateway
 
             enum Responses
             {
-               CONFIGURATION = HACF::RESULTS_START,
+               CONFIGURATION = HBCP::RESULTS_START,
                BUS_TIMING,
                CONNECTED_DEVICES,
                BUS_PERFORMANCE,
@@ -148,7 +148,7 @@ class TwiStream : public Gateway
 
             }
 
-            inline Response( uint16_t id, const HACF& message ) :
+            inline Response( uint16_t id, const HBCP& message ) :
                IResponse( id, message )
             {
 
@@ -212,7 +212,7 @@ class TwiStream : public Gateway
 
       void notifyEndOfSlaveTransfer();
 
-      bool handleRequest( HACF* message );
+      bool handleRequest( HBCP* message );
 
       void checkBusTiming( bool active = false );
 

@@ -12,7 +12,7 @@
 
 #include <IoStream.h>
 #include <Reactive.h>
-#include <Protocols/HACF.h>
+#include <Protocols/HBCP.h>
 #include <Containers/StaticQueue.h>
 #include <Time/Timestamp.h>
 #include <ConfigurationManager.h>
@@ -32,7 +32,7 @@ class Gateway : public Reactive
       static const uint8_t MIN_IDLE_TIME = 3;
       static const uint16_t MAGIC_NUMBER = 0xEFEF;
 
-      typedef StaticQueue<HACF*, uint8_t, MESSAGE_QUEUE_SIZE> MessageQueue;
+      typedef StaticQueue<HBCP*, uint8_t, MESSAGE_QUEUE_SIZE> MessageQueue;
 
       enum Errorcodes
       {
@@ -148,7 +148,7 @@ class Gateway : public Reactive
 
             enum Commands
             {
-               GET_CONFIGURATION = HACF::COMMANDS_START,
+               GET_CONFIGURATION = HBCP::COMMANDS_START,
                SET_CONFIGURATION
             };
 
@@ -194,9 +194,9 @@ class Gateway : public Reactive
 
             enum Responses
             {
-               CONFIGURATION = HACF::RESULTS_START,
+               CONFIGURATION = HBCP::RESULTS_START,
 
-               EVENT_GATEWAY_LOAD = HACF::EVENTS_START,
+               EVENT_GATEWAY_LOAD = HBCP::EVENTS_START,
             };
 
             struct GatewayLoad
@@ -218,7 +218,7 @@ class Gateway : public Reactive
             {
             }
 
-            inline Response( uint16_t id, const HACF& message ) : IResponse( id, message )
+            inline Response( uint16_t id, const HBCP& message ) : IResponse( id, message )
             {
             }
 
@@ -296,15 +296,15 @@ class Gateway : public Reactive
 
       void notifyError( uint8_t errorCode, uint8_t* errorData = 0 );
 
-      void notifyMessageReceived( HACF::ControlFrame* controlFrame );
+      void notifyMessageReceived( HBCP::ControlFrame* controlFrame );
 
-      void notifyMessageSent( HACF* hacf );
+      void notifyMessageSent( HBCP* hacf );
 
       void reportGatewayLoad();
 
       void setNumOfGateways( uint8_t p_numOfGateways );
 
-      bool handleRequest( HACF* message );
+      bool handleRequest( HBCP* message );
 
       ////    Attributes    ////
 

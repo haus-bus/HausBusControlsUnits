@@ -6,7 +6,7 @@
  */
 
 #include <Basics.h>
-#include <Protocols/HACF.h>
+#include <Protocols/HBCP.h>
 #include <Peripherals/IoPort.h>
 #include <util/delay.h>
 #include <EventPkg/EventPkg.h>
@@ -431,7 +431,7 @@ IStream::Status SoftTwi::read( void* pData, uint16_t length, EventDrivenUnit* us
       if ( ( wasMaster != isMaster ) && ( streamState == IStream::WRITING ) )
       {
          // increase buffer while switching to slave mode
-         length = HACF::MAX_BUFFER_SIZE - bytesTransferred;
+         length = HBCP::MAX_BUFFER_SIZE - bytesTransferred;
          streamState = IStream::READING;
          status = IStream::ARB_LOST;
       }

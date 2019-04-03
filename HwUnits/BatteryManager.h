@@ -30,7 +30,7 @@ class BatteryManager : public BaseSensorUnit
 
          enum Commands
          {
-            ERASE = HACF::COMMANDS_START,
+            ERASE = HBCP::COMMANDS_START,
             GET_LOGS,
          };
 
@@ -76,7 +76,7 @@ class BatteryManager : public BaseSensorUnit
 
          enum Responses
          {
-            LOG_DATA = HACF::RESULTS_START,
+            LOG_DATA = HBCP::RESULTS_START,
          };
 
          union Parameter
@@ -91,7 +91,7 @@ class BatteryManager : public BaseSensorUnit
          {
          }
 
-         inline Response( uint16_t id, const HACF& message ) :
+         inline Response( uint16_t id, const HBCP& message ) :
             IResponse( id, message )
          {
          }

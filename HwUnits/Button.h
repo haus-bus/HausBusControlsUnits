@@ -17,7 +17,7 @@ class CriticalSection;
 
 class Event;
 
-class HACF;
+class HBCP;
 
 class Led;
 
@@ -117,7 +117,7 @@ class Button : public Reactive
 
             enum Commands
             {
-               GET_CONFIGURATION = HACF::COMMANDS_START,
+               GET_CONFIGURATION = HBCP::COMMANDS_START,
                SET_CONFIGURATION,
                ENABLE_EVENTS,
                GET_STATUS
@@ -179,10 +179,10 @@ class Button : public Reactive
 
             enum Responses
             {
-               CONFIGURATION = HACF::RESULTS_START,
+               CONFIGURATION = HBCP::RESULTS_START,
                STATUS,
 
-               EVENT_COVERED = HACF::EVENTS_START,
+               EVENT_COVERED = HBCP::EVENTS_START,
                EVENT_CLICKED,
                EVENT_DOUBLE_CLICKED,
                EVENT_HOLD_START,
@@ -204,7 +204,7 @@ class Button : public Reactive
             {
             }
 
-            inline Response( uint16_t id, const HACF& message ) :
+            inline Response( uint16_t id, const HBCP& message ) :
                IResponse( id, message )
             {
             }
@@ -237,7 +237,7 @@ class Button : public Reactive
 
       ////    Operations    ////
 
-      bool handleRequest( HACF* message );
+      bool handleRequest( HBCP* message );
 
       virtual bool notifyEvent( const Event& event );
 

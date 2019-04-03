@@ -28,9 +28,9 @@ Button::Button( uint8_t _id ) :
    SET_STATE_L2( RELEASED );
 }
 
-bool Button::handleRequest( HACF* message )
+bool Button::handleRequest( HBCP* message )
 {
-   HACF::ControlFrame& cf = message->controlFrame;
+   HBCP::ControlFrame& cf = message->controlFrame;
    Command* data = reinterpret_cast<Command*>( cf.getData() );
 
    if ( cf.isCommand( Command::GET_CONFIGURATION ) )

@@ -19,7 +19,7 @@ enum CommChannel
    COMM_TWI
 };
 
-HACF::ControlFrame* BooterHw::message;
+HBCP::ControlFrame* BooterHw::message;
 
 BooterHw::TransferBuffer BooterHw::transferBuffer;
 
@@ -154,7 +154,7 @@ void BooterHw::configure()
    }
 }
 
-HACF::ControlFrame* BooterHw::getMessage()
+HBCP::ControlFrame* BooterHw::getMessage()
 {
    WatchDog::reset();
    RealTimeCounter::setCount( 0 );
@@ -188,7 +188,7 @@ HACF::ControlFrame* BooterHw::getMessage()
       {
       }
    }
-   if ( message && message->isCommand() && message->isRelevantForComponent() && message->isRelevantForObject( HACF::BOOTLOADER_ID ) )
+   if ( message && message->isCommand() && message->isRelevantForComponent() && message->isRelevantForObject( HBCP::BOOTLOADER_ID ) )
    {
       return message;
    }
@@ -333,7 +333,7 @@ void BooterHw::writeMessageToRS485( uint8_t* pData, uint16_t length )
    {
       rx.isSet() ? waitCnt++ : waitCnt = 0;
    }
-   while ( waitCnt < HACF::deviceId );
+   while ( waitCnt < HBCP::deviceId );
 #endif
    rs485.disableReceiver();
    rs485TxEnable.set();

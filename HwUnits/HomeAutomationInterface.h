@@ -32,7 +32,7 @@ class HomeAutomationInterface
 
             enum Commands
             {
-               GENERATE_RANDOM_DEVICE_ID = HACF::COMMANDS_START,
+               GENERATE_RANDOM_DEVICE_ID = HBCP::COMMANDS_START,
                RESET,
                GET_MODULE_ID,
                GET_REMOTE_OBJECTS,
@@ -51,10 +51,10 @@ class HomeAutomationInterface
                SET_SYSTEM_VARIABLE,
                GET_SYSTEM_VARIABLE,
 
-               SET_DEBUG_OPTIONS = HACF::COMMANDS_END - 3,
-               SET_TIME = HACF::COMMANDS_END - 2,
-               GET_TIME = HACF::COMMANDS_END - 1,
-               PING = HACF::COMMANDS_END
+               SET_DEBUG_OPTIONS = HBCP::COMMANDS_END - 3,
+               SET_TIME = HBCP::COMMANDS_END - 2,
+               GET_TIME = HBCP::COMMANDS_END - 1,
+               PING = HBCP::COMMANDS_END
             };
 
             struct GetModuleId
@@ -182,7 +182,7 @@ class HomeAutomationInterface
 
             enum Responses
             {
-               MODULE_ID = HACF::RESULTS_START,
+               MODULE_ID = HBCP::RESULTS_START,
                REMOTE_OBJECTS,
                UNUSED_MEMORY,
                CONFIGURATION,
@@ -193,10 +193,10 @@ class HomeAutomationInterface
                RULE_TRIGGERED,
                SYSTEM_VARIABLE,
 
-               TIME_DIFFERENCE = HACF::RESULTS_END - 2,
+               TIME_DIFFERENCE = HBCP::RESULTS_END - 2,
                TIME,
                PONG,
-               EVENT_TIME = HACF::EVENTS_START,
+               EVENT_TIME = HBCP::EVENTS_START,
                EVENT_NEW_DEVICE_ID,
                EVENT_STARTED,
                EVENT_GROUP_ON,
@@ -214,7 +214,7 @@ class HomeAutomationInterface
             struct MemoryData
             {
                uint32_t address;
-               uint8_t data[HACF::MAX_DATA_SIZE];
+               uint8_t data[HBCP::MAX_DATA_SIZE];
             };
 
             struct RuleData
@@ -339,7 +339,7 @@ inline HomeAutomationConfiguration& HomeAutomationInterface::Response::setConfig
 {
    controlFrame.setDataLength( sizeof( getResponse() ) + sizeof( getParameter().configuration ) );
    setResponse( CONFIGURATION );
-   getParameter().configuration.dataBlockSize = HACF::MAX_DATA_SIZE;
+   getParameter().configuration.dataBlockSize = HBCP::MAX_DATA_SIZE;
    getParameter().configuration.fcke = fcke;
    return getParameter().configuration.hwConfiguration;
 }

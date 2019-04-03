@@ -109,13 +109,13 @@ void IrReceiver::checkForNewEvent()
    }
 }
 
-bool IrReceiver::handleRequest( HACF* message )
+bool IrReceiver::handleRequest( HBCP* message )
 {
    if ( !message->controlFrame.isCommand() )
    {
       return false;
    }
-   HACF::ControlFrame& cf = message->controlFrame;
+   HBCP::ControlFrame& cf = message->controlFrame;
    if ( cf.isCommand( Command::ON ) )
    {
       DEBUG_H1( FSTR( ".on()" ) );

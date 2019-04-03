@@ -17,7 +17,7 @@ class Dimmer;
 
 class Event;
 
-class HACF;
+class HBCP;
 
 class IResponse;
 
@@ -68,7 +68,7 @@ class ModBusSlave : public Gateway,
 
             enum Commands
             {
-               GET_CONFIGURATION = HACF::COMMANDS_START,
+               GET_CONFIGURATION = HBCP::COMMANDS_START,
                SET_CONFIGURATION,
                READ_COIL_STATUS, // digital output states
                READ_INPUT_STATUS, // digital input state
@@ -138,7 +138,7 @@ class ModBusSlave : public Gateway,
 
             enum Responses
             {
-               CONFIGURATION = HACF::RESULTS_START,
+               CONFIGURATION = HBCP::RESULTS_START,
                COIL_STATUS, // digital output states
                INPUT_STATUS, // digital input state
                HOLDING_REGISTERS, // registers (counter, ad, configuration..)
@@ -156,7 +156,7 @@ class ModBusSlave : public Gateway,
             {
             }
 
-            inline Response( uint16_t id, const HACF& message ) :
+            inline Response( uint16_t id, const HBCP& message ) :
                IResponse( id, message )
             {
             }
@@ -264,7 +264,7 @@ class ModBusSlave : public Gateway,
 
       void sendCommand( const RegisterAddress& regAddr );
 
-      uint16_t updateValueFromMsg( const HACF& event, uint16_t value );
+      uint16_t updateValueFromMsg( const HBCP& event, uint16_t value );
 
       virtual ModBusTcp::Adu::Exception writeRegister(
          ModBusTcp::WriteRegister* cmd );

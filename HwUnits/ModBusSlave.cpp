@@ -81,8 +81,8 @@ bool ModBusSlave::notifyEvent( const Event& event )
    {
       DEBUG_H1( FSTR( ".evMessage" ) );
 
-      HACF* message = event.isEvMessage()->getMessage();
-      HACF::ControlFrame& cf = message->controlFrame;
+      HBCP* message = event.isEvMessage()->getMessage();
+      HBCP::ControlFrame& cf = message->controlFrame;
 
       Response response( getId(), *message );
 
@@ -105,13 +105,13 @@ bool ModBusSlave::notifyEvent( const Event& event )
    {
       DEBUG_H1( FSTR( ".evGatewayMessage" ) );
 
-      HACF* message = event.isEvGatewayMessage()->getMessage();
-      HACF::ControlFrame& cf = message->controlFrame;
+      HBCP* message = event.isEvGatewayMessage()->getMessage();
+      HBCP::ControlFrame& cf = message->controlFrame;
       if ( !cf.isCommand() )
       {
 
-         HACF::Object& sender = cf.senderId;
-         if ( ( HACF::deviceId >> 8 ) == sender.getNetworkId() )
+         HBCP::Object& sender = cf.senderId;
+         if ( ( HBCP::deviceId >> 8 ) == sender.getNetworkId() )
          {
             uint8_t _device
                = ( message->isFromThisDevice() ? 0 : sender.getAddress() );
@@ -316,7 +316,7 @@ void ModBusSlave::sendCommand( const ModBusSlave::RegisterAddress& regAddr )
 
 }
 
-uint16_t ModBusSlave::updateValueFromMsg( const HACF& event, uint16_t value )
+uint16_t ModBusSlave::updateValueFromMsg( const HBCP& event, uint16_t value )
 {
    uint8_t classId = event.controlFrame.senderId.getClassId();
    if ( classId == Object::ClassId::BUTTON )

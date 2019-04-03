@@ -52,13 +52,13 @@ void DaliLine::run()
 {
 }
 
-bool DaliLine::handleRequest( HACF* message )
+bool DaliLine::handleRequest( HBCP* message )
 {
    if ( !message->controlFrame.isCommand() )
    {
       return false;
    }
-   HACF::ControlFrame& cf = message->controlFrame;
+   HBCP::ControlFrame& cf = message->controlFrame;
    Command* data = reinterpret_cast<Command*>( cf.getData() );
 
    if ( cf.isCommand( Command::ALL_ON ) )

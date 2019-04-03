@@ -8,7 +8,7 @@
 #ifndef IResponse_H
 #define IResponse_H
 
-#include <Protocols/HACF.h>
+#include <Protocols/HBCP.h>
 
 class CriticalSection;
 
@@ -18,7 +18,7 @@ class Scheduler;
 
 class evMessage;
 
-class IResponse : public HACF
+class IResponse : public HBCP
 {
    ////    Constructors and destructors    ////
 
@@ -26,7 +26,7 @@ class IResponse : public HACF
 
       IResponse( uint16_t id );
 
-      IResponse( uint16_t id, const HACF& request );
+      IResponse( uint16_t id, const HBCP& request );
 
    protected:
 
@@ -59,7 +59,7 @@ class IResponse : public HACF
 
       void setup( uint16_t id );
 
-      void setupForResult( const HACF& request );
+      void setupForResult( const HBCP& request );
 };
 
 #endif
