@@ -1,5 +1,5 @@
 /*
- * HomeAutomationInterface.h
+ * HbcInterface.h
  *
  *  Created on: 28.08.2014
  *      Author: Viktor Pankraz
@@ -8,13 +8,13 @@
 #ifndef Systems_HomeAutomationInterface_H
 #define Systems_HomeAutomationInterface_H
 
-#include "HomeAutomationConfiguration.h"
+#include "HbcConfiguration.h"
 #include <MemoryManager.h>
 #include <Security/ModuleId.h>
 #include <IResponse.h>
 
 
-class HomeAutomationInterface
+class HbcInterface
 {
    public:
 
@@ -129,7 +129,7 @@ class HomeAutomationInterface
             union Parameter
             {
                GetModuleId getModuleId;
-               HomeAutomationConfiguration setConfiguration;
+               HbcConfiguration setConfiguration;
                ReadMemory readMemory;
                WriteMemory writeMemory;
                WriteRules writeRules;
@@ -206,7 +206,7 @@ class HomeAutomationInterface
 
             struct Configuration
             {
-               HomeAutomationConfiguration hwConfiguration;
+               HbcConfiguration hwConfiguration;
                uint16_t dataBlockSize;
                uint8_t fcke;
             };
@@ -275,7 +275,7 @@ class HomeAutomationInterface
                return *reinterpret_cast<Parameter*>( IResponse::getParameter() );
             }
 
-            inline HomeAutomationConfiguration& setConfiguration( uint8_t fcke );
+            inline HbcConfiguration& setConfiguration( uint8_t fcke );
 
             inline void setDeviceId( uint16_t _id );
 
@@ -335,7 +335,7 @@ class HomeAutomationInterface
       };
 };
 
-inline HomeAutomationConfiguration& HomeAutomationInterface::Response::setConfiguration( uint8_t fcke )
+inline HbcConfiguration& HbcInterface::Response::setConfiguration( uint8_t fcke )
 {
    controlFrame.setDataLength( sizeof( getResponse() ) + sizeof( getParameter().configuration ) );
    setResponse( CONFIGURATION );
@@ -344,34 +344,34 @@ inline HomeAutomationConfiguration& HomeAutomationInterface::Response::setConfig
    return getParameter().configuration.hwConfiguration;
 }
 
-inline void HomeAutomationInterface::Response::setDeviceId( uint16_t _id )
+inline void HbcInterface::Response::setDeviceId( uint16_t _id )
 {
    controlFrame.setDataLength( sizeof( getResponse() ) + sizeof( getParameter().deviceId ) );
    setResponse( EVENT_NEW_DEVICE_ID );
    getParameter().deviceId = _id;
 }
 
-inline void HomeAutomationInterface::Response::setMemoryStatus( uint8_t status )
+inline void HbcInterface::Response::setMemoryStatus( uint8_t status )
 {
    controlFrame.setDataLength( sizeof( getResponse() ) + sizeof( getParameter().status ) );
    setResponse( MEMORY_STATUS );
    getParameter().status = status;
 }
 
-inline ModuleId* HomeAutomationInterface::Response::setModuleId()
+inline ModuleId* HbcInterface::Response::setModuleId()
 {
    controlFrame.setDataLength( sizeof( getResponse() ) + sizeof( getParameter().moduleId ) );
    setResponse( MODULE_ID );
    return &getParameter().moduleId;
 }
 
-inline void HomeAutomationInterface::Response::setPong()
+inline void HbcInterface::Response::setPong()
 {
    controlFrame.setDataLength( sizeof( getResponse() ) );
    setResponse( PONG );
 }
 
-inline uint8_t* HomeAutomationInterface::Response::setReadMemory( const uint32_t& address, uint16_t size )
+inline uint8_t* HbcInterface::Response::setReadMemory( const uint32_t& address, uint16_t size )
 {
    controlFrame.setDataLength( sizeof( getResponse() ) + sizeof( getParameter().memoryData.address ) + size );
    setResponse( MEMORY_DATA );
@@ -379,7 +379,7 @@ inline uint8_t* HomeAutomationInterface::Response::setReadMemory( const uint32_t
    return getParameter().memoryData.data;
 }
 
-inline uint8_t* HomeAutomationInterface::Response::setReadRules( uint16_t offset, uint16_t length )
+inline uint8_t* HbcInterface::Response::setReadRules( uint16_t offset, uint16_t length )
 {
    controlFrame.setDataLength( sizeof( getResponse() ) + sizeof( getParameter().rulesData.offset ) + length );
    setResponse( RULES_DATA );
@@ -387,7 +387,7 @@ inline uint8_t* HomeAutomationInterface::Response::setReadRules( uint16_t offset
    return getParameter().rulesData.data;
 }
 
-inline void HomeAutomationInterface::Response::setRuleState( uint8_t index, uint8_t state )
+inline void HbcInterface::Response::setRuleState( uint8_t index, uint8_t state )
 {
    controlFrame.setDataLength( sizeof( getResponse() ) + sizeof( getParameter().ruleState ) );
    setResponse( RULE_STATE );
@@ -395,35 +395,35 @@ inline void HomeAutomationInterface::Response::setRuleState( uint8_t index, uint
    getParameter().ruleState.state = state;
 }
 
-inline void HomeAutomationInterface::Response::setStarted( uint8_t sources )
+inline void HbcInterface::Response::setStarted( uint8_t sources )
 {
    controlFrame.setDataLength( sizeof( getResponse() ) + sizeof( getParameter().status ) );
    setResponse( EVENT_STARTED );
    getParameter().status = sources;
 }
 
-inline void HomeAutomationInterface::Response::setTime( uint16_t value )
+inline void HbcInterface::Response::setTime( uint16_t value )
 {
    controlFrame.setDataLength( sizeof( getResponse() ) + sizeof( getParameter().time ) );
    setResponse( TIME );
    getParameter().time = value;
 }
 
-inline void HomeAutomationInterface::Response::setTimeDifference( int8_t value )
+inline void HbcInterface::Response::setTimeDifference( int8_t value )
 {
    controlFrame.setDataLength( sizeof( getResponse() ) + sizeof( getParameter().timeDifference ) );
    setResponse( TIME_DIFFERENCE );
    getParameter().timeDifference = value;
 }
 
-inline void HomeAutomationInterface::Response::setUnitGroupEvent( uint8_t event, uint8_t index )
+inline void HbcInterface::Response::setUnitGroupEvent( uint8_t event, uint8_t index )
 {
    controlFrame.setDataLength( sizeof( getResponse() ) + sizeof( getParameter().unitGroupEvent ) );
    setResponse( event );
    getParameter().unitGroupEvent.index = index;
 }
 
-inline void HomeAutomationInterface::Response::setSystemVariable( uint8_t type, uint8_t index, uint16_t value )
+inline void HbcInterface::Response::setSystemVariable( uint8_t type, uint8_t index, uint16_t value )
 {
    controlFrame.setDataLength( sizeof( getResponse() ) + sizeof( getParameter().systemVariable ) );
    setResponse( SYSTEM_VARIABLE );
@@ -432,7 +432,7 @@ inline void HomeAutomationInterface::Response::setSystemVariable( uint8_t type, 
    getParameter().systemVariable.value = value;
 }
 
-inline void HomeAutomationInterface::Response::setUnusedMemory()
+inline void HbcInterface::Response::setUnusedMemory()
 {
    controlFrame.setDataLength( sizeof( getResponse() ) + sizeof( getParameter().unusedMemory ) );
    setResponse( UNUSED_MEMORY );

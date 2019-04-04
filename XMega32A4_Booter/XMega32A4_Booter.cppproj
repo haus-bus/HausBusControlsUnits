@@ -102,7 +102,7 @@
             <Value>../../Interfaces</Value>
             <Value>../../Xmega</Value>
             <Value>../../SwFramework</Value>
-            <Value>../../BoardHardware</Value>
+            <Value>../../HbcUnits\HwUnitBoards</Value>
             <Value>../../HbcUnits</Value>
             <Value>../../HbcUnits</Value>
             <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.68\include</Value>
@@ -183,7 +183,7 @@
             <Value>../../Interfaces</Value>
             <Value>../../Xmega</Value>
             <Value>../../SwFramework</Value>
-            <Value>../../BoardHardware</Value>
+            <Value>../../HbcUnits\HwUnitBoards</Value>
             <Value>../../HbcUnits</Value>
             <Value>../../HbcUnits</Value>
             <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.68\include</Value>
@@ -262,7 +262,7 @@
             <Value>../../Interfaces</Value>
             <Value>../../Xmega</Value>
             <Value>../../SwFramework</Value>
-            <Value>../../BoardHardware</Value>
+            <Value>../../HbcUnits\HwUnitBoards</Value>
             <Value>../../HbcUnits</Value>
             <Value>../../HbcUnits</Value>
             <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.68\include</Value>
@@ -298,7 +298,7 @@
     <OutputPath>bin\SD485\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="BoardHardware\" />
+    <Folder Include="HbcUnits\HwUnitBoards\" />
     <Folder Include="HbcUnits\" />
     <Folder Include="Interfaces\" />
     <Folder Include="SwFramework\" />
@@ -311,17 +311,13 @@
     <Folder Include="Xmega\Peripherals\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\BoardHardware\Electronics.h">
+    <Compile Include="..\HbcUnits\HwUnitBoards\HbcDeviceHw.cpp">
       <SubType>compile</SubType>
-      <Link>BoardHardware\Electronics.h</Link>
+      <Link>HbcUnits\HwUnitBoards\HbcDeviceHw.cpp</Link>
     </Compile>
-    <Compile Include="..\BoardHardware\HomeAutomationHw.cpp">
+    <Compile Include="..\HbcUnits\HwUnitBoards\HbcDeviceHw.h">
       <SubType>compile</SubType>
-      <Link>BoardHardware\HomeAutomationHw.cpp</Link>
-    </Compile>
-    <Compile Include="..\BoardHardware\HomeAutomationHw.h">
-      <SubType>compile</SubType>
-      <Link>BoardHardware\HomeAutomationHw.h</Link>
+      <Link>HbcUnits\HwUnitBoards\HbcDeviceHw.h</Link>
     </Compile>
     <Compile Include="..\Booter\Booter.cpp">
       <SubType>compile</SubType>
@@ -339,21 +335,21 @@
       <SubType>compile</SubType>
       <Link>BooterHw.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\HomeAutomationConfiguration.cpp">
+    <Compile Include="..\HbcUnits\HbcConfiguration.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\HomeAutomationConfiguration.cpp</Link>
+      <Link>HbcUnits\HbcConfiguration.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\HomeAutomationConfiguration.h">
+    <Compile Include="..\HbcUnits\HbcConfiguration.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\HomeAutomationConfiguration.h</Link>
+      <Link>HbcUnits\HbcConfiguration.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\HomeAutomationInterface.cpp">
+    <Compile Include="..\HbcUnits\HbcInterface.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\HomeAutomationInterface.cpp</Link>
+      <Link>HbcUnits\HbcInterface.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\HomeAutomationInterface.h">
+    <Compile Include="..\HbcUnits\HbcInterface.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\HomeAutomationInterface.h</Link>
+      <Link>HbcUnits\HbcInterface.h</Link>
     </Compile>
     <Compile Include="..\Interfaces\Release.h">
       <SubType>compile</SubType>

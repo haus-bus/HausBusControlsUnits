@@ -72,7 +72,7 @@ void BooterHw::configure()
 
    if ( getFirmwareId() != CONTROLLER_ID )
    {
-      HomeAutomationConfiguration::restoreFactoryConfiguration( CONTROLLER_ID, BOARD_FCKE );
+      HbcConfiguration::restoreFactoryConfiguration( CONTROLLER_ID, BOARD_FCKE );
    }
 #ifndef _DEBUG_
    InterruptController::selectBootInterruptSection();
@@ -86,7 +86,7 @@ void BooterHw::configure()
    PORTD.OUTSET = Pin4;                 // deselect enc28j60
    PORTD.PIN5CTRL = PORT_OPC_PULLUP_gc; // pullup for interrupt
 
-   uint16_t deviceId = HomeAutomationConfiguration::instance().getDeviceId();
+   uint16_t deviceId = HbcConfiguration::instance().getDeviceId();
    MAC::local.set( 0xAE, 0xDE, 0x48, 0, HBYTE( deviceId ), LBYTE( deviceId ) );
    if ( enc28j60.init() == Enc28j60::OK )
    {
@@ -200,7 +200,7 @@ void BooterHw::sendMessage()
    // prepare header for RS485 or TWI
    TwiHeader* header = reinterpret_cast<TwiHeader*>( transferBuffer.header );
    header->address = 0;
-   header->lastDeviceId = HomeAutomationConfiguration::instance().getDeviceId();
+   header->lastDeviceId = HbcConfiguration::instance().getDeviceId();
 
    uint16_t length = sizeof( TwiHeader ) - sizeof( header->unused ) + transferBuffer.controlFrame.getLength();
 

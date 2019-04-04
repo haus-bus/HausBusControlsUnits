@@ -8,7 +8,7 @@
 #include "AR8System.h"
 #include "DebugOptions.h"
 #include <Gateway.h>
-#include "HomeAutomation.h"
+#include "HbcDevice.h"
 #include <Scheduler.h>
 #include <Time/WeekTime.h>
 

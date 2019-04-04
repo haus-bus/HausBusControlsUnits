@@ -6,6 +6,8 @@
  */
 #include "PbsSystem.h"
 
+#include <Peripherals/WatchDog.h>
+
 int main( int argc, char* argv[] )
 {
    int status = 0;

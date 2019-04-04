@@ -7,6 +7,7 @@
 
 #include "BooterLoader.h"
 
+#include <Peripherals/ResetSystem.h>
 #include <Release.h>
 
 const ModuleId moduleId =

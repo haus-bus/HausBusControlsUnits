@@ -1,11 +1,11 @@
 /*
- * HomeAutomation.cpp
+ * HbcDevice.cpp
  *
  *  Created on: 28.08.2014
  *      Author: Viktor Pankraz
  */
 
-#include "HomeAutomation.h"
+#include "HbcDevice.h"
 #include <SystemConditions.h>
 #include <DebugOptions.h>
 #include <EventPkg/EventPkg.h>
@@ -15,16 +15,17 @@
 #include <Rules/RuleEngine.h>
 #include <Scheduler.h>
 #include <Time/Calender.h>
+#include <Peripherals/ResetSystem.h>
 
 extern uint16_t getUnusedMemory();
 
-const uint8_t HomeAutomation::debugLevel( DEBUG_LEVEL_OFF );
+const uint8_t HbcDevice::debugLevel( DEBUG_LEVEL_OFF );
 
-Timestamp HomeAutomation::lastMemoryReportTime;
+Timestamp HbcDevice::lastMemoryReportTime;
 
-uint16_t HomeAutomation::LogicalUnitGroup::state[MAX_GROUPS];
+uint16_t HbcDevice::LogicalUnitGroup::state[MAX_GROUPS];
 
-uint8_t HomeAutomation::LogicalUnitGroup::setState( const HomeAutomationInterface::Command::SetUnitGroupState& params )
+uint8_t HbcDevice::LogicalUnitGroup::setState( const HbcInterface::Command::SetUnitGroupState& params )
 {
    uint8_t idx = params.index;
    uint16_t preState = state[idx];
@@ -41,23 +42,23 @@ uint8_t HomeAutomation::LogicalUnitGroup::setState( const HomeAutomationInterfac
 
    if ( preState && !state[idx] )
    {
-      return HomeAutomationInterface::Response::EVENT_GROUP_OFF;
+      return HbcInterface::Response::EVENT_GROUP_OFF;
    }
    if ( preState != state[idx] )
    {
       if ( state[idx] == triggerLevel )
       {
-         return HomeAutomationInterface::Response::EVENT_GROUP_ON;
+         return HbcInterface::Response::EVENT_GROUP_ON;
       }
       if ( !preState || ( preState == triggerLevel ) )
       {
-         return HomeAutomationInterface::Response::EVENT_GROUP_UNDEFINED;
+         return HbcInterface::Response::EVENT_GROUP_UNDEFINED;
       }
    }
    return 0;
 }
 
-void HomeAutomation::MyEvent::setTimeEvent()
+void HbcDevice::MyEvent::setTimeEvent()
 {
    controlFrame.setDataLength( 4 );
    setResponse( EVENT_TIME );
@@ -67,7 +68,7 @@ void HomeAutomation::MyEvent::setTimeEvent()
    weekTime[2] = Calender::now.getDayOfWeek();
 }
 
-bool HomeAutomation::notifyEvent( const Event& event )
+bool HbcDevice::notifyEvent( const Event& event )
 {
    if ( event.isEvWakeup() )
    {
@@ -161,15 +162,15 @@ bool HomeAutomation::notifyEvent( const Event& event )
    return false;
 }
 
-void HomeAutomation::run()
+void HbcDevice::run()
 {
    if ( inFatalError() )
    {
       ResetSystem::reset();
    }
 
-   HomeAutomationInterface::Response event( getId() );
-   HomeAutomationConfiguration& conf = HomeAutomationConfiguration::instance();
+   HbcInterface::Response event( getId() );
+   HbcConfiguration& conf = HbcConfiguration::instance();
    uint8_t reportMemoryStatusTime = conf.getReportMemoryStatusTime();
 
    if ( inStartUp() )
@@ -182,12 +183,12 @@ void HomeAutomation::run()
 
       if ( ResetSystem::isBrownOutReset() )
       {
-         event.setErrorCode( HomeAutomationInterface::ErrorCode::LOW_VOLTAGE );
+         event.setErrorCode( HbcInterface::ErrorCode::LOW_VOLTAGE );
          event.queue( this );
       }
       if ( ResetSystem::isWatchDogReset() )
       {
-         event.setErrorCode( HomeAutomationInterface::ErrorCode::WATCHDOG );
+         event.setErrorCode( HbcInterface::ErrorCode::WATCHDOG );
          event.queue( this );
       }
       checkPersistentRules();
@@ -207,17 +208,17 @@ void HomeAutomation::run()
    }
 }
 
-void HomeAutomation::checkPersistentRules()
+void HbcDevice::checkPersistentRules()
 {
    if ( !PersistentRules::instance().init() )
    {
       IResponse event( getId() );
-      event.setErrorCode( HomeAutomationInterface::ErrorCode::INVALID_RULE_TABLE );
+      event.setErrorCode( HbcInterface::ErrorCode::INVALID_RULE_TABLE );
       event.queue( this );
    }
 }
 
-void HomeAutomation::cmdGetRemoteObjects( HomeAutomationInterface::Response& response )
+void HbcDevice::cmdGetRemoteObjects( HbcInterface::Response& response )
 {
    DEBUG_H2( getId(), FSTR( ".getRemoteObjects()" ) );
 
@@ -235,22 +236,22 @@ void HomeAutomation::cmdGetRemoteObjects( HomeAutomationInterface::Response& res
       if ( index++ >= getMaxObjectListSize() )
       {
          IResponse event( getId() );
-         event.setErrorCode( HomeAutomationInterface::ErrorCode::MAX_OBJECTS_REACHED );
+         event.setErrorCode( HbcInterface::ErrorCode::MAX_OBJECTS_REACHED );
          event.queue( this );
          break;
       }
    }
    response.controlFrame.setDataLength( sizeof( response.getResponse() ) + sizeof( response.getParameter().remoteObjects[0] ) * numOfObjects );
-   response.setResponse( HomeAutomationInterface::Response::REMOTE_OBJECTS );
+   response.setResponse( HbcInterface::Response::REMOTE_OBJECTS );
 }
 
-void HomeAutomation::cmdReadMemory( HomeAutomationInterface::Command::ReadMemory& parameter,
-                                    HomeAutomationInterface::Response& response )
+void HbcDevice::cmdReadMemory( HbcInterface::Command::ReadMemory& parameter,
+                               HbcInterface::Response& response )
 {
    DEBUG_H2( getId(), FSTR( ".readMemory()" ) );
    uint8_t* dest = response.setReadMemory( parameter.address, parameter.length );
 
-   if ( parameter.address & HomeAutomationInterface::DATA_SECTION_MASK )
+   if ( parameter.address & HbcInterface::DATA_SECTION_MASK )
    {
       uint8_t* source = reinterpret_cast<uint8_t*>( parameter.address & 0xFFFF );
       uint16_t length = parameter.length;
@@ -268,13 +269,13 @@ void HomeAutomation::cmdReadMemory( HomeAutomationInterface::Command::ReadMemory
    }
 }
 
-void HomeAutomation::cmdWriteRules( HomeAutomationInterface::Command::WriteRules& parameter,
-                                    uint16_t dataLength, HomeAutomationInterface::Response& response )
+void HbcDevice::cmdWriteRules( HbcInterface::Command::WriteRules& parameter,
+                               uint16_t dataLength, HbcInterface::Response& response )
 {
    DEBUG_H1( FSTR( ".writeRules()" ) );
    RuleEngine::disable();
    IStream::Status result = IStream::SUCCESS;
-   if ( HomeAutomationHw::writeRules( parameter.offset, parameter.data, dataLength ) != dataLength )
+   if ( HbcDeviceHw::writeRules( parameter.offset, parameter.data, dataLength ) != dataLength )
    {
       result = IStream::ABORTED;
    }
@@ -286,23 +287,23 @@ void HomeAutomation::cmdWriteRules( HomeAutomationInterface::Command::WriteRules
 
 }
 
-bool HomeAutomation::handleRequest( HBCP* message )
+bool HbcDevice::handleRequest( HBCP* message )
 {
    bool consumed = true;
 
    HBCP::ControlFrame& cf = message->controlFrame;
-   HomeAutomationInterface::Command* data = reinterpret_cast<HomeAutomationInterface::Command*>( cf.data );
-   HomeAutomationInterface::Response response( getId() );
+   HbcInterface::Command* data = reinterpret_cast<HbcInterface::Command*>( cf.data );
+   HbcInterface::Response response( getId() );
 
    if ( cf.isCommand() )
    {
-      if ( cf.isCommand( HomeAutomationInterface::Command::RESET ) )
+      if ( cf.isCommand( HbcInterface::Command::RESET ) )
       {
          DEBUG_H1( FSTR( ".reset()" ) );
          setMainState( FATAL_ERROR );
          setSleepTime( TIME_TO_RESET );
       }
-      else if ( cf.isCommand( HomeAutomationInterface::Command::SET_RULE_STATE ) )
+      else if ( cf.isCommand( HbcInterface::Command::SET_RULE_STATE ) )
       {
          DEBUG_H1( FSTR( ".setRuleState()" ) );
          uint8_t idx = data->parameter.setRuleState.index;
@@ -311,10 +312,10 @@ bool HomeAutomation::handleRequest( HBCP* message )
             RuleEngine::getRules()[idx].setState( data->parameter.setRuleState.state );
          }
       }
-      else if ( cf.isCommand( HomeAutomationInterface::Command::SET_SYSTEM_VARIABLE ) )
+      else if ( cf.isCommand( HbcInterface::Command::SET_SYSTEM_VARIABLE ) )
       {
          DEBUG_H1( FSTR( ".setSystemVariable()" ) );
-         HomeAutomationInterface::Command::SetSystemVariable& ssv = data->parameter.setSystemVariable;
+         HbcInterface::Command::SetSystemVariable& ssv = data->parameter.setSystemVariable;
          bool success = false;
 
          if ( ssv.type == SystemConditions::BIT )
@@ -339,7 +340,7 @@ bool HomeAutomation::handleRequest( HBCP* message )
          }
 
       }
-      else if ( cf.isCommand( HomeAutomationInterface::Command::TRIGGER_RULE_ELEMENT ) )
+      else if ( cf.isCommand( HbcInterface::Command::TRIGGER_RULE_ELEMENT ) )
       {
          DEBUG_H1( FSTR( ".triggerRuleElement()" ) );
          uint8_t idx = data->parameter.triggerRuleElement.idxRule;
@@ -348,7 +349,7 @@ bool HomeAutomation::handleRequest( HBCP* message )
             RuleEngine::getRules()[idx].triggerElement( data->parameter.triggerRuleElement.idxElement );
          }
       }
-      else if ( cf.isCommand( HomeAutomationInterface::Command::SET_UNIT_GROUP_STATE ) )
+      else if ( cf.isCommand( HbcInterface::Command::SET_UNIT_GROUP_STATE ) )
       {
          DEBUG_H1( FSTR( ".setUnitGroupState()" ) );
          uint8_t event = LogicalUnitGroup::setState( data->parameter.setUnitGroupState );
@@ -358,18 +359,18 @@ bool HomeAutomation::handleRequest( HBCP* message )
             response.queue( this );
          }
       }
-      else if ( cf.isCommand( HomeAutomationInterface::Command::SET_DEBUG_OPTIONS ) )
+      else if ( cf.isCommand( HbcInterface::Command::SET_DEBUG_OPTIONS ) )
       {
          DEBUG_H1( FSTR( ".setDebugOptions()" ) );
          DebugOptions::set( data->parameter.debugOptions );
       }
-      else if ( cf.isCommand( HomeAutomationInterface::Command::SET_SUN_TIMES ) )
+      else if ( cf.isCommand( HbcInterface::Command::SET_SUN_TIMES ) )
       {
          DEBUG_H1( FSTR( ".setSunTimes()" ) );
          WeekTime::sunRise.set( WeekTime::WEEK_DAY_MASK | data->parameter.sunTimes.sunRise );
          WeekTime::sunSet.set( WeekTime::WEEK_DAY_MASK | data->parameter.sunTimes.sunSet );
       }
-      else if ( cf.isCommand( HomeAutomationInterface::Command::SET_TIME ) )
+      else if ( cf.isCommand( HbcInterface::Command::SET_TIME ) )
       {
          DEBUG_H1( FSTR( ".setTime()" ) );
          int16_t timeDifference = WeekTime( data->parameter.time ).distanceToNow();
@@ -381,7 +382,7 @@ bool HomeAutomation::handleRequest( HBCP* message )
             // do not adjust timeCorrection for too big deviation, it is most likely a reboot or startup
             if ( abs( timeDifference ) < MAX_TIME_DIFFERENCE )
             {
-               HomeAutomationConfiguration& conf = HomeAutomationConfiguration::instance();
+               HbcConfiguration& conf = HbcConfiguration::instance();
                int8_t timeCorrection = conf.getTimeCorrectionValue() + timeDifference;
                conf.setTimeCorrectionValue( timeCorrection );
                SystemTime::ticksPerSecondAdjustment = timeCorrection;
@@ -398,20 +399,20 @@ bool HomeAutomation::handleRequest( HBCP* message )
       else
       {
          response.setupForResult( *message );
-         if ( cf.isCommand( HomeAutomationInterface::Command::GET_MODULE_ID ) )
+         if ( cf.isCommand( HbcInterface::Command::GET_MODULE_ID ) )
          {
             DEBUG_H1( FSTR( ".getModuleId()" ) );
-            if ( !HomeAutomationHw::getModuleId( data->parameter.getModuleId.index, response.setModuleId() ) )
+            if ( !HbcDeviceHw::getModuleId( data->parameter.getModuleId.index, response.setModuleId() ) )
             {
-               response.setErrorCode( HomeAutomationInterface::ErrorCode::MODULE_NOT_EXISTS );
+               response.setErrorCode( HbcInterface::ErrorCode::MODULE_NOT_EXISTS );
             }
          }
-         else if ( cf.isCommand( HomeAutomationInterface::Command::GET_TIME ) )
+         else if ( cf.isCommand( HbcInterface::Command::GET_TIME ) )
          {
             DEBUG_H1( FSTR( ".getTime()" ) );
             response.setTime( Calender::getCurrentWeekTime().get() );
          }
-         else if ( cf.isCommand( HomeAutomationInterface::Command::GET_RULE_STATE ) )
+         else if ( cf.isCommand( HbcInterface::Command::GET_RULE_STATE ) )
          {
             DEBUG_H1( FSTR( ".getRuleState()" ) );
             uint8_t idx = data->parameter.index;
@@ -421,13 +422,13 @@ bool HomeAutomation::handleRequest( HBCP* message )
             }
             else
             {
-               response.setErrorCode( HomeAutomationInterface::ErrorCode::SYNTAX_ERROR );
+               response.setErrorCode( HbcInterface::ErrorCode::SYNTAX_ERROR );
             }
          }
-         else if ( cf.isCommand( HomeAutomationInterface::Command::GET_SYSTEM_VARIABLE ) )
+         else if ( cf.isCommand( HbcInterface::Command::GET_SYSTEM_VARIABLE ) )
          {
             DEBUG_H1( FSTR( ".getSystemVariable()" ) );
-            HomeAutomationInterface::Command::GetSystemVariable& gsv = data->parameter.getSystemVariable;
+            HbcInterface::Command::GetSystemVariable& gsv = data->parameter.getSystemVariable;
             uint16_t value = 0;
             bool valid = true;
             if ( gsv.type == SystemConditions::BIT )
@@ -456,25 +457,25 @@ bool HomeAutomation::handleRequest( HBCP* message )
             }
             else
             {
-               response.setErrorCode( HomeAutomationInterface::ErrorCode::SYNTAX_ERROR );
+               response.setErrorCode( HbcInterface::ErrorCode::SYNTAX_ERROR );
             }
          }
-         else if ( cf.isCommand( HomeAutomationInterface::Command::SET_CONFIGURATION ) )
+         else if ( cf.isCommand( HbcInterface::Command::SET_CONFIGURATION ) )
          {
-            if ( cf.getDataLength() == ( HomeAutomationConfiguration::SIZEOF + 1 ) )
+            if ( cf.getDataLength() == ( HbcConfiguration::SIZEOF + 1 ) )
             {
                DEBUG_H1( FSTR( ".setConfiguration()" ) );
-               HomeAutomationConfiguration conf;
-               HomeAutomationConfiguration::instance().get( conf );
-               memcpy( &conf, &data->parameter.setConfiguration, HomeAutomationConfiguration::SIZEOF );
-               HomeAutomationConfiguration::instance().set( conf );
+               HbcConfiguration conf;
+               HbcConfiguration::instance().get( conf );
+               memcpy( &conf, &data->parameter.setConfiguration, HbcConfiguration::SIZEOF );
+               HbcConfiguration::instance().set( conf );
                lastMemoryReportTime = Timestamp();
                setSleepTime( WAKE_UP );
-               if ( HBCP::deviceId != HomeAutomationConfiguration::instance().getDeviceId() )
+               if ( HBCP::deviceId != HbcConfiguration::instance().getDeviceId() )
                {
                   // change deviceId only after reset
-                  // HBCP::deviceId = HomeAutomationHw::Configuration::instance().getDeviceId();
-                  response.setDeviceId( HomeAutomationConfiguration::instance().getDeviceId() );
+                  // HBCP::deviceId = HbcDeviceHw::Configuration::instance().getDeviceId();
+                  response.setDeviceId( HbcConfiguration::instance().getDeviceId() );
                }
                else
                {
@@ -483,60 +484,60 @@ bool HomeAutomation::handleRequest( HBCP* message )
             }
             else
             {
-               response.setErrorCode( HomeAutomationInterface::ErrorCode::SYNTAX_ERROR );
+               response.setErrorCode( HbcInterface::ErrorCode::SYNTAX_ERROR );
             }
          }
-         else if ( cf.isCommand( HomeAutomationInterface::Command::GENERATE_RANDOM_DEVICE_ID ) )
+         else if ( cf.isCommand( HbcInterface::Command::GENERATE_RANDOM_DEVICE_ID ) )
          {
             if ( cf.getDataLength() == 1 )
             {
                uint16_t deviceId = SystemTime::now() & 0x7FFF;
-               HomeAutomationConfiguration::instance().setDeviceId( deviceId );
+               HbcConfiguration::instance().setDeviceId( deviceId );
                response.setStarted( response.EVENT_NEW_DEVICE_ID );
             }
             else
             {
-               response.setErrorCode( HomeAutomationInterface::ErrorCode::SYNTAX_ERROR );
+               response.setErrorCode( HbcInterface::ErrorCode::SYNTAX_ERROR );
             }
          }
-         else if ( cf.isCommand( HomeAutomationInterface::Command::GET_REMOTE_OBJECTS ) )
+         else if ( cf.isCommand( HbcInterface::Command::GET_REMOTE_OBJECTS ) )
          {
             cmdGetRemoteObjects( response );
          }
-         else if ( cf.isCommand( HomeAutomationInterface::Command::GET_UNUSED_MEMORY ) )
+         else if ( cf.isCommand( HbcInterface::Command::GET_UNUSED_MEMORY ) )
          {
             DEBUG_H1( FSTR( ".getUnusedMemory()" ) );
             response.setUnusedMemory();
          }
-         else if ( cf.isCommand( HomeAutomationInterface::Command::GET_CONFIGURATION ) )
+         else if ( cf.isCommand( HbcInterface::Command::GET_CONFIGURATION ) )
          {
             DEBUG_H1( FSTR( ".getConfiguration()" ) );
-            HomeAutomationConfiguration::instance().get( response.setConfiguration( HomeAutomationHw::getFckE() ) );
+            HbcConfiguration::instance().get( response.setConfiguration( HbcDeviceHw::getFckE() ) );
          }
-         else if ( cf.isCommand( HomeAutomationInterface::Command::READ_MEMORY ) )
+         else if ( cf.isCommand( HbcInterface::Command::READ_MEMORY ) )
          {
             cmdReadMemory( data->parameter.readMemory, response );
          }
-         else if ( cf.isCommand( HomeAutomationInterface::Command::WRITE_MEMORY ) )
+         else if ( cf.isCommand( HbcInterface::Command::WRITE_MEMORY ) )
          {
             DEBUG_H1( FSTR( ".writeMemory()" ) );
             response.setMemoryStatus( IStream::LOCKED );
          }
-         else if ( cf.isCommand( HomeAutomationInterface::Command::WRITE_RULES ) )
+         else if ( cf.isCommand( HbcInterface::Command::WRITE_RULES ) )
          {
             cmdWriteRules( data->parameter.writeRules,
                            cf.getDataLength() - sizeof( data->command ) - sizeof( data->parameter.writeRules.offset ),
                            response );
          }
-         else if ( cf.isCommand( HomeAutomationInterface::Command::READ_RULES ) )
+         else if ( cf.isCommand( HbcInterface::Command::READ_RULES ) )
          {
             DEBUG_H1( FSTR( ".readRules()" ) );
-            HomeAutomationInterface::Command::ReadRules* parameter = &data->parameter.readRules;
-            HomeAutomationHw::readRules( parameter->offset,
-                                         response.setReadRules( parameter->offset, parameter->length ),
-                                         parameter->length );
+            HbcInterface::Command::ReadRules* parameter = &data->parameter.readRules;
+            HbcDeviceHw::readRules( parameter->offset,
+                                    response.setReadRules( parameter->offset, parameter->length ),
+                                    parameter->length );
          }
-         else if ( cf.isCommand( HomeAutomationInterface::Command::PING ) )
+         else if ( cf.isCommand( HbcInterface::Command::PING ) )
          {
             DEBUG_H1( FSTR( ".ping()" ) );
             response.setPong();
@@ -559,8 +560,8 @@ bool HomeAutomation::handleRequest( HBCP* message )
    return consumed;
 }
 
-HomeAutomationInterface::Response* HomeAutomation::getErrorEvent() const
+HbcInterface::Response* HbcDevice::getErrorEvent() const
 {
-   return (HomeAutomationInterface::Response*) &errorEvent;
+   return (HbcInterface::Response*) &errorEvent;
 }
 

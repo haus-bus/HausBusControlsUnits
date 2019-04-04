@@ -8,7 +8,7 @@
 #include "PbsSystemHw.h"
 #include <Release.h>
 #include <Security/Checksum.h>
-#include <HomeAutomationConfiguration.h>
+#include <HbcConfiguration.h>
 #include <Tracing/Logger.h>
 #include <LogicalButton.h>
 #include <Security/ModuleId.h>
@@ -74,7 +74,7 @@ void PbsSystemHw::configureLogicalButtons()
    DEBUG_M1( FSTR( "LButtons" ) );
 
    uint8_t i = 0;
-   uint8_t mask = HomeAutomationConfiguration::instance().getLogicalButtonMask();
+   uint8_t mask = HbcConfiguration::instance().getLogicalButtonMask();
    while ( mask )
    {
       if ( mask & 1 )

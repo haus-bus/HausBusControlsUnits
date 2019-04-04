@@ -81,7 +81,7 @@
             <Value>../../Xmega</Value>
             <Value>../../HbcUnits</Value>
             <Value>../../HwProtocols</Value>
-            <Value>../../BoardHardware</Value>
+            <Value>../../HbcUnits\HwUnitBoards</Value>
             <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.68\include</Value>
           </ListValues>
         </avrgcc.compiler.directories.IncludePaths>
@@ -112,7 +112,7 @@
             <Value>../../SwFramework</Value>
             <Value>../../HbcUnits</Value>
             <Value>../../HwProtocols</Value>
-            <Value>../../BoardHardware</Value>
+            <Value>../../HbcUnits\HwUnitBoards</Value>
             <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.68\include</Value>
           </ListValues>
         </avrgcccpp.compiler.directories.IncludePaths>
@@ -168,7 +168,7 @@
             <Value>../../Xmega</Value>
             <Value>../../HbcUnits</Value>
             <Value>../../HwProtocols</Value>
-            <Value>../../BoardHardware</Value>
+            <Value>../../HbcUnits\HwUnitBoards</Value>
             <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.68\include</Value>
           </ListValues>
         </avrgcc.compiler.directories.IncludePaths>
@@ -201,7 +201,7 @@
             <Value>../../SwFramework</Value>
             <Value>../../HbcUnits</Value>
             <Value>../../HwProtocols</Value>
-            <Value>../../BoardHardware</Value>
+            <Value>../../HbcUnits\HwUnitBoards</Value>
             <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.68\include</Value>
           </ListValues>
         </avrgcccpp.compiler.directories.IncludePaths>
@@ -234,49 +234,49 @@
     <PostBuildEvent>"$(ToolchainDir)\avr-objcopy" -j .text -j .data -O binary  $(OutputFileName).elf  $(OutputFileName).bin &amp;&amp; "$(SolutionDir)utils\bin\modid" $(OutputFileName).bin "$(SolutionDir)Binaries\AR8Debug"</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\BoardHardware\DigitalPortHw.cpp">
+    <Compile Include="..\HbcUnits\HwUnitBoards\DigitalPortHw.cpp">
       <SubType>compile</SubType>
-      <Link>BoardHardware\DigitalPortHw.cpp</Link>
+      <Link>HbcUnits\HwUnitBoards\DigitalPortHw.cpp</Link>
     </Compile>
-    <Compile Include="..\BoardHardware\DigitalPortHw.h">
+    <Compile Include="..\HbcUnits\HwUnitBoards\DigitalPortHw.h">
       <SubType>compile</SubType>
-      <Link>BoardHardware\DigitalPortHw.h</Link>
+      <Link>HbcUnits\HwUnitBoards\DigitalPortHw.h</Link>
     </Compile>
-    <Compile Include="..\BoardHardware\Electronics.h">
+    <Compile Include="..\HbcUnits\HwUnitBoards\HbcDeviceHw.cpp">
       <SubType>compile</SubType>
-      <Link>BoardHardware\Electronics.h</Link>
+      <Link>HbcUnits\HwUnitBoards\HbcDeviceHw.cpp</Link>
     </Compile>
-    <Compile Include="..\BoardHardware\HomeAutomationHw.cpp">
+    <Compile Include="..\HbcUnits\HwUnitBoards\HbcDeviceHw.h">
       <SubType>compile</SubType>
-      <Link>BoardHardware\HomeAutomationHw.cpp</Link>
+      <Link>HbcUnits\HwUnitBoards\HbcDeviceHw.h</Link>
     </Compile>
-    <Compile Include="..\BoardHardware\HomeAutomationHw.h">
+    <Compile Include="..\HbcUnits\HwUnitBoards\HwUnitBoards.h">
       <SubType>compile</SubType>
-      <Link>BoardHardware\HomeAutomationHw.h</Link>
+      <Link>HbcUnits\HwUnitBoards\HwUnitBoards.h</Link>
     </Compile>
-    <Compile Include="..\BoardHardware\HwUnitBoards.h">
+    <Compile Include="..\HbcUnits\HwUnitBoards\RollerShutterHw.cpp">
       <SubType>compile</SubType>
-      <Link>BoardHardware\HwUnitBoards.h</Link>
+      <Link>HbcUnits\HwUnitBoards\RollerShutterHw.cpp</Link>
     </Compile>
-    <Compile Include="..\BoardHardware\RollerShutterHw.cpp">
+    <Compile Include="..\HbcUnits\HwUnitBoards\RollerShutterHw.h">
       <SubType>compile</SubType>
-      <Link>BoardHardware\RollerShutterHw.cpp</Link>
+      <Link>HbcUnits\HwUnitBoards\RollerShutterHw.h</Link>
     </Compile>
-    <Compile Include="..\BoardHardware\RollerShutterHw.h">
+    <Compile Include="..\HbcUnits\HwUnitBoards\SlotHw.cpp">
       <SubType>compile</SubType>
-      <Link>BoardHardware\RollerShutterHw.h</Link>
+      <Link>HbcUnits\HwUnitBoards\SlotHw.cpp</Link>
     </Compile>
-    <Compile Include="..\BoardHardware\SlotHw.cpp">
+    <Compile Include="..\HbcUnits\HwUnitBoards\SlotHw.h">
       <SubType>compile</SubType>
-      <Link>BoardHardware\SlotHw.cpp</Link>
+      <Link>HbcUnits\HwUnitBoards\SlotHw.h</Link>
     </Compile>
-    <Compile Include="..\BoardHardware\SlotHw.h">
+    <Compile Include="..\HbcUnits\HwUnitBoards\SystemBoards.h">
       <SubType>compile</SubType>
-      <Link>BoardHardware\SlotHw.h</Link>
+      <Link>HbcUnits\HwUnitBoards\SystemBoards.h</Link>
     </Compile>
-    <Compile Include="..\BoardHardware\SystemBoards.h">
+    <Compile Include="..\HbcUnits\Rules\RuleEngine.h">
       <SubType>compile</SubType>
-      <Link>BoardHardware\SystemBoards.h</Link>
+      <Link>HbcUnits\Rules\RuleEngine.h</Link>
     </Compile>
     <Compile Include="..\HwProtocols\Dali.cpp">
       <SubType>compile</SubType>
@@ -346,13 +346,13 @@
       <SubType>compile</SubType>
       <Link>HwProtocols\SoftTwi.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\AnalogInputUnit.cpp">
+    <Compile Include="..\HbcUnits\HwUnits\AnalogInputUnit.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\AnalogInputUnit.cpp</Link>
+      <Link>HbcUnits\HwUnits\AnalogInputUnit.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\AnalogInputUnit.h">
+    <Compile Include="..\HbcUnits\HwUnits\AnalogInputUnit.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\AnalogInputUnit.h</Link>
+      <Link>HbcUnits\HwUnits\AnalogInputUnit.h</Link>
     </Compile>
     <Compile Include="..\HbcUnits\BaseSensorUnit.cpp">
       <SubType>compile</SubType>
@@ -362,129 +362,129 @@
       <SubType>compile</SubType>
       <Link>HbcUnits\BaseSensorUnit.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\Button.cpp">
+    <Compile Include="..\HbcUnits\HwUnits\Button.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\Button.cpp</Link>
+      <Link>HbcUnits\HwUnits\Button.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\Button.h">
+    <Compile Include="..\HbcUnits\HwUnits\Button.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\Button.h</Link>
+      <Link>HbcUnits\HwUnits\Button.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\Counter.cpp">
+    <Compile Include="..\HbcUnits\HwUnits\Counter.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\Counter.cpp</Link>
+      <Link>HbcUnits\HwUnits\Counter.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\Counter.h">
+    <Compile Include="..\HbcUnits\HwUnits\Counter.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\Counter.h</Link>
+      <Link>HbcUnits\HwUnits\Counter.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\Dht.cpp">
+    <Compile Include="..\HbcUnits\HwUnits\Dht.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\Dht.cpp</Link>
+      <Link>HbcUnits\HwUnits\Dht.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\Dht.h">
+    <Compile Include="..\HbcUnits\HwUnits\Dht.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\Dht.h</Link>
+      <Link>HbcUnits\HwUnits\Dht.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\DigitalOutputUnit.cpp">
+    <Compile Include="..\HbcUnits\HwUnits\DigitalOutputUnit.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\DigitalOutputUnit.cpp</Link>
+      <Link>HbcUnits\HwUnits\DigitalOutputUnit.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\DigitalOutputUnit.h">
+    <Compile Include="..\HbcUnits\HwUnits\DigitalOutputUnit.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\DigitalOutputUnit.h</Link>
+      <Link>HbcUnits\HwUnits\DigitalOutputUnit.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\DigitalPort.cpp">
+    <Compile Include="..\HbcUnits\HwUnits\DigitalPort.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\DigitalPort.cpp</Link>
+      <Link>HbcUnits\HwUnits\DigitalPort.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\DigitalPort.h">
+    <Compile Include="..\HbcUnits\HwUnits\DigitalPort.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\DigitalPort.h</Link>
+      <Link>HbcUnits\HwUnits\DigitalPort.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\Dimmer.cpp">
+    <Compile Include="..\HbcUnits\HwUnits\Dimmer.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\Dimmer.cpp</Link>
+      <Link>HbcUnits\HwUnits\Dimmer.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\Dimmer.h">
+    <Compile Include="..\HbcUnits\HwUnits\Dimmer.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\Dimmer.h</Link>
+      <Link>HbcUnits\HwUnits\Dimmer.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\DS1307.cpp">
+    <Compile Include="..\HbcUnits\HwUnits\DS1307.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\DS1307.cpp</Link>
+      <Link>HbcUnits\HwUnits\DS1307.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\DS1307.h">
+    <Compile Include="..\HbcUnits\HwUnits\DS1307.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\DS1307.h</Link>
+      <Link>HbcUnits\HwUnits\DS1307.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\DS1820.cpp">
+    <Compile Include="..\HbcUnits\HwUnits\DS1820.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\DS1820.cpp</Link>
+      <Link>HbcUnits\HwUnits\DS1820.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\DS1820.h">
+    <Compile Include="..\HbcUnits\HwUnits\DS1820.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\DS1820.h</Link>
+      <Link>HbcUnits\HwUnits\DS1820.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\HacfIpStackManager.cpp">
+    <Compile Include="..\HbcUnits\HbcIpStackManager.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\HacfIpStackManager.cpp</Link>
+      <Link>HbcUnits\HbcIpStackManager.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\HacfIpStackManager.h">
+    <Compile Include="..\HbcUnits\HbcIpStackManager.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\HacfIpStackManager.h</Link>
+      <Link>HbcUnits\HbcIpStackManager.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\HomeAutomation.cpp">
+    <Compile Include="..\HbcUnits\HbcDevice.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\HomeAutomation.cpp</Link>
+      <Link>HbcUnits\HbcDevice.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\HomeAutomation.h">
+    <Compile Include="..\HbcUnits\HbcDevice.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\HomeAutomation.h</Link>
+      <Link>HbcUnits\HbcDevice.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\HomeAutomationConfiguration.cpp">
+    <Compile Include="..\HbcUnits\HbcConfiguration.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\HomeAutomationConfiguration.cpp</Link>
+      <Link>HbcUnits\HbcConfiguration.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\HomeAutomationConfiguration.h">
+    <Compile Include="..\HbcUnits\HbcConfiguration.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\HomeAutomationConfiguration.h</Link>
+      <Link>HbcUnits\HbcConfiguration.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\HomeAutomationInterface.cpp">
+    <Compile Include="..\HbcUnits\HbcInterface.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\HomeAutomationInterface.cpp</Link>
+      <Link>HbcUnits\HbcInterface.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\HomeAutomationInterface.h">
+    <Compile Include="..\HbcUnits\HbcInterface.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\HomeAutomationInterface.h</Link>
+      <Link>HbcUnits\HbcInterface.h</Link>
     </Compile>
     <Compile Include="..\HbcUnits\HbcUnits.h">
       <SubType>compile</SubType>
       <Link>HbcUnits\HbcUnits.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\InternalTemperatureUnit.cpp">
+    <Compile Include="..\HbcUnits\HwUnits\InternalTemperatureUnit.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\InternalTemperatureUnit.cpp</Link>
+      <Link>HbcUnits\HwUnits\InternalTemperatureUnit.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\InternalTemperatureUnit.h">
+    <Compile Include="..\HbcUnits\HwUnits\InternalTemperatureUnit.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\InternalTemperatureUnit.h</Link>
+      <Link>HbcUnits\HwUnits\InternalTemperatureUnit.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\IrReceiver.cpp">
+    <Compile Include="..\HbcUnits\HwUnits\IrReceiver.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\IrReceiver.cpp</Link>
+      <Link>HbcUnits\HwUnits\IrReceiver.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\IrReceiver.h">
+    <Compile Include="..\HbcUnits\HwUnits\IrReceiver.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\IrReceiver.h</Link>
+      <Link>HbcUnits\HwUnits\IrReceiver.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\Led.cpp">
+    <Compile Include="..\HbcUnits\HwUnits\Led.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\Led.cpp</Link>
+      <Link>HbcUnits\HwUnits\Led.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\Led.h">
+    <Compile Include="..\HbcUnits\HwUnits\Led.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\Led.h</Link>
+      <Link>HbcUnits\HwUnits\Led.h</Link>
     </Compile>
     <Compile Include="..\HbcUnits\LoggerMemory.cpp">
       <SubType>compile</SubType>
@@ -510,33 +510,29 @@
       <SubType>compile</SubType>
       <Link>HbcUnits\ModBusSlave.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\PortPinUnit.cpp">
+    <Compile Include="..\HbcUnits\HwUnits\PortPinUnit.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\PortPinUnit.cpp</Link>
+      <Link>HbcUnits\HwUnits\PortPinUnit.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\PortPinUnit.h">
+    <Compile Include="..\HbcUnits\HwUnits\PortPinUnit.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\PortPinUnit.h</Link>
+      <Link>HbcUnits\HwUnits\PortPinUnit.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\RollerShutter.cpp">
+    <Compile Include="..\HbcUnits\HwUnits\RollerShutter.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\RollerShutter.cpp</Link>
+      <Link>HbcUnits\HwUnits\RollerShutter.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\RollerShutter.h">
+    <Compile Include="..\HbcUnits\HwUnits\RollerShutter.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\RollerShutter.h</Link>
+      <Link>HbcUnits\HwUnits\RollerShutter.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\UltrasonicDistanceMeter.cpp">
+    <Compile Include="..\HbcUnits\HwUnits\UltrasonicDistanceMeter.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\UltrasonicDistanceMeter.cpp</Link>
+      <Link>HbcUnits\HwUnits\UltrasonicDistanceMeter.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\UltrasonicDistanceMeter.h">
+    <Compile Include="..\HbcUnits\HwUnits\UltrasonicDistanceMeter.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\UltrasonicDistanceMeter.h</Link>
-    </Compile>
-    <Compile Include="..\Interfaces\IDimmerHw.cpp">
-      <SubType>compile</SubType>
-      <Link>Interfaces\IDimmerHw.cpp</Link>
+      <Link>HbcUnits\HwUnits\UltrasonicDistanceMeter.h</Link>
     </Compile>
     <Compile Include="..\Interfaces\IDimmerHw.h">
       <SubType>compile</SubType>
@@ -1218,10 +1214,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="HbcUnits\HwUnits\" />
     <Folder Include="HbcUnits\Rules" />
     <Folder Include="Interfaces" />
     <Folder Include="HbcUnits" />
-    <Folder Include="BoardHardware" />
+    <Folder Include="HbcUnits\HwUnitBoards" />
     <Folder Include="HwProtocols" />
     <Folder Include="SwFramework\Container" />
     <Folder Include="SwFramework\EventPkg" />

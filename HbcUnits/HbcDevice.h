@@ -1,5 +1,5 @@
 /*
- * HomeAutomation.h
+ * HbcDevice.h
  *
  *  Created on: 28.08.2014
  *      Author: Viktor Pankraz
@@ -8,10 +8,10 @@
 #ifndef Systems_HomeAutomation_H
 #define Systems_HomeAutomation_H
 
-#include "HomeAutomationInterface.h"
-#include "HomeAutomationConfiguration.h"
+#include "HbcInterface.h"
+#include "HbcConfiguration.h"
 
-#include <HomeAutomationHw.h>
+#include <HbcDeviceHw.h>
 #include <Reactive.h>
 #include <Time/SystemTime.h>
 #include <IResponse.h>
@@ -38,7 +38,7 @@ class WeekTime;
 
 class evMessage;
 
-class HomeAutomation : public Reactive
+class HbcDevice : public Reactive
 {
    public:
 
@@ -57,7 +57,7 @@ class HomeAutomation : public Reactive
 
             ////    Operations    ////
 
-            static uint8_t setState( const HomeAutomationInterface::Command::SetUnitGroupState& params );
+            static uint8_t setState( const HbcInterface::Command::SetUnitGroupState& params );
 
             ////    Attributes    ////
 
@@ -95,10 +95,10 @@ class HomeAutomation : public Reactive
 
       ////    Constructors and destructors    ////
 
-      inline HomeAutomation() : errorEvent( HBCP::SYSTEM_ID )
+      inline HbcDevice() : errorEvent( HBCP::SYSTEM_ID )
       {
          setId( ( ClassId::SYSTEM << 8 ) | HBCP::SYSTEM_ID );
-         HomeAutomationConfiguration& conf = HomeAutomationConfiguration::instance();
+         HbcConfiguration& conf = HbcConfiguration::instance();
          HBCP::deviceId = conf.getDeviceId();
          Calender::minuteListener = this;
          // give some additional time to get e.g. a valid IP address from DHCP Server
@@ -115,14 +115,14 @@ class HomeAutomation : public Reactive
 
       void checkPersistentRules();
 
-      void cmdGetRemoteObjects( HomeAutomationInterface::Response& response );
+      void cmdGetRemoteObjects( HbcInterface::Response& response );
 
-      void cmdReadMemory( HomeAutomationInterface::Command::ReadMemory& parameter,
-                          HomeAutomationInterface::Response& response );
+      void cmdReadMemory( HbcInterface::Command::ReadMemory& parameter,
+                          HbcInterface::Response& response );
 
-      void cmdWriteRules( HomeAutomationInterface::Command::WriteRules& parameter,
+      void cmdWriteRules( HbcInterface::Command::WriteRules& parameter,
                           uint16_t dataLength,
-                          HomeAutomationInterface::Response& response );
+                          HbcInterface::Response& response );
 
       bool handleRequest( HBCP* message );
 
@@ -134,7 +134,7 @@ class HomeAutomation : public Reactive
 
    public:
 
-      HomeAutomationInterface::Response* getErrorEvent() const;
+      HbcInterface::Response* getErrorEvent() const;
 
    protected:
 
@@ -159,7 +159,7 @@ class HomeAutomation : public Reactive
 
    protected:
 
-      HomeAutomationInterface::Response errorEvent;
+      HbcInterface::Response errorEvent;
 
 };
 

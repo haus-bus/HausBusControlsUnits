@@ -5,7 +5,7 @@
  *      Author: viktor.pankraz
  */
 
-#include <UltrasonicDistanceMeter.h>
+#include "UltrasonicDistanceMeter.h"
 #include <ErrorMessage.h>
 
 const uint8_t UltrasonicDistanceMeter::debugLevel( DEBUG_LEVEL_OFF );

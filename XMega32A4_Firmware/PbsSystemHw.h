@@ -8,12 +8,13 @@
 #ifndef PbsSystemHw_H
 #define PbsSystemHw_H
 
-#include <HomeAutomationHw.h>
+#include <HwUnitBoards/SystemBoards.h>
+#include <HbcDeviceHw.h>
 #include <InternalEeprom.h>
 
 extern MOD_ID_SECTION const ModuleId moduleId;
 
-class PbsSystemHw : public HomeAutomationHw
+class PbsSystemHw : public HbcDeviceHw
 {
    ////    Constructors and destructors    ////
 

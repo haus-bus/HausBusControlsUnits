@@ -5,16 +5,16 @@
  *      Author: Viktor Pankraz
  */
 
-#include "HomeAutomation.h"
+#include "HbcDevice.h"
 #include "DebugOptions.h"
 #include "PbsSystem.h"
 
+#include <Release.h>
 #include <Gateway.h>
 #include <Scheduler.h>
 #include <Time/WeekTime.h>
-#include <Release.h>
-#include <PortPinUnit.h>
-#include <DS1820.h>
+#include <HwUnits/PortPinUnit.h>
+#include <HwUnits/DS1820.h>
 
 PbsSystem::PbsSystem()
 {

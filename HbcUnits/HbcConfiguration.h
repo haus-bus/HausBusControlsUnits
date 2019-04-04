@@ -1,5 +1,5 @@
 /*
- * HomeAutomationConfiguration.h
+ * HbcConfiguration.h
  *
  *  Created on: 28.08.2014
  *      Author: Viktor Pankraz
@@ -8,16 +8,15 @@
 #ifndef HwUnits_HomeAutomationConfiguration_H
 #define HwUnits_HomeAutomationConfiguration_H
 
-#include "Electronics.h"
 #include "HbcUnits.h"
-
+#include <HwUnitBoards.h>
 #include <UserSignature.h>
 
 class Checksum;
 
 class Scheduler;
 
-class HomeAutomationConfiguration
+class HbcConfiguration
 {
    public:
 
@@ -29,7 +28,7 @@ class HomeAutomationConfiguration
 
       ////    Operations    ////
 
-      uint8_t get( HomeAutomationConfiguration& configuration );
+      uint8_t get( HbcConfiguration& configuration );
 
       uint16_t getDeviceId();
 
@@ -43,11 +42,11 @@ class HomeAutomationConfiguration
 
       inline int8_t getTimeCorrectionValue() const;
 
-      inline static HomeAutomationConfiguration& instance();
+      inline static HbcConfiguration& instance();
 
       inline static void restoreFactoryConfiguration( uint8_t id, uint8_t fcke );
 
-      void set( HomeAutomationConfiguration& configuration );
+      void set( HbcConfiguration& configuration );
 
       inline void setDeviceId( uint16_t _deviceId );
 
@@ -75,12 +74,12 @@ class HomeAutomationConfiguration
 };
 
 
-inline uint8_t HomeAutomationConfiguration::getLogicalButtonMask() const
+inline uint8_t HbcConfiguration::getLogicalButtonMask() const
 {
    return UserSignature::read( reinterpret_cast<uintptr_t>( &logicalButtonMask ) );
 }
 
-inline uint8_t HomeAutomationConfiguration::getReportMemoryStatusTime()
+inline uint8_t HbcConfiguration::getReportMemoryStatusTime()
 {
    uint8_t value = UserSignature::read( reinterpret_cast<uintptr_t>( &reportMemoryStatusTime ) );
 
@@ -91,34 +90,34 @@ inline uint8_t HomeAutomationConfiguration::getReportMemoryStatusTime()
    return value;
 }
 
-inline uint8_t HomeAutomationConfiguration::getSlotType( uint8_t idx ) const
+inline uint8_t HbcConfiguration::getSlotType( uint8_t idx ) const
 {
    return UserSignature::read( reinterpret_cast<uintptr_t>( &slotTypes[idx] ) );
 }
 
-inline uint8_t HomeAutomationConfiguration::getStartupDelay() const
+inline uint8_t HbcConfiguration::getStartupDelay() const
 {
    return UserSignature::read( reinterpret_cast<uintptr_t>( &startupDelay ) );
 }
 
-inline int8_t HomeAutomationConfiguration::getTimeCorrectionValue() const
+inline int8_t HbcConfiguration::getTimeCorrectionValue() const
 {
    return UserSignature::read( reinterpret_cast<uintptr_t>( &timeCorrectionValue ) );
 }
 
-inline void HomeAutomationConfiguration::setTimeCorrectionValue( int8_t value )
+inline void HbcConfiguration::setTimeCorrectionValue( int8_t value )
 {
    UserSignature::write( reinterpret_cast<uintptr_t>( &timeCorrectionValue ), &value, sizeof( value ) );
 }
 
-inline HomeAutomationConfiguration& HomeAutomationConfiguration::instance()
+inline HbcConfiguration& HbcConfiguration::instance()
 {
-   return *reinterpret_cast<HomeAutomationConfiguration*>( USER_SIGNATURE_ROW_OFFSET );
+   return *reinterpret_cast<HbcConfiguration*>( USER_SIGNATURE_ROW_OFFSET );
 }
 
-inline void HomeAutomationConfiguration::restoreFactoryConfiguration( uint8_t id, uint8_t fcke )
+inline void HbcConfiguration::restoreFactoryConfiguration( uint8_t id, uint8_t fcke )
 {
-   uint8_t buffer[sizeof( HomeAutomationConfiguration ) + 2];
+   uint8_t buffer[sizeof( HbcConfiguration ) + 2];
    memset( &buffer, 0xFF, sizeof( buffer ) );
    buffer[0] = id;
    buffer[1] = fcke;
@@ -129,9 +128,9 @@ inline void HomeAutomationConfiguration::restoreFactoryConfiguration( uint8_t id
    UserSignature::write( 0, &buffer, sizeof( buffer ) );
 }
 
-inline void HomeAutomationConfiguration::setDeviceId( uint16_t _deviceId )
+inline void HbcConfiguration::setDeviceId( uint16_t _deviceId )
 {
-   HomeAutomationConfiguration conf;
+   HbcConfiguration conf;
    get( conf );
    conf.deviceId = _deviceId;
    set( conf );

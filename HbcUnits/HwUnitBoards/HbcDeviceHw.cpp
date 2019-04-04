@@ -1,27 +1,22 @@
 /*
- * HomeAutomationHw.cpp
+ * HbcDeviceHw.cpp
  *
  *  Created on: 28.08.2014
  *      Author: Viktor Pankraz
  */
 
-#include "HomeAutomationHw.h"
+#include "HbcDeviceHw.h"
 #include <Security/Checksum.h>
 #include <FlashString.h>
 #include <Tracing/Logger.h>
 #include <Security/ModuleId.h>
-#include <Peripherals/Oscillator.h>
-#include <Peripherals/Clock.h>
-#include <Peripherals/Eeprom.h>
-#include <Peripherals/RealTimeCounter.h>
-#include <Peripherals/DigitalFrequencyLockedLoops.h>
 
-const uint8_t HomeAutomationHw::debugLevel( DEBUG_LEVEL_OFF );
+const uint8_t HbcDeviceHw::debugLevel( DEBUG_LEVEL_OFF );
 
 
 #ifdef _DEBUG_
 
-FlashString* HomeAutomationHw::getId()
+FlashString* HbcDeviceHw::getId()
 {
    return FSTR( "SystemHw::" );
 }
@@ -29,7 +24,7 @@ FlashString* HomeAutomationHw::getId()
 #endif
 
 
-bool HomeAutomationHw::getModuleId( uint8_t index, ModuleId* moduleId )
+bool HbcDeviceHw::getModuleId( uint8_t index, ModuleId* moduleId )
 {
    uint32_t modulIdPosition = findModuleIdPosition( index );
    DEBUG_H2( FSTR( "ModIdPos:" ), modulIdPosition );
@@ -45,6 +40,15 @@ bool HomeAutomationHw::getModuleId( uint8_t index, ModuleId* moduleId )
    }
    return false;
 }
+
+
+#include <Peripherals/Oscillator.h>
+#include <Peripherals/Clock.h>
+#include <Peripherals/Eeprom.h>
+#include <Peripherals/WatchDog.h>
+#include <Peripherals/RealTimeCounter.h>
+#include <Peripherals/InterruptController.h>
+#include <Peripherals/DigitalFrequencyLockedLoops.h>
 
 static void
 __attribute__( ( section( ".init3" ), naked, used ) )

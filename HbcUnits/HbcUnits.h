@@ -54,7 +54,7 @@ class UdpStream;
 
 class Gateway;
 
-class HacfIpStackManager;
+class HbcIpStackManager;
 
 class IResponse;
 

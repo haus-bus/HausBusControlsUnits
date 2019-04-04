@@ -1,16 +1,22 @@
 /*
- * Electronics.h
+ * HwUnitBoards.h
  *
  *  Created on: 17.07.2017
  *      Author: Viktor Pankraz
  */
 
-#ifndef Electronics_Electronics_H
-#define Electronics_Electronics_H
+#ifndef HbcUnits_HwUnitBoards_H
+#define HbcUnits_HwUnitBoards_H
 
-#include <avr/io.h>
-#include <util/delay.h>
 #include <DefaultTypes.h>
+
+class DaliDimmerHw;
+
+class DigitalPortHw;
+
+class RollerShutterHw;
+
+class SlotHw;
 
 enum FIRMWARE_IDS
 {
@@ -46,5 +52,8 @@ enum BoardRevisions
    SD485_LC4_0V = 43,
    SD485_LC4_1V = 45,
 };
+
+// Turn off a power load generates a current spike. So wait some time to prevent errors in communication.
+static const uint16_t POWER_SWITCH_DELAY = 6;
 
 #endif

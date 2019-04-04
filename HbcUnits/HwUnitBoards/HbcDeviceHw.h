@@ -1,5 +1,5 @@
 /*
- * HomeAutomationHw.h
+ * HbcDeviceHw.h
  *
  *  Created on: 28.08.2014
  *      Author: Viktor Pankraz
@@ -8,7 +8,7 @@
 #ifndef Electronics_SystemBoards_HomeAutomationHw_H
 #define Electronics_SystemBoards_HomeAutomationHw_H
 
-#include "SystemBoards.h"
+#include "HwUnitBoards.h"
 
 #include <ApplicationTable.h>
 #include <UserSignature.h>
@@ -25,7 +25,7 @@ class Logger;
 
 class ModuleId;
 
-class HomeAutomationHw
+class HbcDeviceHw
 {
    public:
 
@@ -33,7 +33,7 @@ class HomeAutomationHw
 
       ////    Constructors and destructors    ////
 
-      inline HomeAutomationHw()
+      inline HbcDeviceHw()
       {
       }
 
@@ -84,13 +84,13 @@ class HomeAutomationHw
       static const uint8_t debugLevel;
 };
 
-inline void HomeAutomationHw::enableInterrupts()
+inline void HbcDeviceHw::enableInterrupts()
 {
    PMIC.CTRL |= PMIC_LOLVLEN_bm | PMIC_MEDLVLEN_bm | PMIC_HILVLEN_bm;
    GlobalInterrupt::enable();
 }
 
-inline Flash::address_t HomeAutomationHw::findModuleIdPosition(
+inline Flash::address_t HbcDeviceHw::findModuleIdPosition(
    bool loaderModId )
 {
    Flash::address_t address;
@@ -110,12 +110,12 @@ inline Flash::address_t HomeAutomationHw::findModuleIdPosition(
    return -1;
 }
 
-inline uint16_t HomeAutomationHw::readRules( uint16_t offset, void* pData, uint16_t length )
+inline uint16_t HbcDeviceHw::readRules( uint16_t offset, void* pData, uint16_t length )
 {
    return ApplicationTable::read( offset, pData, length );
 }
 
-inline uint16_t HomeAutomationHw::writeRules( uint16_t offset, void* pData, uint16_t length )
+inline uint16_t HbcDeviceHw::writeRules( uint16_t offset, void* pData, uint16_t length )
 {
    if ( length )
    {

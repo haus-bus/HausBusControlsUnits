@@ -34,7 +34,7 @@ ModuleId Booter::installedMod;
 NO_RETURN void Booter::start()
 {
    hardware.configure();
-   HBCP::deviceId = HomeAutomationConfiguration::instance().getDeviceId();
+   HBCP::deviceId = HbcConfiguration::instance().getDeviceId();
 
    checkFirmware();
    while ( true )

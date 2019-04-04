@@ -19,6 +19,7 @@
 #include <Peripherals/DmaController.h>
 #include <Peripherals/EventSystem.h>
 #include <Peripherals/IoPort.h>
+#include <Peripherals/WatchDog.h>
 #include <Release.h>
 
 IrDecoder* irDecoder( 0 );
@@ -72,7 +73,7 @@ INTERRUPT void USARTE0_RXC_vect()
 
 INTERRUPT void PORTE_INT0_vect()
 {
-   if ( HomeAutomationHw::getFckE() >= FCKE_V4_0 )
+   if ( HbcDeviceHw::getFckE() >= FCKE_V4_0 )
    {
       // notify new transmission started and disable interrupt
       rs485Hw.notifyRxStartFromISR();

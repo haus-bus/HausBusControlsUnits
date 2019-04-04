@@ -1,15 +1,15 @@
 /*
- * HomeAutomationConfiguration.cpp
+ * HbcConfiguration.cpp
  *
  *  Created on: 28.08.2014
  *      Author: Viktor Pankraz
  */
 
-#include "HomeAutomationConfiguration.h"
+#include "HbcConfiguration.h"
 #include <Security/Checksum.h>
 
 
-uint16_t HomeAutomationConfiguration::getDeviceId()
+uint16_t HbcConfiguration::getDeviceId()
 {
    uint16_t id = UserSignature::read( reinterpret_cast<uintptr_t>( &deviceId ) );
    id |= ( UserSignature::read( reinterpret_cast<uintptr_t>( &deviceId ) + 1 ) << 8 );
@@ -20,7 +20,7 @@ uint16_t HomeAutomationConfiguration::getDeviceId()
    return id;
 }
 
-uint8_t HomeAutomationConfiguration::get( HomeAutomationConfiguration& configuration )
+uint8_t HbcConfiguration::get( HbcConfiguration& configuration )
 {
 
    UserSignature::read( reinterpret_cast<uintptr_t>( this ), &configuration, sizeof( configuration ) );
@@ -52,7 +52,7 @@ uint8_t HomeAutomationConfiguration::get( HomeAutomationConfiguration& configura
     */
 }
 
-void HomeAutomationConfiguration::set( HomeAutomationConfiguration& configuration )
+void HbcConfiguration::set( HbcConfiguration& configuration )
 {
    configuration.checksum = 0;
    configuration.checksum = Checksum::get( &configuration, sizeof( configuration ) );

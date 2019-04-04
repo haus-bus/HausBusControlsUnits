@@ -226,7 +226,6 @@ uint8_t SlotHw::suspend( uint8_t mode )
       {
          digitalOutput1.configInput();
       }
-      _delay_us( 100 );
    }
    return true;
 

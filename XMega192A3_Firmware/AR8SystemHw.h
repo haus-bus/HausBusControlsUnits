@@ -9,10 +9,10 @@
 #define Electronics_SystemBoards_AR8_AR8_Boards_AR8SystemHw_H
 
 #include "AR8_Board.h"
-#include <HomeAutomationHw.h>
+#include <HbcDeviceHw.h>
 #include <InternalEeprom.h>
 
-class AR8SystemHw : public HomeAutomationHw
+class AR8SystemHw : public HbcDeviceHw
 {
    public:
 

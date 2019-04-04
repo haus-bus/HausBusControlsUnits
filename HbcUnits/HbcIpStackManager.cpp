@@ -1,11 +1,11 @@
 /*
- * HacfIpStackManager.cpp
+ * HbcIpStackManager.cpp
  *
  *  Created on: 28.08.2014
  *      Author: Viktor Pankraz
  */
 
-#include "HacfIpStackManager.h"
+#include "HbcIpStackManager.h"
 #include "ModBusSlave.h"
 #include <Protocols/Ethernet/ArpHeader.h>
 #include <Protocols/IpStack/ArpManager.h>
@@ -19,43 +19,43 @@
 #include <Protocols/Ethernet/UdpHeader.h>
 #include <ErrorMessage.h>
 
-uint8_t HacfIpStackManager::Command::getCommand() const
+uint8_t HbcIpStackManager::Command::getCommand() const
 {
    return command;
 }
 
-void HacfIpStackManager::Command::setCommand( uint8_t p_command )
+void HbcIpStackManager::Command::setCommand( uint8_t p_command )
 {
    command = p_command;
 }
 
-void HacfIpStackManager::Command::setParameter( const HacfIpStackManager::Command::Parameter& p_parameter )
+void HbcIpStackManager::Command::setParameter( const HbcIpStackManager::Command::Parameter& p_parameter )
 {
    parameter = p_parameter;
 }
 
-HacfIpStackManager::Response::Parameter& HacfIpStackManager::Response::setConfiguration()
+HbcIpStackManager::Response::Parameter& HbcIpStackManager::Response::setConfiguration()
 {
    controlFrame.setDataLength( sizeof( getResponse() ) + sizeof( getParameter().configuration ) );
    setResponse( CONFIGURATION );
    return getParameter();
 }
 
-void HacfIpStackManager::Response::setCurrentIp()
+void HbcIpStackManager::Response::setCurrentIp()
 {
    controlFrame.setDataLength( sizeof( getResponse() ) + sizeof( getParameter().ip ) );
    setResponse( CURRENT_IP );
    getParameter().ip = IP::local.getAddress();
 }
 
-HacfIpStackManager::HacfIpStackManager( Enc28j60& _stream )
+HbcIpStackManager::HbcIpStackManager( Enc28j60& _stream )
 {
    IpConnection::stream = &_stream;
    setId( ( ClassId::ETHERNET << 8 ) | 1 );
    setConfiguration( ConfigurationManager::getConfiguration<EepromConfiguration>( id ) );
 }
 
-bool HacfIpStackManager::notifyEvent( const Event& event )
+bool HbcIpStackManager::notifyEvent( const Event& event )
 {
    if ( event.isEvMessage() )
    {
@@ -101,11 +101,11 @@ bool HacfIpStackManager::notifyEvent( const Event& event )
    return IpStackManager::notifyEvent( event );
 }
 
-void HacfIpStackManager::wakeUpDevice( const MAC& mac )
+void HbcIpStackManager::wakeUpDevice( const MAC& mac )
 {
 }
 
-bool HacfIpStackManager::handleRequest( HBCP* message )
+bool HbcIpStackManager::handleRequest( HBCP* message )
 {
    bool consumed = true;
    HBCP::ControlFrame& cf = message->controlFrame;

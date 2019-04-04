@@ -6,11 +6,12 @@
  */
 
 #include "ModBusSlave.h"
-#include "Button.h"
-#include "Dimmer.h"
+#include "HwUnits/Button.h"
+#include "HwUnits/Dimmer.h"
+#include "HwUnits/Led.h"
+#include "HwUnits/RollerShutter.h"
+
 #include <Protocols/IpStack/IpConnection.h>
-#include "Led.h"
-#include "RollerShutter.h"
 #include <IStream.h>
 
 const uint8_t ModBusSlave::debugLevel( DEBUG_LEVEL_OFF );

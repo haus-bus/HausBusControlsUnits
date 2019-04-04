@@ -7,12 +7,12 @@
 #ifndef Systems_HomeAutomationSystems_MS6System_H
 #define Systems_HomeAutomationSystems_MS6System_H
 
-#include <DigitalPort.h>
-#include <HomeAutomation.h>
+#include <HwUnits/DigitalPort.h>
+#include <HbcDevice.h>
 
 #include "PbsSystemHw.h"
 
-class PbsSystem : public HomeAutomation
+class PbsSystem : public HbcDevice
 {
    ////    Constructors and destructors    ////
 

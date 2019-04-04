@@ -9,8 +9,8 @@
 #define Booter_H
 
 #include <Protocols/HBCP.h>
-#include <HomeAutomationHw.h>
-#include <HomeAutomationInterface.h>
+#include <HbcDeviceHw.h>
+#include <HbcInterface.h>
 #include <Security/ModuleId.h>
 #include <Security/Crc8.h>
 #include <SystemBoards.h>
@@ -45,18 +45,18 @@ class Booter
 
       inline static const void cmdPing();
 
-      inline static void cmdReadMemory( HomeAutomationInterface::Command::ReadMemory& parameter );
+      inline static void cmdReadMemory( HbcInterface::Command::ReadMemory& parameter );
 
       inline static const void cmdReset();
 
-      inline static void cmdSetConfiguration( HomeAutomationConfiguration& configuration )
+      inline static void cmdSetConfiguration( HbcConfiguration& configuration )
       {
          DEBUG_H2( getId(), FSTR( ".setConfiguration()" ) );
          message->setDataLength( 0 );
-         HomeAutomationConfiguration::instance().set( configuration );
+         HbcConfiguration::instance().set( configuration );
       }
 
-      inline static void cmdWriteMemory( HomeAutomationInterface::Command::WriteMemory& parameter )
+      inline static void cmdWriteMemory( HbcInterface::Command::WriteMemory& parameter )
       {
          DEBUG_H2( getId(), FSTR( ".writeMemory()" ) );
 #ifdef _DEBUG_
@@ -114,9 +114,9 @@ class Booter
 #endif
       }
 
-      inline static HomeAutomationInterface::Response* getResponse()
+      inline static HbcInterface::Response* getResponse()
       {
-         return reinterpret_cast<HomeAutomationInterface::Response*>( ( (uint16_t) message ) - sizeof( HBCP::Header ) );
+         return reinterpret_cast<HbcInterface::Response*>( ( (uint16_t) message ) - sizeof( HBCP::Header ) );
       }
 
       inline static bool handleMessage();
@@ -202,7 +202,7 @@ inline void Booter::checkFirmware()
 {
    DEBUG_H2( getId(), FSTR( ".checkFirmware()" ) );
 
-   if ( HomeAutomationHw::getModuleId( 0, &installedMod ) )
+   if ( HbcDeviceHw::getModuleId( 0, &installedMod ) )
    {
       uint32_t fCrc;
       uint32_t cCrc = Flash::getRangeCRC( 0, installedMod.getSize() - 1 );
@@ -231,21 +231,21 @@ inline void Booter::checkFirmware()
 inline void Booter::cmdGetConfiguration()
 {
    DEBUG_H2( getId(), FSTR( ".getConfiguration()" ) );
-   HomeAutomationConfiguration::instance().get(
+   HbcConfiguration::instance().get(
       getResponse()->setConfiguration( hardware.getFckE() ) );
 }
 
 inline void Booter::cmdGetModuleId( uint8_t index )
 {
    DEBUG_H2( getId(), FSTR( ".getModuleId()" ) );
-   HomeAutomationInterface::Response* response = getResponse();
-   if ( !HomeAutomationHw::getModuleId( --index, response->setModuleId() ) )
+   HbcInterface::Response* response = getResponse();
+   if ( !HbcDeviceHw::getModuleId( --index, response->setModuleId() ) )
    {
-      response->setErrorCode( HomeAutomationInterface::ErrorCode::MODULE_NOT_EXISTS );
+      response->setErrorCode( HbcInterface::ErrorCode::MODULE_NOT_EXISTS );
    }
    else if ( !isFirmwareValid && !index )
    {
-      response->setErrorCode( HomeAutomationInterface::ErrorCode::INVALID_FW_LOADED );
+      response->setErrorCode( HbcInterface::ErrorCode::INVALID_FW_LOADED );
    }
 }
 
@@ -257,13 +257,13 @@ inline const void Booter::cmdPing()
 }
 
 inline void Booter::cmdReadMemory(
-   HomeAutomationInterface::Command::ReadMemory& parameter )
+   HbcInterface::Command::ReadMemory& parameter )
 {
    DEBUG_H2( getId(), FSTR( ".readMemory()" ) );
 
-   HomeAutomationInterface::Response* response = getResponse();
+   HbcInterface::Response* response = getResponse();
    uint8_t* dest = response->setReadMemory( parameter.address, parameter.length );
-   if ( parameter.address & HomeAutomationInterface::DATA_SECTION_MASK )
+   if ( parameter.address & HbcInterface::DATA_SECTION_MASK )
    {
       uint8_t* source = reinterpret_cast<uint8_t*>( parameter.address & 0xFFFF );
       uint16_t length = parameter.length;
@@ -291,36 +291,36 @@ inline bool Booter::handleMessage()
 {
    bool consumed = true;
 
-   HomeAutomationInterface::Command* data = reinterpret_cast<HomeAutomationInterface::Command*>( message->getData() );
+   HbcInterface::Command* data = reinterpret_cast<HbcInterface::Command*>( message->getData() );
    uint8_t command = data->getCommand();
    if ( command < HBCP::RESULTS_START )
    {
-      if ( command == HomeAutomationInterface::Command::RESET )
+      if ( command == HbcInterface::Command::RESET )
       {
          cmdReset();
       }
-// else if( command == HomeAutomationInterface::Command::GENERATE_RANDOM_DEVICE_ID )
+// else if( command == HbcInterface::Command::GENERATE_RANDOM_DEVICE_ID )
 // {
 // HBCP::deviceId = ( BooterHw::getNewDeviceId() & 0x7FFF );
-// HomeAutomationHw::Configuration::instance().setDeviceId( HBCP::deviceId );
+// HbcDeviceHw::Configuration::instance().setDeviceId( HBCP::deviceId );
 // }
-      else if ( command == HomeAutomationInterface::Command::GET_MODULE_ID )
+      else if ( command == HbcInterface::Command::GET_MODULE_ID )
       {
          cmdGetModuleId( data->parameter.getModuleId.index );
       }
-      else if ( command == HomeAutomationInterface::Command::GET_CONFIGURATION )
+      else if ( command == HbcInterface::Command::GET_CONFIGURATION )
       {
          cmdGetConfiguration();
       }
-      else if ( command == HomeAutomationInterface::Command::SET_CONFIGURATION )
+      else if ( command == HbcInterface::Command::SET_CONFIGURATION )
       {
          cmdSetConfiguration( data->parameter.setConfiguration );
       }
-      else if ( command == HomeAutomationInterface::Command::READ_MEMORY )
+      else if ( command == HbcInterface::Command::READ_MEMORY )
       {
          cmdReadMemory( data->parameter.readMemory );
       }
-      else if ( command == HomeAutomationInterface::Command::WRITE_MEMORY )
+      else if ( command == HbcInterface::Command::WRITE_MEMORY )
       {
          writeMemoryStart();
          cmdWriteMemory( data->parameter.writeMemory );
@@ -331,7 +331,7 @@ inline bool Booter::handleMessage()
          }
          writeMemoryEnd();
       }
-      else if ( command == HomeAutomationInterface::Command::PING )
+      else if ( command == HbcInterface::Command::PING )
       {
          cmdPing();
       }

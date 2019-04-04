@@ -8,12 +8,12 @@
 #ifndef BooterLoaderHw_H
 #define BooterLoaderHw_H
 
-#include <HomeAutomationHw.h>
+#include <HbcDeviceHw.h>
 
 class Checksum;
 class ModuleId;
 
-class BooterLoaderHw : public HomeAutomationHw
+class BooterLoaderHw : public HbcDeviceHw
 {
    ////    Constructors and destructors    ////
 

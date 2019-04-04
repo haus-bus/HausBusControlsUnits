@@ -10,11 +10,11 @@
 
 #include "AR8SystemHw.h"
 
-#include <DigitalPort.h>
-#include <HomeAutomation.h>
+#include <HwUnits/DigitalPort.h>
+#include <HbcDevice.h>
 
 
-class AR8System : public HomeAutomation
+class AR8System : public HbcDevice
 {
    ////    Constructors and destructors    ////
 

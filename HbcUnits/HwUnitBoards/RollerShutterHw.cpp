@@ -8,6 +8,7 @@
 
 #include "RollerShutterHw.h"
 #include <Tracing/Logger.h>
+#include <Time/SystemTime.h>
 
 
 bool RollerShutterHw::isDirectionToClose()
@@ -37,7 +38,7 @@ void RollerShutterHw::off()
       digitalOutput0.clear();
       return;
    }
-   _delay_ms( POWER_SWITCH_DELAY );
+   SystemTime::waitMs( POWER_SWITCH_DELAY );
 
    if ( digitalOutput0.isInverted() )
    {
@@ -64,7 +65,7 @@ void RollerShutterHw::on()
       return;
    }
    digitalOutput1.set();
-   _delay_ms( POWER_SWITCH_DELAY );
+   SystemTime::waitMs( POWER_SWITCH_DELAY );
 }
 
 void RollerShutterHw::setDirectionToClose()

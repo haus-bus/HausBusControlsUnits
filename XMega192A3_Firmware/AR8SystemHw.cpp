@@ -8,23 +8,22 @@
 #include "AR8SystemHw.h"
 
 #include <Security/Checksum.h>
-#include <Dimmer.h>
-#include <DS1820.h>
-#include <Peripherals/Eeprom.h>
-#include <Peripherals/EventSystem.h>
-#include <HacfIpStackManager.h>
-#include <IrReceiver.h>
+#include <Security/ModuleId.h>
+#include <HwUnits/Dimmer.h>
+#include <HwUnits/DS1820.h>
+#include <HwUnits/DigitalOutputUnit.h>
+#include <HwUnits/RollerShutter.h>
+#include <HwUnits/IrReceiver.h>
 #include <Tracing/Logger.h>
 #include <LogicalButton.h>
-#include <DigitalOutputUnit.h>
-#include <Security/ModuleId.h>
-#include <RollerShutter.h>
+#include <Peripherals/Eeprom.h>
+#include <Peripherals/EventSystem.h>
 #include <Peripherals/TimerCounter.h>
 #include <Protocols/IpStack/UdpConnection.h>
 #include <Protocols/Ethernet/MAC.h>
 #include <Gateway.h>
-#include <HacfIpStackManager.h>
-#include <HomeAutomationConfiguration.h>
+#include <HbcIpStackManager.h>
+#include <HbcConfiguration.h>
 
 #include <SoftTwi.h>
 #include <RS485Hw.h>
@@ -73,12 +72,12 @@ void AR8SystemHw::configure()
 
 void AR8SystemHw::configureEthernet()
 {
-   uint16_t deviceId = HomeAutomationConfiguration::instance().getDeviceId();
+   uint16_t deviceId = HbcConfiguration::instance().getDeviceId();
    MAC::local.set( 0xAE, 0xDE, 0x48, 0, HBYTE( deviceId ), LBYTE( deviceId ) );
 
    if ( enc28j60.init() == Enc28j60::OK )
    {
-      new HacfIpStackManager( enc28j60 );
+      new HbcIpStackManager( enc28j60 );
       new Gateway( UdpConnection::connect( IP::broadcast(), 9, 9, NULL ), Gateway::UDP_9 );
    }
 }
@@ -107,7 +106,7 @@ void AR8SystemHw::configureLogicalButtons()
    DEBUG_M1( FSTR( "LButtons" ) );
 
    uint8_t i = 0;
-   uint8_t mask = HomeAutomationConfiguration::instance().getLogicalButtonMask();
+   uint8_t mask = HbcConfiguration::instance().getLogicalButtonMask();
    while ( mask )
    {
       if ( mask & 1 )
@@ -147,7 +146,7 @@ void AR8SystemHw::configureSlots()
       slotHw[slot].getDigitalOutput0()->setPinNumber( pinNumber );
       slotHw[slot].getDigitalOutput1()->setPinNumber( pinNumber );
       slotHw[slot].configure(
-         HomeAutomationConfiguration::instance().getSlotType( slot ) );
+         HbcConfiguration::instance().getSlotType( slot ) );
 
       if ( slotHw[slot].isDimmerHw() )
       {
@@ -202,7 +201,7 @@ void AR8SystemHw::configureZeroCrossDetection()
    portA.enableInterrupt0Source( Pin7 );
    EventSystem::setEventSource( 1, EVSYS_CHMUX_PORTA_PIN7_gc );
 
-   if ( HomeAutomationHw::getFckE() < AR8_I2C )
+   if ( HbcDeviceHw::getFckE() < AR8_I2C )
    {
       DigitalInputTmpl<PortA, 5> pa5;
       portA.configure( Pin5, PORT_OPC_PULLUP_gc, false, PORT_ISC_RISING_gc );

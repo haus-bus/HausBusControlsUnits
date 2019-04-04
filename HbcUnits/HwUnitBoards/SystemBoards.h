@@ -9,21 +9,8 @@
 #define Electronics_SystemBoards_SystemBoards_H
 
 #include <DefaultTypes.h>
-#include <Electronics.h>
-#include <Peripherals/InterruptController.h>
-#include <Peripherals/IoPort.h>
-#include <Peripherals/ResetSystem.h>
-#include <Peripherals/Usart.h>
-#include <Peripherals/WatchDog.h>
-class Clock;
 
-class HomeAutomationHw;
-
-class Oscillator;
-
-class RealTimeCounter;
-
-
+class HbcDeviceHw;
 
 enum TRACE_PORT_PINS {
    TR_IDLE_PIN = Pin0,

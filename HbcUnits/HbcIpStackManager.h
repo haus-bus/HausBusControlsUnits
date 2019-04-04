@@ -1,5 +1,5 @@
 /*
- * HacfIpStackManager.h
+ * HbcIpStackManager.h
  *
  *  Created on: 28.08.2014
  *      Author: Viktor Pankraz
@@ -44,7 +44,7 @@ class UdpHeader;
 
 class evMessage;
 
-class HacfIpStackManager : public IpStackManager
+class HbcIpStackManager : public IpStackManager
 {
    public:
 
@@ -197,7 +197,7 @@ class HacfIpStackManager : public IpStackManager
 
       ////    Constructors and destructors    ////
 
-      HacfIpStackManager( Enc28j60& _stream );
+      HbcIpStackManager( Enc28j60& _stream );
 
       ////    Operations    ////
 

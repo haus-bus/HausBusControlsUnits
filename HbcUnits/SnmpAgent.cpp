@@ -9,7 +9,7 @@
 #include <PortPinUnit.h>
 #include <Button.h>
 #include <Protocols/IpStack/UdpConnection.h>
-#include <HomeAutomationInterface.h>
+#include <HbcInterface.h>
 
 #define MAX_SEND_RETRIES 10
 
@@ -373,7 +373,7 @@ bool SnmpAgent::sendMessage( HBCP* msg )
 
    bool isEvStarted = ( sender.classId == ::Object::ClassId::SYSTEM )
                       && ( sender.instanceId == 1 )
-                      && ( cf.data[0] == HomeAutomationInterface::Response::EVENT_STARTED );
+                      && ( cf.data[0] == HbcInterface::Response::EVENT_STARTED );
 
    Snmp::TrapHeader header;
    header.addObject( senderOid );

@@ -5,7 +5,7 @@
  *      Author: viktor.pankraz
  */
 
-#include <DS1307.h>
+#include "DS1307.h"
 #include <ErrorMessage.h>
 #include <SwFramework.h>
 #include <Time/Calender.h>

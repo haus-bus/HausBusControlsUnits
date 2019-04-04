@@ -10,6 +10,7 @@
 
 #include "BooterLoaderHw.h"
 
+#include <SystemBoards.h>
 #include <Security/ModuleId.h>
 
 extern MOD_ID_SECTION const ModuleId moduleId;

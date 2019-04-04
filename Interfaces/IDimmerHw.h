@@ -49,7 +49,10 @@ class IDimmerHw
 
       virtual uint8_t setMode( uint8_t mode ) = 0;
 
-      virtual uint8_t suspend( uint8_t mode );
+      virtual uint8_t suspend( uint8_t mode )
+      {
+         return 0;
+      }
 
       inline void off()
       {

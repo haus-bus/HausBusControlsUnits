@@ -99,7 +99,7 @@
         <avrgcccpp.compiler.directories.IncludePaths>
           <ListValues>
             <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.0.38\include</Value>
-            <Value>../../BoardHardware</Value>
+            <Value>../../HbcUnits\HwUnitBoards</Value>
             <Value>../../SwFramework</Value>
             <Value>../../HbcUnits</Value>
             <Value>../../HbcUnits</Value>
@@ -180,7 +180,7 @@
         <avrgcccpp.compiler.directories.IncludePaths>
           <ListValues>
             <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.0.38\include</Value>
-            <Value>../../BoardHardware</Value>
+            <Value>../../HbcUnits\HwUnitBoards</Value>
             <Value>../../SwFramework</Value>
             <Value>../../HbcUnits</Value>
             <Value>../../HbcUnits</Value>
@@ -221,17 +221,13 @@
     </PreBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\BoardHardware\Electronics.h">
+    <Compile Include="..\HbcUnits\HwUnitBoards\HbcDeviceHw.cpp">
       <SubType>compile</SubType>
-      <Link>BoardHardware\Electronics.h</Link>
+      <Link>HbcUnits\HwUnitBoards\HbcDeviceHw.cpp</Link>
     </Compile>
-    <Compile Include="..\BoardHardware\HomeAutomationHw.cpp">
+    <Compile Include="..\HbcUnits\HwUnitBoards\HbcDeviceHw.h">
       <SubType>compile</SubType>
-      <Link>BoardHardware\HomeAutomationHw.cpp</Link>
-    </Compile>
-    <Compile Include="..\BoardHardware\HomeAutomationHw.h">
-      <SubType>compile</SubType>
-      <Link>BoardHardware\HomeAutomationHw.h</Link>
+      <Link>HbcUnits\HwUnitBoards\HbcDeviceHw.h</Link>
     </Compile>
     <Compile Include="..\Booterloader\BooterLoader.cpp">
       <SubType>compile</SubType>
@@ -248,6 +244,10 @@
     <Compile Include="..\Booterloader\BooterLoaderHw.h">
       <SubType>compile</SubType>
       <Link>BooterLoaderHw.h</Link>
+    </Compile>
+    <Compile Include="..\HbcUnits\HwUnitBoards\SystemBoards.h">
+      <SubType>compile</SubType>
+      <Link>HbcUnits\HwUnitBoards\SystemBoards.h</Link>
     </Compile>
     <Compile Include="..\Xmega\Peripherals\Flash.cpp">
       <SubType>compile</SubType>
@@ -274,7 +274,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="BoardHardware\" />
+    <Folder Include="HbcUnits\" />
+    <Folder Include="HbcUnits\HwUnitBoards\" />
     <Folder Include="Xmega\" />
     <Folder Include="Xmega\Peripherals\" />
   </ItemGroup>

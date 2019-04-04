@@ -6,8 +6,8 @@
  */
 
 #include "LogicalButton.h"
-#include "Button.h"
-#include "Led.h"
+#include "HwUnits/Button.h"
+#include "HwUnits/Led.h"
 
 #include <ErrorMessage.h>
 

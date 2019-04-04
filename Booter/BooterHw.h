@@ -9,9 +9,13 @@
 #define BooterHw_H
 
 #include <Protocols/HBCP.h>
-#include <HomeAutomationHw.h>
-#include <HomeAutomationConfiguration.h>
+#include <HbcDeviceHw.h>
+#include <HbcConfiguration.h>
+#include <Peripherals/InterruptController.h>
 #include <Peripherals/RealTimeCounter.h>
+#include <Peripherals/WatchDog.h>
+#include <Peripherals/ResetSystem.h>
+#include <Peripherals/Usart.h>
 #include <Peripherals/Twi.h>
 
 #include <Enc28j60.h>
@@ -22,7 +26,7 @@ class Checksum;
 
 class ModuleId;
 
-class BooterHw : public HomeAutomationHw
+class BooterHw : public HbcDeviceHw
 {
    public:
       static const uint16_t UDP_MIN_PACKET_SIZE = 60;
