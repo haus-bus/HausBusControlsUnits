@@ -9,7 +9,7 @@
 #define HwUnits_PortPinUnit_H
 
 #include "HbcUnits.h"
-#include <DigitalOutput.h>
+#include <PwmOutput.h>
 #include <ConfigurationManager.h>
 
 class CriticalSection;
@@ -383,7 +383,7 @@ class PortPinUnit : public Reactive
 
       EepromConfiguration* configuration;
 
-      DigitalOutput hardware;
+      PwmOutput hardware;
 
 };
 

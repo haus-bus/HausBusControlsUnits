@@ -26,6 +26,8 @@ class PbsSystemHw : public HbcDeviceHw
 
       void configure();
 
+      void configurePwm( TimerCounter& timer );
+
       void configureLogicalButtons();
 
       void configureTwi();

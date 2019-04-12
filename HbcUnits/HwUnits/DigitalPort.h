@@ -13,7 +13,6 @@
 #include "Counter.h"
 #include "Led.h"
 #include <ConfigurationManager.h>
-#include <DigitalPortHw.h>
 
 class CriticalSection;
 
@@ -199,7 +198,7 @@ class DigitalPort : public Reactive
 
       inline DigitalPort( uint8_t portNumber ) :
          notUseablePins( 0 ), state( 0 ), counter0( 0xFF ), counter1( 0xFF ),
-         hardware( portNumber )
+         hardware( &IoPort::instance( portNumber ) )
       {
          configuration = NULL;
          clearPinFunction();
@@ -213,8 +212,6 @@ class DigitalPort : public Reactive
       virtual bool notifyEvent( const Event& event );
 
       void run();
-
-      void updateLeds();
 
    protected:
 
@@ -295,7 +292,7 @@ class DigitalPort : public Reactive
 
       EepromConfiguration* configuration;
 
-      DigitalPortHw hardware;
+      IoPort* hardware;
 
 };
 

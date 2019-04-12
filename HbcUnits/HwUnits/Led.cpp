@@ -7,7 +7,6 @@
 
 #include "Led.h"
 #include <PortPin.h>
-#include <PwmOutput.h>
 
 const uint8_t Led::debugLevel( DEBUG_LEVEL_OFF | DEBUG_STATE_L3 );
 
@@ -223,5 +222,5 @@ void Led::setBrightness( uint8_t p_brightness )
 
 void Led::updateHw()
 {
-   ( (PwmOutput*) &hardware )->set( getHwBrightness() );
+   hardware.set( getHwBrightness() );
 }

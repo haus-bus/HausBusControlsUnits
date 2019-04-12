@@ -64,6 +64,12 @@ void PbsSystemHw::configure()
       configureTwi();
    }
 
+   // start Timer of PORTC and PORTD to support LED dimming
+   configurePwm( TimerCounter::instance( PortC, 0 ) );
+   configurePwm( TimerCounter::instance( PortC, 1 ) );
+   configurePwm( TimerCounter::instance( PortD, 0 ) );
+   configurePwm( TimerCounter::instance( PortD, 1 ) );
+
    // enable interrupts
    IoPort::instance<PortE>().enableInterrupt0();
    enableInterrupts();
@@ -84,6 +90,20 @@ void PbsSystemHw::configureLogicalButtons()
       mask >>= 1;
       i++;
    }
+}
+
+void PbsSystemHw::configurePwm( TimerCounter& timer )
+{
+   #if F_CPU == 32000000UL
+   timer.configClockSource( TC_CLKSEL_DIV8_gc );
+   #elif F_CPU == 8000000UL
+   timer.configClockSource( TC_CLKSEL_DIV1_gc );
+   #else
+   #    error "F_CPU is not supported for PwmHardware"
+   #endif
+
+   timer.configWGM( TC_WGMODE_SS_gc );
+   timer.setPeriod( 100 );
 }
 
 #ifdef SUPPORT_RS485

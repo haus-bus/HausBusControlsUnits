@@ -33,8 +33,6 @@ class IoPort;
 
 class PortPin;
 
-class SlotHw;
-
 class RS485Hw;
 
 extern IrDecoder* irDecoder;
@@ -44,8 +42,6 @@ extern MOD_ID_SECTION const ModuleId moduleId;
 static const uint16_t ZCD_DEFAULT_PERIOD( 40960 );
 
 static const uint8_t debugLevel( DEBUG_LEVEL_OFF );
-
-extern SlotHw slotHw[MAX_SLOTS];
 
 extern DigitalOutput chipSelectSdCard;
 

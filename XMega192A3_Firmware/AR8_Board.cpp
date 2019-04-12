@@ -12,7 +12,6 @@
 #include <Dali.h>
 #include <DigitalOutput.h>
 #include <PortPin.h>
-#include <SlotHw.h>
 #include <RS485Hw.h>
 #include <SoftTwi.h>
 #include <Peripherals/DmaChannel.h>
@@ -30,8 +29,6 @@ const ModuleId moduleId = { "$MOD$ AR8      ",
                             Release::MINOR,
                             AR8_ID,
                             0 };
-
-SlotHw slotHw[MAX_SLOTS];
 
 DigitalOutput chipSelectSdCard( PortC, 4 );
 

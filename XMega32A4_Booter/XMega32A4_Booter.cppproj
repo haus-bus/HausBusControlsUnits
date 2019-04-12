@@ -99,7 +99,6 @@
         </avrgcccpp.compiler.symbols.DefSymbols>
         <avrgcccpp.compiler.directories.IncludePaths>
           <ListValues>
-            <Value>../../Interfaces</Value>
             <Value>../../Xmega</Value>
             <Value>../../SwFramework</Value>
             <Value>../../HbcUnits\HwUnitBoards</Value>
@@ -180,7 +179,6 @@
         </avrgcccpp.compiler.symbols.DefSymbols>
         <avrgcccpp.compiler.directories.IncludePaths>
           <ListValues>
-            <Value>../../Interfaces</Value>
             <Value>../../Xmega</Value>
             <Value>../../SwFramework</Value>
             <Value>../../HbcUnits\HwUnitBoards</Value>
@@ -259,7 +257,6 @@
         </avrgcccpp.compiler.symbols.DefSymbols>
         <avrgcccpp.compiler.directories.IncludePaths>
           <ListValues>
-            <Value>../../Interfaces</Value>
             <Value>../../Xmega</Value>
             <Value>../../SwFramework</Value>
             <Value>../../HbcUnits\HwUnitBoards</Value>
@@ -300,7 +297,6 @@
   <ItemGroup>
     <Folder Include="HbcUnits\HwUnitBoards\" />
     <Folder Include="HbcUnits\" />
-    <Folder Include="Interfaces\" />
     <Folder Include="SwFramework\" />
     <Folder Include="SwFramework\Traces" />
     <Folder Include="SwFramework\Protocols\" />
@@ -351,9 +347,9 @@
       <SubType>compile</SubType>
       <Link>HbcUnits\HbcInterface.h</Link>
     </Compile>
-    <Compile Include="..\Interfaces\Release.h">
+    <Compile Include="..\HbcUnits\Release.h">
       <SubType>compile</SubType>
-      <Link>Interfaces\Release.h</Link>
+      <Link>HbcUnits\Release.h</Link>
     </Compile>
     <Compile Include="..\SwFramework\Protocols\HBCP.cpp">
       <SubType>compile</SubType>

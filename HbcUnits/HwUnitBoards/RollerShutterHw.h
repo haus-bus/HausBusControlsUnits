@@ -5,21 +5,20 @@
  *      Author: Viktor Pankraz
  */
 
-#ifndef Electronics_HwUnitBoards_RollerShutterHw_H
-#define Electronics_HwUnitBoards_RollerShutterHw_H
+#ifndef HbcUnits_HwUnitBoards_RollerShutterHw_H
+#define HbcUnits_HwUnitBoards_RollerShutterHw_H
 
 #include "HwUnitBoards.h"
-#include "SlotHw.h"
-class Logger;
+#include <DigitalOutput.h>
 
 
-class RollerShutterHw : public SlotHw
+class RollerShutterHw
 {
    public:
 
       enum Direction
       {
-         To_CLOSE,
+         TO_CLOSE,
          TO_OPEN
       };
 
@@ -33,7 +32,12 @@ class RollerShutterHw : public SlotHw
             };
       };
 
-      inline RollerShutterHw() : direction( false ), inverted( false ), independent( false )
+      inline RollerShutterHw( PortPin directionPin, PortPin powerPin ) :
+         direction( false ),
+         inverted( false ),
+         independent( false ),
+         directionOutput( directionPin ),
+         powerOutput( powerPin )
       {
 
       }
@@ -57,7 +61,7 @@ class RollerShutterHw : public SlotHw
          inverted = _inverted;
          if ( !independent )
          {
-            digitalOutput0.setInverted( inverted );
+            directionOutput.setInverted( inverted );
          }
       }
 
@@ -73,5 +77,9 @@ class RollerShutterHw : public SlotHw
       uint8_t inverted : 1;
 
       uint8_t independent : 1;
+
+      DigitalOutput directionOutput;
+
+      DigitalOutput powerOutput;
 };
 #endif

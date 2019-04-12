@@ -13,8 +13,7 @@ const uint8_t Counter::debugLevel( DEBUG_LEVEL_OFF );
 
 Counter::Response::Parameter& Counter::Response::setConfiguration()
 {
-   controlFrame.setDataLength(
-      sizeof( getResponse() ) + sizeof( getParameter().configuration ) );
+   controlFrame.setDataLength( sizeof( getResponse() ) + sizeof( getParameter().configuration ) );
    setResponse( CONFIGURATION );
    return getParameter();
 }

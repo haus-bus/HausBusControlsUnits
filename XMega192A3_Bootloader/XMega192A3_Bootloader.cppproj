@@ -104,7 +104,6 @@
             <Value>../../HbcUnits</Value>
             <Value>../../HbcUnits</Value>
             <Value>../../Xmega</Value>
-            <Value>../../Interfaces</Value>
             <Value>..</Value>
             <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.68\include</Value>
           </ListValues>
@@ -185,7 +184,6 @@
             <Value>../../HbcUnits</Value>
             <Value>../../HbcUnits</Value>
             <Value>../../Xmega</Value>
-            <Value>../../Interfaces</Value>
             <Value>..</Value>
             <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.68\include</Value>
           </ListValues>

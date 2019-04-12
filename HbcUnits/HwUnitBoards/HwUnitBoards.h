@@ -53,6 +53,18 @@ enum BoardRevisions
    SD485_LC4_1V = 45,
 };
 
+enum SlotType
+{
+   UNUSED_SLOT,
+   DIMMER,
+   POWER_SOCKET,
+   ROLLER_SHUTTER,
+   DOUBLE_SWITCH = 0x07,
+   DIMMER_30 = 0x0A,
+   DIMMER_31 = 0x0B,
+   MAX_SLOT_TYPES
+};
+
 // Turn off a power load generates a current spike. So wait some time to prevent errors in communication.
 static const uint16_t POWER_SWITCH_DELAY = 6;
 

@@ -9,6 +9,7 @@
 
 #include <Security/Checksum.h>
 #include <Security/ModuleId.h>
+#include <HwUnitBoards/DimmerHw.h>
 #include <HwUnits/Dimmer.h>
 #include <HwUnits/DS1820.h>
 #include <HwUnits/DigitalOutputUnit.h>
@@ -33,7 +34,7 @@ void putc( char c )
    Usart::instance<DBG_PORT, DBG_CHANNEL>().write( c );
 }
 
-AR8SystemHw::AR8SystemHw()
+AR8SystemHw::AR8SystemHw() : hasDimmerInSlotsOneToFour( false )
 {
    configure();
 }
@@ -127,50 +128,59 @@ void AR8SystemHw::configureSlots()
    Object* object;
    while ( slot-- )
    {
-      if ( slot < ( MAX_SLOTS / 2 ) )
-      {
-         slotHw[slot].getDigitalOutput1()->setPortNumber( PortA );
-         slotHw[slot].getDigitalOutput0()->setPortNumber( PortC );
-         slotHw[slot].setTimerCounter0( &TimerCounter::instance( PortC, 0 ) );
-      }
-      else
-      {
-         slotHw[slot].getDigitalOutput1()->setPortNumber( PortB );
-         slotHw[slot].getDigitalOutput0()->setPortNumber( PortD );
-         slotHw[slot].setTimerCounter0( &TimerCounter::instance( PortD, 0 ) );
-      }
+      uint8_t portNumber = ( slot < ( MAX_SLOTS / 2 ) ) ? PortA : PortB;
+
       if ( pinNumber > 3 )
       {
          pinNumber = 0;
       }
-      slotHw[slot].getDigitalOutput0()->setPinNumber( pinNumber );
-      slotHw[slot].getDigitalOutput1()->setPinNumber( pinNumber );
-      slotHw[slot].configure(
-         HbcConfiguration::instance().getSlotType( slot ) );
 
-      if ( slotHw[slot].isDimmerHw() )
-      {
-         new Dimmer( slot + 1, &slotHw[slot] );
-      }
-      else if ( slotHw[slot].isPowerSocketHw() )
-      {
-         object = new DigitalOutputUnit( *slotHw[slot].getDigitalOutput1() );
-         object->setInstanceId( slot + 1 );
-      }
-      else if ( slotHw[slot].isRollerShutterHw() )
-      {
-         new RollerShutter( slot + 1,
-                            reinterpret_cast<RollerShutterHw*>( &slotHw[slot] ) );
-      }
-      else if ( slotHw[slot].isDoubleSwitchHw() )
-      {
-         object = new DigitalOutputUnit( *slotHw[slot].getDigitalOutput0() );
-         object->setInstanceId( slot + 1 );
-         object = new DigitalOutputUnit( *slotHw[slot].getDigitalOutput1() );
-         object->setInstanceId( slot + 9 );
-      }
-      DEBUG_M4( "slot", slot, " = ", slotHw[slot].getType() );
+      SlotType slotType = (SlotType)HbcConfiguration::instance().getSlotType( slot );
+      DEBUG_M4( "slot", slot, " = ", (uint8_t)slotType );
 
+      switch ( slotType )
+      {
+         case DIMMER:
+         case DIMMER_30:
+         case DIMMER_31:
+         {
+            new Dimmer( slot + 1, new DimmerHw( PortPin( portNumber + 2, pinNumber ),
+                                                PortPin( portNumber, pinNumber ),
+                                                slotType == DIMMER_31 ) );
+            if ( slot < 4 )
+            {
+               hasDimmerInSlotsOneToFour = true;
+            }
+            break;
+         }
+
+         case POWER_SOCKET:
+         {
+            object = new DigitalOutputUnit( PortPin( portNumber, pinNumber ) );
+            object->setInstanceId( slot + 1 );
+            break;
+         }
+
+         case ROLLER_SHUTTER:
+         {
+            new RollerShutter( slot + 1, new RollerShutterHw( PortPin( portNumber + 2, pinNumber ), PortPin( portNumber, pinNumber ) ) );
+            break;
+         }
+
+         case DOUBLE_SWITCH:
+         {
+            object = new DigitalOutputUnit( PortPin( portNumber + 2, pinNumber ) );
+            object->setInstanceId( slot + 1 );
+            object = new DigitalOutputUnit( PortPin( portNumber, pinNumber ) );
+            object->setInstanceId( slot + 1 + MAX_SLOTS );
+            break;
+         }
+
+         default:
+         {
+            WARN_4( "not supported slotType: ", (uint8_t)slotType, " for slot", slot );
+         }
+      }
       pinNumber++;
    }
 }
@@ -205,9 +215,8 @@ void AR8SystemHw::configureZeroCrossDetection()
    {
       DigitalInputTmpl<PortA, 5> pa5;
       portA.configure( Pin5, PORT_OPC_PULLUP_gc, false, PORT_ISC_RISING_gc );
-      // if slot0-4 has dimmer
-      if ( slotHw[0].isDimmerHw() || slotHw[1].isDimmerHw()
-         || slotHw[2].isDimmerHw() || slotHw[3].isDimmerHw() )
+
+      if ( hasDimmerInSlotsOneToFour )
       {
          // Select PA5 as event channel 0 multiplexer input.
          EventSystem::setEventSource( 1, EVSYS_CHMUX_PORTA_PIN5_gc );

@@ -228,7 +228,7 @@ void PortPinUnit::updateHw()
       if ( driveOnState )
       {
          hardware.configOutput();
-         hardware.set();
+         hardware.DigitalOutput::set();
       }
       else
       {
@@ -240,7 +240,7 @@ void PortPinUnit::updateHw()
       if ( driveOffState )
       {
          hardware.configOutput();
-         hardware.clear();
+         hardware.DigitalOutput::clear();
       }
       else
       {

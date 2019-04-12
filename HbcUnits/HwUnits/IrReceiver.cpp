@@ -18,7 +18,7 @@ extern void configureInfraRedHw( PortPin portPin, IrDecoder* decoder );
 
 IrReceiver::IrReceiver( uint8_t _id, PortPin portPin ) :
    receiving( 0 ), repetitionFrameNumber( 0 ),
-   inputPin( portPin.getPortNumber(), portPin.getPinNumber() )
+   inputPin( portPin )
 {
    setId( ( ClassId::IR_RECEIVER << 8 ) | _id );
 }

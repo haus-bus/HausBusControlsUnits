@@ -54,6 +54,8 @@ class AR8SystemHw : public HbcDeviceHw
 
    protected:
 
+      bool hasDimmerInSlotsOneToFour;
+
 };
 
 #endif

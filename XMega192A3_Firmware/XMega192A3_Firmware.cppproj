@@ -76,7 +76,6 @@
         </avrgcc.compiler.symbols.DefSymbols>
         <avrgcc.compiler.directories.IncludePaths>
           <ListValues>
-            <Value>../../Interfaces</Value>
             <Value>../../SwFramework</Value>
             <Value>../../Xmega</Value>
             <Value>../../HbcUnits</Value>
@@ -107,7 +106,6 @@
         </avrgcccpp.compiler.symbols.DefSymbols>
         <avrgcccpp.compiler.directories.IncludePaths>
           <ListValues>
-            <Value>../../Interfaces</Value>
             <Value>../../Xmega</Value>
             <Value>../../SwFramework</Value>
             <Value>../../HbcUnits</Value>
@@ -163,7 +161,6 @@
         </avrgcc.compiler.symbols.DefSymbols>
         <avrgcc.compiler.directories.IncludePaths>
           <ListValues>
-            <Value>../../Interfaces</Value>
             <Value>../../SwFramework</Value>
             <Value>../../Xmega</Value>
             <Value>../../HbcUnits</Value>
@@ -196,7 +193,6 @@
         </avrgcccpp.compiler.symbols.DefSymbols>
         <avrgcccpp.compiler.directories.IncludePaths>
           <ListValues>
-            <Value>../../Interfaces</Value>
             <Value>../../Xmega</Value>
             <Value>../../SwFramework</Value>
             <Value>../../HbcUnits</Value>
@@ -234,14 +230,6 @@
     <PostBuildEvent>"$(ToolchainDir)\avr-objcopy" -j .text -j .data -O binary  $(OutputFileName).elf  $(OutputFileName).bin &amp;&amp; "$(SolutionDir)utils\bin\modid" $(OutputFileName).bin "$(SolutionDir)Binaries\AR8Debug"</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\HbcUnits\HwUnitBoards\DigitalPortHw.cpp">
-      <SubType>compile</SubType>
-      <Link>HbcUnits\HwUnitBoards\DigitalPortHw.cpp</Link>
-    </Compile>
-    <Compile Include="..\HbcUnits\HwUnitBoards\DigitalPortHw.h">
-      <SubType>compile</SubType>
-      <Link>HbcUnits\HwUnitBoards\DigitalPortHw.h</Link>
-    </Compile>
     <Compile Include="..\HbcUnits\HwUnitBoards\HbcDeviceHw.cpp">
       <SubType>compile</SubType>
       <Link>HbcUnits\HwUnitBoards\HbcDeviceHw.cpp</Link>
@@ -262,13 +250,13 @@
       <SubType>compile</SubType>
       <Link>HbcUnits\HwUnitBoards\RollerShutterHw.h</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\HwUnitBoards\SlotHw.cpp">
+    <Compile Include="..\HbcUnits\HwUnitBoards\DimmerHw.cpp">
       <SubType>compile</SubType>
-      <Link>HbcUnits\HwUnitBoards\SlotHw.cpp</Link>
+      <Link>HbcUnits\HwUnitBoards\DimmerHw.cpp</Link>
     </Compile>
-    <Compile Include="..\HbcUnits\HwUnitBoards\SlotHw.h">
+    <Compile Include="..\HbcUnits\HwUnitBoards\DimmerHw.h">
       <SubType>compile</SubType>
-      <Link>HbcUnits\HwUnitBoards\SlotHw.h</Link>
+      <Link>HbcUnits\HwUnitBoards\DimmerHw.h</Link>
     </Compile>
     <Compile Include="..\HbcUnits\HwUnitBoards\SystemBoards.h">
       <SubType>compile</SubType>
@@ -534,13 +522,13 @@
       <SubType>compile</SubType>
       <Link>HbcUnits\HwUnits\UltrasonicDistanceMeter.h</Link>
     </Compile>
-    <Compile Include="..\Interfaces\IDimmerHw.h">
+    <Compile Include="..\HbcUnits\HwUnitBoards\IDimmerHw.h">
       <SubType>compile</SubType>
-      <Link>Interfaces\IDimmerHw.h</Link>
+      <Link>HbcUnits\HwUnitBoards\IDimmerHw.h</Link>
     </Compile>
-    <Compile Include="..\Interfaces\Release.h">
+    <Compile Include="..\HbcUnits\Release.h">
       <SubType>compile</SubType>
-      <Link>Interfaces\Release.h</Link>
+      <Link>HbcUnits\Release.h</Link>
     </Compile>
     <Compile Include="..\SwFramework\Containers\Array.h">
       <SubType>compile</SubType>
@@ -1216,7 +1204,6 @@
   <ItemGroup>
     <Folder Include="HbcUnits\HwUnits\" />
     <Folder Include="HbcUnits\Rules" />
-    <Folder Include="Interfaces" />
     <Folder Include="HbcUnits" />
     <Folder Include="HbcUnits\HwUnitBoards" />
     <Folder Include="HwProtocols" />

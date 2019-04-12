@@ -17,7 +17,7 @@ const uint8_t Dht22::debugLevel( DEBUG_LEVEL_OFF );
 Dht22::Dht22( PortPin pin ) :
    portPin( pin )
 {
-   pin.getIoPort().configure( pin.getPin(), PORT_OPC_PULLUP_gc );
+   portPin.enablePullup();
 }
 
 
