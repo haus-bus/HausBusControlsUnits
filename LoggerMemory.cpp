@@ -110,7 +110,7 @@ bool LoggerMemory::notifyEvent( const Event& event )
    {
       HBCP* message = event.isEvMessage()->getMessage();
       HBCP::ControlFrame& cf = message->controlFrame;
-      // Command* data = reinterpret_cast<Command*>( cf.getData() );
+      Command* data = reinterpret_cast<Command*>( cf.getData() );
 
       if ( cf.isCommand( Command::ERASE ) )
       {

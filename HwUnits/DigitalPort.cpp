@@ -13,7 +13,6 @@
 #endif
 
 #ifdef USE_OW
-#include <OneWire.h>
 #include "DS1820.h"
 #endif
 
